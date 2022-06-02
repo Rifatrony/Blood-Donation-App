@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Blood Donation Application</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_to_continue">Login to Continue</string>
+    <string name="number">Number</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="create_new_account">Create new Acount</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register">Register</string>
+    <string name="already_have_account">Already have Account</string>
+    <string name="name">Name</string>
+    <string name="update">Update</string>
+    <string name="state">State</string>
+    <string name="district">District</string>
+</resources>
