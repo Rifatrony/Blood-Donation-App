@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -211,6 +212,10 @@ public class RecipientActivity extends AppCompatActivity implements View.OnClick
                 dbUserInfo.updateChildren(userInfo).addOnCompleteListener(task1 -> {
 
                     if (task1.isSuccessful()) {
+
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
                         showToast("Registration Complete");
                         progressBar.setVisibility(View.GONE);
                         registerButton.setVisibility(View.VISIBLE);

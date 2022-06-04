@@ -44,16 +44,32 @@
 
 
     <TextView
-        android:id="@+id/header_address_textView"
+        android:id="@+id/header_blood_group_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Address"
+        android:text="AB+"
         android:textSize="14sp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/header_number_textView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/header_number_textView"
-        app:layout_constraintTop_toBottomOf="@+id/header_number_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/header_number_textView"
+        />
+
+    <TextView
+        android:id="@+id/header_type_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Type"
+        android:textColor="@color/white"
+
+
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/header_blood_group_textView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/header_blood_group_textView"
+        app:layout_constraintTop_toBottomOf="@+id/header_blood_group_textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

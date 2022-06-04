@@ -50,12 +50,12 @@
                     android:orientation="vertical"
                     >
 
-
-                    <TextView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="profile"
-                        android:id="@+id/profile"/>
+                        android:id="@+id/recyclerView"
+                        />
+
 
                 </LinearLayout>
 

@@ -21,7 +21,7 @@ public class UserDetailsAdapter extends RecyclerView.Adapter<UserDetailsAdapter.
     @NonNull
     @Override
     public UserDetailsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.profile_layout, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.user_profile_layout, parent, false);
         return new UserDetailsViewHolder(view);
     }
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:padding="20dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/userNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="@string/name"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:padding="4dp"
+                />
+
+            <TextView
+                android:id="@+id/userNumberTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/number"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:padding="4dp"
+                />
+
+            <TextView
+                android:id="@+id/userBloodGroupTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Blood Group"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:padding="4dp"
+                />
+
+            <TextView
+                android:id="@+id/userAddressTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="Address"
+                android:textSize="16sp"
+                android:padding="4dp"
+                />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/emailButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:background="@drawable/button_background"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            />
+
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.cardview.widget.CardView>

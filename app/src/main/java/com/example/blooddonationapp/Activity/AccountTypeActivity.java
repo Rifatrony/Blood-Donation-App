@@ -47,10 +47,12 @@ public class AccountTypeActivity extends AppCompatActivity implements View.OnCli
         switch (view.getId()){
             case R.id.donorAccountButton:
                 startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                finish();
                 break;
 
             case R.id.recipientAccountButton:
                 startActivity(new Intent(getApplicationContext(), RecipientActivity.class));
+                finish();
                 break;
         }
     }

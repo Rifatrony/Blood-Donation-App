@@ -61,6 +61,7 @@
                     android:padding="10dp">
 
                     <TextView
+                        android:id="@+id/userNameTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Account Name"
@@ -74,6 +75,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/userNumberTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Phone Number"
@@ -86,6 +88,7 @@
                         />
 
                     <TextView
+                        android:id="@+id/userBloodGroupTextView"
                         android:layout_width="100dp"
                         android:layout_height="90dp"
                         android:text="AB+"
@@ -118,6 +121,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/userLastDonateTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -149,6 +153,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/userNextDonateTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -162,6 +167,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/userAddressTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Address"

@@ -220,6 +220,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                     if (task1.isSuccessful()) {
                         showToast("Registration Complete");
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        finish();
                         progressBar.setVisibility(View.GONE);
                         registerButton.setVisibility(View.VISIBLE);
                     }

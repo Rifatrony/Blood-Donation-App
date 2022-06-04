@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
@@ -19,7 +20,13 @@ import java.util.ArrayList;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    TextView userNameTextView, userNumberTextView, userBloodGroupTextView,
+            userLastDonateTextView, userNextDonateTextView, userAddressTextView;
+
+    String name, number, blood_group, last_donate, next_donate, address;
+
     DatabaseReference db;
+    DatabaseReference userRef;
     FirebaseUser user;
     ArrayList<UserRegisterModel> list;
 
@@ -28,16 +35,36 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        initialization();
+
         user = FirebaseAuth.getInstance().getCurrentUser();
+        userRef = FirebaseDatabase.getInstance().getReference().child("User")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        db = FirebaseDatabase.getInstance().getReference().child("Donor List").child("Donor Details");
-
-        db.addValueEventListener(new ValueEventListener() {
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()){
-                    UserRegisterModel obj = data.getValue(UserRegisterModel.class);
-                    //System.out.println("Country is ; " + obj.getCountry());
+                if (snapshot.exists()){
+
+                    name = snapshot.child("name").getValue().toString();
+                    userNameTextView.setText(name);
+
+                    number = snapshot.child("number").getValue().toString();
+                    userNumberTextView.setText(number);
+
+                    blood_group = snapshot.child("blood_group").getValue().toString();
+                    userBloodGroupTextView.setText(blood_group);
+
+                    last_donate = snapshot.child("dob").getValue().toString();
+                    userLastDonateTextView.setText(last_donate);
+
+                    next_donate = snapshot.child("dob").getValue().toString();
+                    userNextDonateTextView.setText(next_donate);
+
+                    address = snapshot.child("address").getValue().toString();
+                    userAddressTextView.setText(address);
+
+
                 }
             }
 
@@ -46,5 +73,16 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+
+    private void initialization() {
+        userNameTextView = findViewById(R.id.userNameTextView);
+        userNumberTextView = findViewById(R.id.userNumberTextView);
+        userBloodGroupTextView = findViewById(R.id.userBloodGroupTextView);
+        userLastDonateTextView = findViewById(R.id.userLastDonateTextView);
+        userNextDonateTextView = findViewById(R.id.userNextDonateTextView);
+        userAddressTextView = findViewById(R.id.userAddressTextView);
     }
 }
