@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,6 +35,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     FirebaseAuth mAuth;
 
+    FirebaseAuth.AuthStateListener authStateListener;
+
     SessionManagement sessionManagement;
 
     @Override
@@ -44,11 +47,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initialization();
         setListener();
 
+        mAuth = FirebaseAuth.getInstance();
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                if (user != null) {
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+        };
+
     }
 
     private void initialization() {
-
-        mAuth = FirebaseAuth.getInstance();
 
         loginEmailEditText = findViewById(R.id.loginEmailEditText);
         loginPasswordEditText = findViewById(R.id.loginPasswordEditText);
@@ -57,8 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         progressBar = findViewById(R.id.progressBar);
 
-        sessionManagement = new SessionManagement(this);
-
+        //sessionManagement = new SessionManagement(this);
     }
 
     private void setListener() {
@@ -117,14 +132,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
 
-                    SessionModel dataModel = new SessionModel(email, password);
-                    sessionManagement.setLoginSession(dataModel);
-
                     progressBar.setVisibility(View.GONE);
                     loginButton.setVisibility(View.VISIBLE);
+                    showToast("Login Successfully");
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+
+                    finish();
+
                     loginEmailEditText.setText("");
                     loginPasswordEditText.setText("");
-                    showToast("Login Successfully");
+
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -143,20 +161,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     protected void onStart() {
+        mAuth.addAuthStateListener(authStateListener);
         super.onStart();
-        if (!sessionManagement.getSessionModel().getUserEmail().equals("null")) {
+    }
 
-            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(authStateListener);
 
-            intent.putExtra("email", email);
-            intent.putExtra("password", password);
-
-            startActivity(intent);
-            finish();
-
-        } else {
-            showToast("Need to Login");
-
-        }
     }
 }

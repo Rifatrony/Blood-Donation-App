@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.RegisterActivity">
+    tools:context=".Activity.RecipientActivity">
 
 
     <ScrollView
@@ -23,14 +23,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/create_new_account"
+                android:text="Create Recipient Account"
                 android:textColor="@color/black"
                 android:gravity="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:padding="8dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20dp"
                 />
 
             <!--<EditText

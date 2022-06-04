@@ -10,16 +10,10 @@
         android:title="Profile"
         />
     <item
-        android:id="@+id/nav_categories"
-        android:title="Categories"
+        android:id="@+id/nav_DonorList"
+        android:title="Donor List"
         />
 
-    <item
-        android:title="Profile">
-        <menu>
-
-        </menu>
-    </item>
 
     <!--Communication Section-->
 

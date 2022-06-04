@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonationapp.Activity.DonorListActivity;
+import com.example.blooddonationapp.Activity.LoginActivity;
 import com.example.blooddonationapp.Activity.ProfileActivity;
 import com.example.blooddonationapp.Utilities.SessionManagement;
 import com.example.blooddonationapp.Utilities.SessionModel;
@@ -30,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
-
-    SessionManagement sessionManagement;
 
     String email, password;
 
@@ -50,13 +50,6 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation_view);
         mAuth = FirebaseAuth.getInstance();
 
-        /*email = getIntent().getExtras().getString("email");
-        password = getIntent().getStringExtra("password");*/
-
-
-
-        sessionManagement = new SessionManagement(this);
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
             @Override
@@ -69,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.nav_profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        break;
+
+                    case R.id.nav_DonorList:
+                        startActivity(new Intent(getApplicationContext(), DonorListActivity.class));
                         break;
 
                     case R.id.nav_logout:
@@ -110,12 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void logOut(){
 
-        /*SessionModel dataModel = new SessionModel(email, password);
-        email = dataModel.getUserEmail();
-        password = dataModel.getPassword();
-        System.out.println("Email is: " + email  +"\n Password is : " + password);
+        mAuth.signOut();
+        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        finish();
 
-        Toast.makeText(this, "Signout", Toast.LENGTH_SHORT).show();*/
     }
 
     @Override

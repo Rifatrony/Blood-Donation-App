@@ -4,10 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,8 +17,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.blooddonationapp.MainActivity;
-import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -34,9 +30,7 @@ import com.hbb20.CountryCodePicker;
 
 import java.util.HashMap;
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
-
-    String donor, search_blood;
+public class RecipientActivity extends AppCompatActivity implements View.OnClickListener {
 
     ProgressBar progressBar;
     TextView haveAccountTextView;
@@ -67,12 +61,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_recipient);
 
         initialization();
         setListener();
 
-        adapter = new ArrayAdapter<String>(RegisterActivity.this, android.R.layout.simple_spinner_dropdown_item, bloodGroups);
+        adapter = new ArrayAdapter<String>(RecipientActivity.this, android.R.layout.simple_spinner_dropdown_item, bloodGroups);
         bloodGroupSpinner.setAdapter(adapter);
 
         bloodGroupSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -88,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             }
         });
-
     }
 
     private void initialization(){
@@ -137,7 +130,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         System.out.println("Clicked is " + clickedItemIs);
     }
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -213,8 +205,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 userInfo.put("blood_group", blood_group);
                 userInfo.put("dob", dob);
                 userInfo.put("address", address);
-                userInfo.put("type", "donor");
-                userInfo.put("search", "donor" + blood_group);
+                userInfo.put("type", "recipient");
+                userInfo.put("search", "recipient" + blood_group);
 
                 dbUserInfo.updateChildren(userInfo).addOnCompleteListener(task1 -> {
 

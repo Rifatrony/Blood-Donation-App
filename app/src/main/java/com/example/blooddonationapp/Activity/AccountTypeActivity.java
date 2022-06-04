@@ -6,13 +6,19 @@ import androidx.appcompat.widget.AppCompatButton;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.R;
 
 public class AccountTypeActivity extends AppCompatActivity implements View.OnClickListener {
 
-    AppCompatButton donorAccountButton, searchAccountButton;
+    AppCompatButton donorAccountButton, recipientAccountButton;
+
+    RadioGroup radioGroup;
+    RadioButton radioButton;
+    String clickedItemIs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,29 +28,30 @@ public class AccountTypeActivity extends AppCompatActivity implements View.OnCli
         initialization();
         setListener();
 
+
     }
 
     private void initialization() {
         donorAccountButton = findViewById(R.id.donorAccountButton);
-        searchAccountButton = findViewById(R.id.searchAccountButton);
+        recipientAccountButton = findViewById(R.id.recipientAccountButton);
     }
+
 
     private void setListener() {
         donorAccountButton.setOnClickListener(this);
-        searchAccountButton.setOnClickListener(this);
+        recipientAccountButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.donorAccountButton:
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
-                intent.putExtra("donor", "");
-                startActivity(intent);
+                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+                break;
 
-
-            case R.id.searchAccountButton:
-                Toast.makeText(this, "Create Search type account", Toast.LENGTH_SHORT).show();
+            case R.id.recipientAccountButton:
+                startActivity(new Intent(getApplicationContext(), RecipientActivity.class));
+                break;
         }
     }
 }
