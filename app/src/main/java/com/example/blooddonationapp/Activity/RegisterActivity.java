@@ -1,5 +1,6 @@
 package com.example.blooddonationapp.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -9,15 +10,26 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.MainActivity;
+import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
+    ProgressBar progressBar;
     TextView haveAccountTextView;
     EditText emailEditText, phoneNumberEditText, passwordEditText, confirmPasswordEditText;
     AppCompatButton registerButton;
@@ -25,6 +37,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     CountryCodePicker countryCodePicker;
 
     String ccp, email, number, password, confirm_password;
+    String uid;
+
+    FirebaseAuth mAuth;
+    DatabaseReference dbUserInfo;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +54,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initialization(){
+
+        progressBar = findViewById(R.id.progressBar);
+
+        mAuth = FirebaseAuth.getInstance();
+
         countryCodePicker = findViewById(R.id.countryCodePicker);
 
         haveAccountTextView = findViewById(R.id.haveAccountTextView);
@@ -46,6 +68,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         confirmPasswordEditText = findViewById(R.id.confirmPasswordEditText);
 
         registerButton = findViewById(R.id.registerButton);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        dbUserInfo = FirebaseDatabase.getInstance().getReference().child("Donor List").child("Donor Details");
+
     }
 
     private void setListener(){
@@ -79,7 +105,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         System.out.println("Selected country is ======>" + ccp);
 
-
         if (email.isEmpty()){
             showToast("Email Required");
             return;
@@ -97,20 +122,62 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             showToast("Confirm Password Required");
             return;
         }
-        /*if (confirm_password != password){
+        if (!confirm_password.equals(password)){
             showToast("Password and Confirm Password Should be Same");
             return;
-        }*/
+        }
         else {
-            Intent intent = new Intent(RegisterActivity.this, EditProfileActivity.class);
-            startActivity(intent);
-            //registerNewUser();
+            /*Intent intent = new Intent(RegisterActivity.this, EditProfileActivity.class);
+            startActivity(intent);*/
+            registerNewUser();
         }
     }
 
     private void registerNewUser(){
-        showToast("Success");
 
+        progressBar.setVisibility(View.VISIBLE);
+        registerButton.setVisibility(View.GONE);
+
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+
+                    progressBar.setVisibility(View.GONE);
+                    registerButton.setVisibility(View.VISIBLE);
+
+                    emailEditText.setText("");
+                    passwordEditText.setText("");
+                    phoneNumberEditText.setText("");
+                    confirmPasswordEditText.setText("");
+                    showToast("Register Successfully");
+
+                    uid = dbUserInfo.push().getKey();
+
+                    UserRegisterModel obj = new UserRegisterModel(ccp, email, number, password, null, null, null,null, null, null, uid);
+
+                    dbUserInfo.setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                            startActivity(intent);
+                            showToast("Update Profile");
+                        }
+                    });
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                progressBar.setVisibility(View.GONE);
+                registerButton.setVisibility(View.VISIBLE);
+                emailEditText.setText("");
+                passwordEditText.setText("");
+                phoneNumberEditText.setText("");
+                confirmPasswordEditText.setText("");
+                showToast(e.getMessage().toString());
+            }
+        });
     }
-
 }

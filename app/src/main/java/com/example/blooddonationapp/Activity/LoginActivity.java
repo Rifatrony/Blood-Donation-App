@@ -1,5 +1,6 @@
 package com.example.blooddonationapp.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -14,15 +15,26 @@ import android.widget.Toast;
 
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.R;
+import com.example.blooddonationapp.Utilities.SessionManagement;
+import com.example.blooddonationapp.Utilities.SessionModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    EditText loginNumberEditText, loginPasswordEditText;
+    EditText loginEmailEditText, loginPasswordEditText;
     AppCompatButton loginButton;
     ProgressBar progressBar;
     TextView noAccountTextView;
 
-    String number, password;
+    String email, password;
+
+    FirebaseAuth mAuth;
+
+    SessionManagement sessionManagement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +47,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initialization() {
-        loginNumberEditText = findViewById(R.id.loginNumberEditText);
+
+        mAuth = FirebaseAuth.getInstance();
+
+        loginEmailEditText = findViewById(R.id.loginEmailEditText);
         loginPasswordEditText = findViewById(R.id.loginPasswordEditText);
         loginButton = findViewById(R.id.loginButton);
         noAccountTextView = findViewById(R.id.noAccountTextView);
 
         progressBar = findViewById(R.id.progressBar);
+
+        sessionManagement = new SessionManagement(this);
 
     }
 
@@ -62,7 +79,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (view.getId()){
             case R.id.noAccountTextView:
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AccountTypeActivity.class);
                 startActivity(intent);
                 break;
             case R.id.loginButton:
@@ -71,11 +88,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void checkValidation() {
-        number = loginNumberEditText.getText().toString().trim();
+        email = loginEmailEditText.getText().toString().trim();
         password = loginPasswordEditText.getText().toString().trim();
 
-        if (number.isEmpty()){
-            showToast("Enter Phone Number");
+        if (email.isEmpty()){
+            showToast("Enter Email");
             return;
         }
 
@@ -91,7 +108,55 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void userLogin() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+
+        progressBar.setVisibility(View.VISIBLE);
+        loginButton.setVisibility(View.GONE);
+
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+
+                    SessionModel dataModel = new SessionModel(email, password);
+                    sessionManagement.setLoginSession(dataModel);
+
+                    progressBar.setVisibility(View.GONE);
+                    loginButton.setVisibility(View.VISIBLE);
+                    loginEmailEditText.setText("");
+                    loginPasswordEditText.setText("");
+                    showToast("Login Successfully");
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                progressBar.setVisibility(View.GONE);
+                loginButton.setVisibility(View.VISIBLE);
+                loginEmailEditText.setText("");
+                loginPasswordEditText.setText("");
+                showToast(e.getMessage());
+
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!sessionManagement.getSessionModel().getUserEmail().equals("null")) {
+
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+            intent.putExtra("email", email);
+            intent.putExtra("password", password);
+
+            startActivity(intent);
+            finish();
+
+        } else {
+            showToast("Need to Login");
+
+        }
     }
 }

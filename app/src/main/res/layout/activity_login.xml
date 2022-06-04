@@ -44,15 +44,15 @@
                 />
 
             <EditText
-                android:id="@+id/loginNumberEditText"
+                android:id="@+id/loginEmailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/background_input"
-                android:hint="@string/number"
+                android:hint="@string/email"
                 android:imeOptions="actionNext"
                 android:importantForAutofill="no"
-                android:inputType="phone"
+                android:inputType="textEmailAddress"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
                 android:textColor="@color/black"

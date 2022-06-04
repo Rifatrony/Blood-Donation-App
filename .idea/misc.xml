@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/header_color.xml" value="0.167" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_account_type.xml" value="0.25416666666666665" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_edit_profile.xml" value="0.25025641025641027" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_login.xml" value="0.25025641025641027" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_main.xml" value="0.11302083333333333" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_profile.xml" value="0.25025641025641027" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_register.xml" value="0.25025641025641027" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/nav_header.xml" value="0.25416666666666665" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/toolbar.xml" value="0.253125" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/my_navigation_item.xml" value="0.25416666666666665" />
         <entry key="..\:/BloodDonationApp/app/src/main/res/drawable/background_input.xml" value="0.1645" />
         <entry key="..\:/BloodDonationApp/app/src/main/res/drawable/blood_group_background.xml" value="0.153" />
         <entry key="..\:/BloodDonationApp/app/src/main/res/drawable/button_background.xml" value="0.1645" />
