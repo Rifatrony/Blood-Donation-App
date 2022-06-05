@@ -36,13 +36,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
 
-        if (user.getType().equals("donor")){
+        if (user.getType().equals("recipient")){
             holder.emailButton.setVisibility(View.GONE);
         }
 
         holder.userNameTextView.setText(user.getName());
-        holder.userNumberTextView.setText(user.getNumber());
+        holder.userNumberTextView.setText(user.getEmail());
         holder.userBloodGroupTextView.setText(user.getBlood_group());
+        holder.userTypeTextView.setText("Type : "+user.getType());
         holder.userAddressTextView.setText(user.getAddress());
 
     }
@@ -54,7 +55,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public class UserViewHolder extends RecyclerView.ViewHolder {
 
-        TextView userNameTextView, userNumberTextView, userBloodGroupTextView, userAddressTextView;
+        TextView userNameTextView, userNumberTextView, userBloodGroupTextView,userTypeTextView, userAddressTextView;
         AppCompatButton emailButton;
 
         public UserViewHolder(@NonNull View itemView) {
@@ -63,6 +64,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             userNameTextView = itemView.findViewById(R.id.userNameTextView);
             userNumberTextView = itemView.findViewById(R.id.userNumberTextView);
             userBloodGroupTextView = itemView.findViewById(R.id.userBloodGroupTextView);
+            userBloodGroupTextView = itemView.findViewById(R.id.userBloodGroupTextView);
+            userTypeTextView = itemView.findViewById(R.id.userTypeTextView);
             userAddressTextView = itemView.findViewById(R.id.userAddressTextView);
 
             emailButton = itemView.findViewById(R.id.emailButton);

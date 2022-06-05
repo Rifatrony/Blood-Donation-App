@@ -12,8 +12,70 @@
     <item
         android:id="@+id/nav_DonorList"
         android:title="Donor List"
+        android:icon="@drawable/list"
+        android:iconTint="@color/black"
         />
 
+    <item
+        android:id="@+id/nav_search_blood"
+        android:title="Search Blood"
+        android:icon="@drawable/search_blood"
+        />
+    <!--Blood Group Section-->
+    <item
+        android:title="Blood Group">
+        <menu>
+
+            <item
+                android:id="@+id/nav_A_positive"
+                android:icon="@drawable/logout"
+                android:title="A+"
+                />
+
+            <item
+                android:id="@+id/nav_B_positive"
+                android:icon="@drawable/logout"
+                android:title="B+"
+                />
+
+            <item
+                android:id="@+id/nav_AB_positive"
+                android:icon="@drawable/logout"
+                android:title="AB+"
+                />
+
+            <item
+                android:id="@+id/nav_O_positive"
+                android:icon="@drawable/logout"
+                android:title="O+"
+                />
+            <item
+                android:id="@+id/nav_A_negative"
+                android:icon="@drawable/logout"
+                android:title="A-"
+                />
+
+            <item
+                android:id="@+id/nav_B_negative"
+                android:icon="@drawable/logout"
+                android:title="B-"
+                />
+
+            <item
+                android:id="@+id/nav_AB_negative"
+                android:icon="@drawable/logout"
+                android:title="AB-"
+                />
+
+            <item
+                android:id="@+id/nav_O_negative"
+                android:icon="@drawable/logout"
+                android:title="O-"
+                />
+
+
+        </menu>
+    </item>
 
     <!--Communication Section-->
 
