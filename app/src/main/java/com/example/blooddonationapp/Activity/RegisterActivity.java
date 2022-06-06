@@ -3,9 +3,17 @@ package com.example.blooddonationapp.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +30,8 @@ import android.widget.Toast;
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -32,7 +42,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -42,6 +55,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     TextView haveAccountTextView;
     EditText nameEditText, emailEditText, phoneNumberEditText, passwordEditText,
             confirmPasswordEditText, dobEditText, addressEditText;
+
+    TextView longitudeTextView, latitudeTextView;
+
+    double Longitude, latitude;
+    String address1;
 
     Spinner bloodGroupSpinner;
 
@@ -64,13 +82,61 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     DatabaseReference dbUserInfo;
     FirebaseUser user;
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+
         initialization();
         setListener();
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ContextCompat.checkSelfPermission(RegisterActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)){
+                ActivityCompat.requestPermissions(RegisterActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            }else{
+                ActivityCompat.requestPermissions(RegisterActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            }
+        }
+
+        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+
+                Location location = task.getResult();
+
+                if (location!= null){
+
+                    double currentLat = location.getLatitude();
+                    double currentLong = location.getLongitude();
+
+                    try {
+                        Geocoder geocoder = new Geocoder(RegisterActivity.this, Locale.getDefault());
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+
+                        //Longitude = addresses.get(0).getLongitude();
+                        longitudeTextView.setText("Longitude is : " + addresses.get(0).getLongitude());
+                        latitudeTextView.setText("Latitude is : " + addresses.get(0).getLatitude());
+                        address1 = addresses.get(0).getSubLocality().toString();
+                        addressEditText.setText(address1);
+
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
 
         adapter = new ArrayAdapter<String>(RegisterActivity.this, android.R.layout.simple_spinner_dropdown_item, bloodGroups);
         bloodGroupSpinner.setAdapter(adapter);
@@ -88,6 +154,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             }
         });
+
+
 
     }
 
@@ -111,6 +179,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         bloodGroupSpinner = findViewById(R.id.bloodGroupSpinner);
         dobEditText = findViewById(R.id.dobEditText);
         addressEditText = findViewById(R.id.addressEditText);
+
+        latitudeTextView = findViewById(R.id.latitudeTextView);
+        longitudeTextView = findViewById(R.id.longitudeTextView);
 
         registerButton = findViewById(R.id.registerButton);
 
@@ -212,7 +283,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 userInfo.put("confirm_password", confirm_password);
                 userInfo.put("blood_group", blood_group);
                 userInfo.put("dob", dob);
-                userInfo.put("address", address);
+                userInfo.put("longitude", longitudeTextView.getText().toString());
+                userInfo.put("latitude", latitudeTextView.getText().toString());
+                userInfo.put("address", address1);
                 userInfo.put("type", "donor");
                 userInfo.put("search", "donor" + blood_group);
 
@@ -244,4 +317,5 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
     }
+
 }

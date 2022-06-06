@@ -3,8 +3,16 @@ package com.example.blooddonationapp.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +27,8 @@ import android.widget.Toast;
 
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -29,7 +39,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.hbb20.CountryCodePicker;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 public class RecipientActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -37,6 +50,8 @@ public class RecipientActivity extends AppCompatActivity implements View.OnClick
     TextView haveAccountTextView;
     EditText nameEditText, emailEditText, phoneNumberEditText, passwordEditText,
             confirmPasswordEditText, dobEditText, addressEditText;
+
+    TextView longitudeTextView, latitudeTextView;
 
     Spinner bloodGroupSpinner;
 
@@ -59,6 +74,8 @@ public class RecipientActivity extends AppCompatActivity implements View.OnClick
     DatabaseReference dbUserInfo;
     FirebaseUser user;
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +83,55 @@ public class RecipientActivity extends AppCompatActivity implements View.OnClick
 
         initialization();
         setListener();
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ContextCompat.checkSelfPermission(RecipientActivity.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(RecipientActivity.this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)){
+                ActivityCompat.requestPermissions(RecipientActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            }else{
+                ActivityCompat.requestPermissions(RecipientActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
+            }
+        }
+
+        fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+
+                Location location = task.getResult();
+
+                if (location!= null){
+
+                    double currentLat = location.getLatitude();
+                    double currentLong = location.getLongitude();
+
+                    Toast.makeText(RecipientActivity.this, currentLong+"", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RecipientActivity.this, currentLat+"", Toast.LENGTH_SHORT).show();
+
+                    try {
+                        Geocoder geocoder = new Geocoder(RecipientActivity.this, Locale.getDefault());
+                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+
+                        longitudeTextView.setText("Longitude is : " + addresses.get(0).getLongitude());
+                        latitudeTextView.setText("Latitude is : " + addresses.get(0).getLatitude());
+                        addressEditText.setText(addresses.get(0).getSubLocality().toString());
+
+                        Toast.makeText(RecipientActivity.this, addresses.get(0).getSubLocality(), Toast.LENGTH_SHORT).show();
+
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
 
         adapter = new ArrayAdapter<String>(RecipientActivity.this, android.R.layout.simple_spinner_dropdown_item, bloodGroups);
         bloodGroupSpinner.setAdapter(adapter);
@@ -86,6 +152,9 @@ public class RecipientActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initialization(){
+
+        longitudeTextView = findViewById(R.id.longitudeTextView);
+        latitudeTextView = findViewById(R.id.latitudeTextView);
 
         radioGroup = findViewById(R.id.radioGroup);
 
@@ -205,6 +274,8 @@ public class RecipientActivity extends AppCompatActivity implements View.OnClick
                 userInfo.put("confirm_password", confirm_password);
                 userInfo.put("blood_group", blood_group);
                 userInfo.put("dob", dob);
+                userInfo.put("longitude", longitudeTextView.getText().toString());
+                userInfo.put("latitude", latitudeTextView.getText().toString());
                 userInfo.put("address", address);
                 userInfo.put("type", "recipient");
                 userInfo.put("search", "recipient" + blood_group);

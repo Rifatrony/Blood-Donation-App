@@ -57,7 +57,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         fetchLastLocation();
 
-
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.google_map);
 
@@ -98,7 +97,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            
+
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
 
@@ -113,12 +112,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             public void onSuccess(Location location) {
                 if (location != null){
 
-                    currentLocation = location;
+                    //currentLocation = location;
 
                     currentLat = location.getLatitude();
                     currentLong = location.getLongitude();
 
-                    Toast.makeText(MapActivity.this, currentLat + "" + currentLong, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapActivity.this, currentLat + " is Current LAT \n" + currentLong+" is current long", Toast.LENGTH_SHORT).show();
 
                     System.out.println("current lat : "+ currentLat + "current long : "+ currentLong);
 
@@ -130,6 +129,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                 else {
                     System.out.println("Location is null");
+
+                   /* currentLat = location.getLatitude();
+                    currentLong = location.getLongitude();
+
+                    Toast.makeText(MapActivity.this, currentLat + "" + currentLong, Toast.LENGTH_SHORT).show();
+
+                    System.out.println("current lat : "+ currentLat + "current long : "+ currentLong);
+
+                    supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
+                            .findFragmentById(R.id.google_map);
+                    supportMapFragment.getMapAsync(MapActivity.this);*/
                 }
             }
         });
