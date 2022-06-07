@@ -17,6 +17,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,11 +67,16 @@ public class MainActivity extends AppCompatActivity {
     UserAdapter adapter;
     private static final int REQUEST_CODE = 101;
 
+    ProgressBar progressBar;
+    TextView noDataFoundTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initialization();
 
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        recyclerView = findViewById(R.id.recyclerView);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
@@ -113,16 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        toolbar = findViewById(R.id.topAppBar);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.navigation_view);
-        mAuth = FirebaseAuth.getInstance();
-
-        header_name = navigationView.getHeaderView(0).findViewById(R.id.header_name_textView);
-        header_number = navigationView.getHeaderView(0).findViewById(R.id.header_number_textView);
-        header_blood_group = navigationView.getHeaderView(0).findViewById(R.id.header_blood_group_textView);
-        header_type = navigationView.getHeaderView(0).findViewById(R.id.header_type_textView);
 
 
         userRef.addValueEventListener(new ValueEventListener() {
@@ -249,8 +245,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void initialization() {
+
+        progressBar = findViewById(R.id.progressBar);
+        noDataFoundTextView = findViewById(R.id.noDataFoundTextView);
+
+        recyclerView = findViewById(R.id.recyclerView);
+
+        toolbar = findViewById(R.id.topAppBar);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_view);
+        mAuth = FirebaseAuth.getInstance();
+
+        header_name = navigationView.getHeaderView(0).findViewById(R.id.header_name_textView);
+        header_number = navigationView.getHeaderView(0).findViewById(R.id.header_number_textView);
+        header_blood_group = navigationView.getHeaderView(0).findViewById(R.id.header_blood_group_textView);
+        header_type = navigationView.getHeaderView(0).findViewById(R.id.header_type_textView);
+    }
+
 
     private void readDonor() {
+
+        progressBar.setVisibility(View.VISIBLE);
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
         Query query = reference.orderByChild("type").equalTo("donor");
 
@@ -261,11 +278,14 @@ public class MainActivity extends AppCompatActivity {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     User user = dataSnapshot.getValue(User.class);
+                    progressBar.setVisibility(View.INVISIBLE);
                     userList.add(user);
                 }
                 adapter.notifyDataSetChanged();
 
                 if (userList.isEmpty()){
+                    progressBar.setVisibility(View.INVISIBLE);
+                    noDataFoundTextView.setVisibility(View.VISIBLE);
                     Toast.makeText(MainActivity.this, "No Donor Found", Toast.LENGTH_SHORT).show();
                 }
 

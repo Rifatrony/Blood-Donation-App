@@ -14,4 +14,5 @@
     <string name="update">Update</string>
     <string name="state">State</string>
     <string name="district">District</string>
+    <string name="google_map_key">AIzaSyB70FOe9w8eWWqb6fVDmEFiNEpIJyf1YEA</string>
 </resources>
