@@ -2,12 +2,13 @@ package com.example.blooddonationapp.Model;
 
 public class User {
 
-    String name, number, email, password, confirm_password, country, blood_group, dob, address, type, search, id;
+    String name, number, email, password, confirm_password, country, blood_group, dob, longitude, latitude
+            ,address, type, search, id;
 
     public User() {
     }
 
-    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String address, String type, String search, String id) {
+    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String address, String type, String search, String id) {
         this.name = name;
         this.number = number;
         this.email = email;
@@ -16,6 +17,8 @@ public class User {
         this.country = country;
         this.blood_group = blood_group;
         this.dob = dob;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.address = address;
         this.type = type;
         this.search = search;
@@ -84,6 +87,22 @@ public class User {
 
     public void setDob(String dob) {
         this.dob = dob;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
     public String getAddress() {

@@ -124,8 +124,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
                         //Longitude = addresses.get(0).getLongitude();
-                        longitudeTextView.setText("Longitude is : " + addresses.get(0).getLongitude());
-                        latitudeTextView.setText("Latitude is : " + addresses.get(0).getLatitude());
+                        longitudeTextView.setText(String.valueOf(addresses.get(0).getLongitude()));
+                        latitudeTextView.setText(String.valueOf(addresses.get(0).getLatitude()));
                         address1 = addresses.get(0).getSubLocality().toString();
                         addressEditText.setText(address1);
 

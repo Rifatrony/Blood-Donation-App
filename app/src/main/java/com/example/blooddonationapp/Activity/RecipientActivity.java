@@ -117,8 +117,8 @@ public class RecipientActivity extends AppCompatActivity implements View.OnClick
                         Geocoder geocoder = new Geocoder(RecipientActivity.this, Locale.getDefault());
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
-                        longitudeTextView.setText("Longitude is : " + addresses.get(0).getLongitude());
-                        latitudeTextView.setText("Latitude is : " + addresses.get(0).getLatitude());
+                        longitudeTextView.setText(String.valueOf(addresses.get(0).getLongitude()));
+                        latitudeTextView.setText(String.valueOf(addresses.get(0).getLatitude()));
                         addressEditText.setText(addresses.get(0).getSubLocality().toString());
 
                         Toast.makeText(RecipientActivity.this, addresses.get(0).getSubLocality(), Toast.LENGTH_SHORT).show();

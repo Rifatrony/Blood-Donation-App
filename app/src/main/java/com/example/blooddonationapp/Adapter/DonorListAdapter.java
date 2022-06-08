@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
 
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 public class DonorListAdapter extends RecyclerView.Adapter<DonorListAdapter.DonorListViewHolder> {
 
     Context context;
-    ArrayList<UserRegisterModel> list;
+    ArrayList<User> list;
 
-    public DonorListAdapter(Context context, ArrayList<UserRegisterModel> list) {
+    public DonorListAdapter(Context context, ArrayList<User> list) {
         this.context = context;
         this.list = list;
     }
@@ -33,10 +34,10 @@ public class DonorListAdapter extends RecyclerView.Adapter<DonorListAdapter.Dono
 
     @Override
     public void onBindViewHolder(@NonNull DonorListViewHolder holder, int position) {
-        UserRegisterModel data = list.get(position);
+        User data = list.get(position);
         holder.donorNameTextView.setText(data.getName());
         holder.donorBloodGroupTextView.setText(data.getBlood_group());
-        holder.donorAddressTextView.setText(data.getDistrict());
+        holder.donorAddressTextView.setText(data.getAddress());
         holder.donorPhoneNumberTextView.setText(data.getNumber());
     }
 
