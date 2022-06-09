@@ -14,7 +14,10 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -46,13 +49,13 @@ import java.util.Locale;
 public class DonorListActivity extends AppCompatActivity {
 
     RecyclerView donorListRecyclerView;
+    EditText searchBloodGroupEditText;
     SearchView searchView;
     GoogleMap map;
     SupportMapFragment supportMapFragment;
 
     DatabaseReference dbDonorList;
 
-    ArrayList<UserRegisterModel> userRegisterModelList;
     UserAdapter adapter;
 
     double currentLat;
@@ -108,7 +111,7 @@ public class DonorListActivity extends AppCompatActivity {
                         //Longitude = addresses.get(0).getLongitude();
                         currentLat = addresses.get(0).getLatitude();
                         currentLong = addresses.get(0).getLongitude();
-                        Toast.makeText(DonorListActivity.this, "Current Lat == > " + currentLat +"\nCurrent Long == > " + currentLong, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(DonorListActivity.this, "Current Lat == > " + currentLat +"\nCurrent Long == > " + currentLong, Toast.LENGTH_SHORT).show();
                         System.out.println("Current Lat == > " + currentLat +"\nCurrent Long == > " + currentLong);
 
                     }
@@ -129,14 +132,13 @@ public class DonorListActivity extends AppCompatActivity {
         double y2 = currentLat - Math.toDegrees(radius/Ra);
 
 
-
         System.out.println("X1 is " + x1 +"\nX2 is " + x2+"\nY1 is " + y1+"\nY2 is " + y2);
 
-        Toast.makeText(this, "X1 is " + x1, Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(this, "X1 is " + x1, Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "X2 is " + x2, Toast.LENGTH_SHORT).show();
 
         Toast.makeText(this, "Y1 is " + y1, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, "Y2 is " + y2, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Y2 is " + y2, Toast.LENGTH_SHORT).show();*/
 
 
         donorListRecyclerView = findViewById(R.id.donorListRecyclerView);
@@ -199,10 +201,41 @@ public class DonorListActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Latitude = "+finalLat, Toast.LENGTH_SHORT).show();
         Toast.makeText(this, "Longitude = "+finalLng, Toast.LENGTH_SHORT).show();*/
+
+
+        searchBloodGroupEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
     }
 
     private void initialization() {
+        searchBloodGroupEditText = findViewById(R.id.searchBloodGroupEditText);
         searchView = findViewById(R.id.sv_location);
+    }
+
+    private void filter(String text) {
+        ArrayList<User> filteredList = new ArrayList<>();
+
+        for (User item : userList) {
+            if (item.getBlood_group().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        adapter.filterList(filteredList);
     }
 
 }

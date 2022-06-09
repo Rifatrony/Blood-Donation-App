@@ -16,30 +16,18 @@
             android:layout_height="60dp"
             android:background="@color/red">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageBack"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/back"
-                android:tint="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Account Name (User Name)"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/imageBack"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolBar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/red"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:navigationIcon="@drawable/back_white"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/imageBack" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:title="Profile"
+                app:titleTextColor="@color/white"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

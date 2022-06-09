@@ -2,9 +2,16 @@ package com.example.blooddonationapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
@@ -30,12 +37,24 @@ public class ProfileActivity extends AppCompatActivity {
     FirebaseUser user;
     ArrayList<UserRegisterModel> list;
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         initialization();
+
+        toolbar = findViewById(R.id.toolBar);
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = FirebaseDatabase.getInstance().getReference().child("User")
@@ -84,5 +103,34 @@ public class ProfileActivity extends AppCompatActivity {
         userLastDonateTextView = findViewById(R.id.userLastDonateTextView);
         userNextDonateTextView = findViewById(R.id.userNextDonateTextView);
         userAddressTextView = findViewById(R.id.userAddressTextView);
+    }
+
+    private void setListener() {
+
+
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.profile_navigation, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.nav_edit_profile:
+                Toast.makeText(this, "Edit Profile", Toast.LENGTH_SHORT).show();
+                break;
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

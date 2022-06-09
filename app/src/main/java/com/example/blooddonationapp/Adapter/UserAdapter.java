@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
@@ -36,15 +38,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = userList.get(position);
 
-        if (user.getType().equals("recipient")){
-            holder.emailButton.setVisibility(View.GONE);
-        }
+        /*if (user.getType().equals("recipient")){
+            holder.requestButton.setVisibility(View.GONE);
+        }*/
 
         holder.userNameTextView.setText(user.getName());
         holder.userNumberTextView.setText(user.getEmail());
         holder.userBloodGroupTextView.setText(user.getBlood_group());
         holder.userTypeTextView.setText("Type : "+user.getType());
         holder.userAddressTextView.setText(user.getAddress());
+        holder.requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "Send Request", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -53,10 +61,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         return userList.size();
     }
 
+    public void filterList(ArrayList<User> filteredList) {
+        userList = filteredList;
+        notifyDataSetChanged();
+    }
+
     public class UserViewHolder extends RecyclerView.ViewHolder {
 
         TextView userNameTextView, userNumberTextView, userBloodGroupTextView,userTypeTextView, userAddressTextView;
-        AppCompatButton emailButton;
+        AppCompatButton requestButton;
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,7 +81,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             userTypeTextView = itemView.findViewById(R.id.userTypeTextView);
             userAddressTextView = itemView.findViewById(R.id.userAddressTextView);
 
-            emailButton = itemView.findViewById(R.id.emailButton);
+            requestButton = itemView.findViewById(R.id.requestButton);
 
         }
     }

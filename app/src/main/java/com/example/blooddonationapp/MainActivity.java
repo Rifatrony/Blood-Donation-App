@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonationapp.Activity.BloodRequestActivity;
 import com.example.blooddonationapp.Activity.DonorListActivity;
 import com.example.blooddonationapp.Activity.GroupWiseBloodActivity;
 import com.example.blooddonationapp.Activity.LoginActivity;
@@ -155,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawer(GravityCompat.START);
 
                 switch (id){
+
+                    case R.id.nav_blood_request:
+                        startActivity(new Intent(getApplicationContext(), BloodRequestActivity.class));
+                        break;
 
                     case R.id.nav_search_blood:
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));

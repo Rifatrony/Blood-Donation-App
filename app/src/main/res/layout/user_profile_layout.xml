@@ -75,11 +75,11 @@
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/emailButton"
+            android:id="@+id/requestButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
-            android:text="Email"
+            android:text="Request"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"

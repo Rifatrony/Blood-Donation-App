@@ -3,12 +3,12 @@ package com.example.blooddonationapp.Model;
 public class User {
 
     String name, number, email, password, confirm_password, country, blood_group, dob, longitude, latitude
-            ,address, type, search, id;
+            ,address, type, search, id, token;
 
     public User() {
     }
 
-    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String address, String type, String search, String id) {
+    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String address, String type, String search, String id, String token) {
         this.name = name;
         this.number = number;
         this.email = email;
@@ -23,6 +23,7 @@ public class User {
         this.type = type;
         this.search = search;
         this.id = id;
+        this.token = token;
     }
 
     public String getName() {
@@ -135,5 +136,13 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

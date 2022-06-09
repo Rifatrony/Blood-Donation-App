@@ -9,6 +9,13 @@
         android:icon="@drawable/profile"
         android:title="Profile"
         />
+
+    <item
+        android:id="@+id/nav_blood_request"
+        android:title="Blood Request"
+        android:icon="@drawable/request"
+        />
+
     <item
         android:id="@+id/nav_DonorList"
         android:title="Donor List"

@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:src="@drawable/blood1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,7 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Name"
-        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
         android:textColor="@color/white"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
@@ -35,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Phone Number"
-        android:textSize="16sp"
+        android:textSize="13sp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/header_name_textView"
         app:layout_constraintHorizontal_bias="0.0"
@@ -48,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AB+"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/header_number_textView"
         app:layout_constraintHorizontal_bias="0.0"
@@ -63,9 +64,7 @@
         android:layout_marginTop="4dp"
         android:text="Type"
         android:textColor="@color/white"
-
-
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/header_blood_group_textView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/header_blood_group_textView"

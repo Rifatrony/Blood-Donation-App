@@ -40,6 +40,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.hbb20.CountryCodePicker;
 
 import java.io.IOException;
@@ -71,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     CountryCodePicker countryCodePicker;
 
-    String ccp, name, email, number, password, confirm_password, dob, address, blood_group;
+    String ccp, name, email, number, password, confirm_password, dob, address, blood_group, token;
     String uid;
 
     ArrayAdapter<String> adapter;
@@ -155,7 +156,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            System.out.println("Fetching FCM registration token failed");
+                            return;
+                        }
+                        // Get new FCM registration token
+                        token = task.getResult();
 
+                        Toast.makeText(RegisterActivity.this, token, Toast.LENGTH_SHORT).show();
+                        System.out.println("Token is : " + token);
+                    }
+                });
 
     }
 
@@ -288,6 +303,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 userInfo.put("address", address1);
                 userInfo.put("type", "donor");
                 userInfo.put("search", "donor" + blood_group);
+                userInfo.put("token", token);
 
                 dbUserInfo.updateChildren(userInfo).addOnCompleteListener(task1 -> {
 
