@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -44,6 +46,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.hbb20.CountryCodePicker;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -94,6 +97,45 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         initialization();
         setListener();
 
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        dobEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(RegisterActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+
+                        String date;
+                        month = month +1;
+
+                        if (month < 10){
+                            date = day+"/0"+month+"/"+year;
+                            /*THIS PART*/
+                            if (day < 10) {
+                                date = "0"+day+"/0"+month+"/"+year;
+                            }
+                        }
+                        else {
+                            date = day+"/"+month+"/"+year;
+
+                            /*THIS PART*/
+
+                            if (day < 10) {
+                                date = "0"+day+"/0"+month+"/"+year;
+                            }
+                        }
+                        dobEditText.setText(date);
+                    }
+                },year,month,day);
+
+                datePickerDialog.show();
+            }
+        });
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         if (ContextCompat.checkSelfPermission(RegisterActivity.this,
@@ -124,9 +166,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Geocoder geocoder = new Geocoder(RegisterActivity.this, Locale.getDefault());
                         List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
-                        //Longitude = addresses.get(0).getLongitude();
+                        /*Longitude = addresses.get(0).getLongitude();
                         longitudeTextView.setText(String.valueOf(addresses.get(0).getLongitude()));
-                        latitudeTextView.setText(String.valueOf(addresses.get(0).getLatitude()));
+                        latitudeTextView.setText(String.valueOf(addresses.get(0).getLatitude()));*/
+
                         address1 = addresses.get(0).getSubLocality().toString();
                         addressEditText.setText(address1);
 
@@ -195,8 +238,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         dobEditText = findViewById(R.id.dobEditText);
         addressEditText = findViewById(R.id.addressEditText);
 
-        latitudeTextView = findViewById(R.id.latitudeTextView);
-        longitudeTextView = findViewById(R.id.longitudeTextView);
+        /*latitudeTextView = findViewById(R.id.latitudeTextView);
+        longitudeTextView = findViewById(R.id.longitudeTextView);*/
 
         registerButton = findViewById(R.id.registerButton);
 

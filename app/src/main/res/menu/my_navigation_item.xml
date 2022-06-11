@@ -17,6 +17,12 @@
         />
 
     <item
+        android:id="@+id/nav_add_donor"
+        android:title="Add New Donor"
+        android:icon="@drawable/add"
+        />
+
+    <item
         android:id="@+id/nav_DonorList"
         android:title="Donor List"
         android:icon="@drawable/list"

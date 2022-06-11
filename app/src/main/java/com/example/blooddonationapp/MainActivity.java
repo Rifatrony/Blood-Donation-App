@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonationapp.Activity.AddNewDonorActivity;
 import com.example.blooddonationapp.Activity.BloodRequestActivity;
 import com.example.blooddonationapp.Activity.DonorListActivity;
 import com.example.blooddonationapp.Activity.GroupWiseBloodActivity;
@@ -106,13 +107,18 @@ public class MainActivity extends AppCompatActivity {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String type = snapshot.child("type").getValue().toString();
-                if (type.equals("donor")){
-                    readRecipients();
-                }
-                else {
-                    readDonor();
-                }
+               try {
+                   String type = snapshot.child("type").getValue().toString();
+                   if (type.equals("donor")){
+                       readRecipients();
+                   }
+                   else {
+                       readDonor();
+                   }
+               }catch (Exception e){
+                   progressBar.setVisibility(View.GONE);
+                   Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+               }
             }
 
             @Override
@@ -126,17 +132,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
-                    h_name = snapshot.child("name").getValue().toString();
-                    header_name.setText(h_name);
 
-                    h_number = snapshot.child("number").getValue().toString();
-                    header_number.setText(h_number);
+                    try {
+                        h_name = snapshot.child("name").getValue().toString();
+                        header_name.setText(h_name);
 
-                    h_blood_group = snapshot.child("blood_group").getValue().toString();
-                    header_blood_group.setText(h_blood_group);
+                        h_number = snapshot.child("number").getValue().toString();
+                        header_number.setText(h_number);
 
-                    h_type = snapshot.child("type").getValue().toString();
-                    header_type.setText(h_type);
+                        h_blood_group = snapshot.child("blood_group").getValue().toString();
+                        header_blood_group.setText(h_blood_group);
+
+                        h_type = snapshot.child("type").getValue().toString();
+                        header_type.setText(h_type);
+                    }catch (Exception e){
+                        Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }
             }
@@ -165,6 +177,9 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
                         break;
 
+                    case R.id.nav_add_donor:
+                        startActivity(new Intent(getApplicationContext(), AddNewDonorActivity.class));
+                        break;
 
                     case R.id.nav_A_positive:
                         Intent intent1 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
@@ -313,12 +328,18 @@ public class MainActivity extends AppCompatActivity {
                 userList.clear();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    User user = dataSnapshot.getValue(User.class);
-                    userList.add(user);
+                    progressBar.setVisibility(View.GONE);
+                    try {
+                        User user = dataSnapshot.getValue(User.class);
+                        userList.add(user);
+                    }catch (Exception e){
+                        e.getMessage().toString();
+                    }
                 }
                 adapter.notifyDataSetChanged();
 
                 if (userList.isEmpty()){
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(MainActivity.this, "No Data Found", Toast.LENGTH_SHORT).show();
                 }
 

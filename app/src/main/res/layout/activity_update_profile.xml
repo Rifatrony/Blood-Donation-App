@@ -75,65 +75,30 @@
                         android:textColor="@color/black"
                         android:textSize="13sp"
                         tools:ignore="TextFields" />
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:padding="16dp"
-                            android:text="Blood Group"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="normal" />
-
-                        <Spinner
-                            android:id="@+id/bloodGroupSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                    </LinearLayout>
-
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="10dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:padding="16dp"
-                            android:text="Gender"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="normal" />
-
-                        <Spinner
-                            android:id="@+id/genderSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
-                    </LinearLayout>
 
                     <EditText
-                        android:id="@+id/dobEditText"
+                        android:id="@+id/phoneNumberEditText"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/background_input"
-                        android:hint="Date of Birth"
+                        android:hint="@string/number"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="textAutoComplete"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        tools:ignore="TextFields" />
+
+                    <EditText
+                        android:id="@+id/lastDonateEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/background_input"
+                        android:hint="Last Donate"
                         android:drawableEnd="@drawable/calendar"
                         android:drawableTint="@color/red"
                         android:maxLines="1"
@@ -145,13 +110,15 @@
                         android:textColor="@color/black"
                         android:textSize="13sp" />
 
+
+
                     <EditText
-                        android:id="@+id/stateEditText"
+                        android:id="@+id/addressEditText"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/background_input"
-                        android:hint="@string/state"
+                        android:hint="Address"
                         android:maxLines="1"
                         android:imeOptions="actionDone"
                         android:importantForAutofill="no"

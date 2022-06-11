@@ -47,12 +47,12 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         holder.userBloodGroupTextView.setText(user.getBlood_group());
         holder.userTypeTextView.setText("Type : "+user.getType());
         holder.userAddressTextView.setText(user.getAddress());
-        holder.requestButton.setOnClickListener(new View.OnClickListener() {
+        /*holder.requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Send Request", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
     }
 
@@ -81,7 +81,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             userTypeTextView = itemView.findViewById(R.id.userTypeTextView);
             userAddressTextView = itemView.findViewById(R.id.userAddressTextView);
 
-            requestButton = itemView.findViewById(R.id.requestButton);
+            //requestButton = itemView.findViewById(R.id.requestButton);
 
         }
     }

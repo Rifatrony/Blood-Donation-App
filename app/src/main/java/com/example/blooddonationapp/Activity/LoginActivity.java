@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (view.getId()){
             case R.id.noAccountTextView:
-                Intent intent = new Intent(getApplicationContext(), AccountTypeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
                 break;
             case R.id.loginButton:

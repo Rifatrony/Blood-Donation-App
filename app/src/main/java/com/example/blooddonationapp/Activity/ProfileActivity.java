@@ -23,7 +23,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -39,12 +43,18 @@ public class ProfileActivity extends AppCompatActivity {
 
     Toolbar toolbar;
 
+    String dateAfterThreeMonths;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         initialization();
+
+
+
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -74,11 +84,40 @@ public class ProfileActivity extends AppCompatActivity {
                     blood_group = snapshot.child("blood_group").getValue().toString();
                     userBloodGroupTextView.setText(blood_group);
 
-                    last_donate = snapshot.child("dob").getValue().toString();
-                    userLastDonateTextView.setText(last_donate);
 
-                    next_donate = snapshot.child("dob").getValue().toString();
-                    userNextDonateTextView.setText(next_donate);
+                    /*//Set date after 4 months from today
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.MONTH, +4);
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    String nextDonateDate = sdf.format(calendar.getTime());
+
+                    userNextDonateTextView.setText(nextDonateDate);
+
+                    System.out.println(nextDonateDate);*/
+
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+                        last_donate = snapshot.child("last_donate").getValue().toString();
+                        userLastDonateTextView.setText(last_donate);
+
+                        String d = "2022-06-11";
+                        Date date= null;
+                        date = new Date(sdf.parse(d).getTime());
+                        date.setMonth(date.getMonth() + 4);
+
+                        System.out.println("Date is : "+date);
+                        System.out.println("D is : "+last_donate);
+
+                        userNextDonateTextView.setText(date.toString());
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    /*next_donate = snapshot.child("dob").getValue().toString();
+                    userNextDonateTextView.setText(next_donate);*/
 
                     address = snapshot.child("address").getValue().toString();
                     userAddressTextView.setText(address);
@@ -107,15 +146,11 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setListener() {
 
-
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.profile_navigation, menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -125,10 +160,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.nav_edit_profile:
-                Toast.makeText(this, "Edit Profile", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), UpdateProfileActivity.class));
                 break;
-
-
         }
 
         return super.onOptionsItemSelected(item);
