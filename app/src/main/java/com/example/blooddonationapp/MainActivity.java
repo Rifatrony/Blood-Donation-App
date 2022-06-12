@@ -108,13 +108,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                try {
-                   String type = snapshot.child("type").getValue().toString();
+                   readDonor();
+                   /*String type = snapshot.child("type").getValue().toString();
                    if (type.equals("donor")){
                        readRecipients();
                    }
                    else {
                        readDonor();
-                   }
+                   }*/
                }catch (Exception e){
                    progressBar.setVisibility(View.GONE);
                    Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), AddNewDonorActivity.class));
                         break;
 
-                    case R.id.nav_A_positive:
+                    /*case R.id.nav_A_positive:
                         Intent intent1 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
                         intent1.putExtra("group", "A+");
                         startActivity(intent1);
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent8 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
                         intent8.putExtra("group", "O-");
                         startActivity(intent8);
-                        break;
+                        break;*/
 
                     case R.id.nav_profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -280,7 +281,6 @@ public class MainActivity extends AppCompatActivity {
         header_name = navigationView.getHeaderView(0).findViewById(R.id.header_name_textView);
         header_number = navigationView.getHeaderView(0).findViewById(R.id.header_number_textView);
         header_blood_group = navigationView.getHeaderView(0).findViewById(R.id.header_blood_group_textView);
-        header_type = navigationView.getHeaderView(0).findViewById(R.id.header_type_textView);
     }
 
 
@@ -289,9 +289,9 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
-        Query query = reference.orderByChild("type").equalTo("donor");
+        //Query query = reference.orderByChild("type").equalTo("donor");
 
-        query.addValueEventListener(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userList.clear();
@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
                         User user = dataSnapshot.getValue(User.class);
                         userList.add(user);
                     }catch (Exception e){
-                        e.getMessage().toString();
+                        Toast.makeText(MainActivity.this,"Exception"+ e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 adapter.notifyDataSetChanged();

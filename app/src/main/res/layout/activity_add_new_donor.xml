@@ -281,20 +281,31 @@
                         android:textSize="13sp" />
 
 
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/addNewDonorButton"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:background="@drawable/button_background"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="Save"
-                        android:textSize="18sp"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false"
-                        />
+                        >
 
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/addNewDonorButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="55dp"
+                            android:background="@drawable/button_background"
+                            android:text="Save"
+                            android:textSize="18sp"
+                            android:textColor="@color/white"
+                            android:textAllCaps="false"
+                            />
 
+                        <ProgressBar
+                            android:id="@+id/progressBar"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            />
+
+                    </FrameLayout>
 
                 </LinearLayout>
 

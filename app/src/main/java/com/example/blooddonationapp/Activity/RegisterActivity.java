@@ -93,7 +93,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-
         initialization();
         setListener();
 
@@ -155,29 +154,36 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onComplete(@NonNull Task<Location> task) {
 
-                Location location = task.getResult();
+                try {
+                    Location location = task.getResult();
 
-                if (location!= null){
+                    if (location!= null){
 
-                    double currentLat = location.getLatitude();
-                    double currentLong = location.getLongitude();
+                        double currentLat = location.getLatitude();
+                        double currentLong = location.getLongitude();
 
-                    try {
-                        Geocoder geocoder = new Geocoder(RegisterActivity.this, Locale.getDefault());
-                        List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        try {
+                            Geocoder geocoder = new Geocoder(RegisterActivity.this, Locale.getDefault());
+                            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
-                        /*Longitude = addresses.get(0).getLongitude();
-                        longitudeTextView.setText(String.valueOf(addresses.get(0).getLongitude()));
-                        latitudeTextView.setText(String.valueOf(addresses.get(0).getLatitude()));*/
+                            Longitude = addresses.get(0).getLongitude();
+                            latitude = addresses.get(0).getLatitude();
 
-                        address1 = addresses.get(0).getSubLocality().toString();
-                        addressEditText.setText(address1);
+                            System.out.println("Longitude " + Longitude +"Latitude " + latitude);
+                            /*longitudeTextView.setText(String.valueOf(addresses.get(0).getLongitude()));
+                            latitudeTextView.setText(String.valueOf(addresses.get(0).getLatitude()));*/
+
+                            address1 = addresses.get(0).getSubLocality().toString();
+                            addressEditText.setText(address1);
+
+                        }
+                        catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                     }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
+                }catch (Exception e){
+                    Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -341,11 +347,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 userInfo.put("confirm_password", confirm_password);
                 userInfo.put("blood_group", blood_group);
                 userInfo.put("dob", dob);
-                userInfo.put("longitude", longitudeTextView.getText().toString());
-                userInfo.put("latitude", latitudeTextView.getText().toString());
+                userInfo.put("longitude", String.valueOf(Longitude));
+                userInfo.put("latitude", String.valueOf(latitude));
                 userInfo.put("address", address1);
-                userInfo.put("type", "donor");
-                userInfo.put("search", "donor" + blood_group);
+                //userInfo.put("type", "donor");
+                //userInfo.put("search", "donor" + blood_group);
                 userInfo.put("token", token);
 
                 dbUserInfo.updateChildren(userInfo).addOnCompleteListener(task1 -> {

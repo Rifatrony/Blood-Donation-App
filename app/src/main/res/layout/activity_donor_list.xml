@@ -29,8 +29,10 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="Donor List"
@@ -38,9 +40,29 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/imageBack"
+                app:layout_constraintStart_toEndOf="@id/imageBack"
+                app:layout_constraintTop_toTopOf="@id/imageBack"
+                app:layout_constraintVertical_bias="0.533" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/sendRequestButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/send_request_button_bg"
+                android:drawableEnd="@drawable/send"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/white"
+                android:elevation="50dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Send Request"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/imageBack" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -50,57 +72,33 @@
             android:layout_below="@+id/constraint_layout"
             >
 
-            <ScrollView
+            <EditText
+                android:id="@+id/searchBloodGroupEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/search_bg"
+                android:drawableEnd="@drawable/search"
+                android:layout_margin="10dp"
+                android:drawableTint="@color/black"
+                android:hint="Search By Blood Group"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/donorListRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="60dp"
                 android:padding="10dp"
-                >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchBloodGroupEditText" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    >
-
-                    <EditText
-                        android:id="@+id/searchBloodGroupEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/background_input"
-                        android:hint="Search By Blood Group"
-                        android:padding="10dp"
-                        android:drawableEnd="@drawable/search"
-                        android:drawableTint="@color/black"
-                        />
-
-                    <!--
-                    <SearchView
-                        android:id="@+id/sv_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:alpha="0.9"
-                        android:background="@drawable/search_background"
-                        android:elevation="5dp"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        android:queryHint="Search Area" />
-                        -->
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/donorListRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-
-                        />
-
-                </LinearLayout>
-
-
-
-            </ScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

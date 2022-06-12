@@ -5,48 +5,48 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blooddonationapp.Model.User;
+import com.example.blooddonationapp.Model.UserModel;
 import com.example.blooddonationapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+public class UserModelAdapter extends RecyclerView.Adapter<UserModelAdapter.UserModelViewHolder> {
 
     Context context;
-    List<User> userList;
+    List<UserModel> userModelList;
 
-    public UserAdapter(Context context, List<User> userList) {
+    public UserModelAdapter(Context context, List<UserModel> userModelList) {
         this.context = context;
-        this.userList = userList;
+        this.userModelList = userModelList;
     }
 
     @NonNull
     @Override
-    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public UserModelAdapter.UserModelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.user_profile_layout, parent, false);
-        return new UserViewHolder(view);
+        return new UserModelAdapter.UserModelViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-        User user = userList.get(position);
+    public void onBindViewHolder(@NonNull UserModelAdapter.UserModelViewHolder holder, int position) {
+        UserModel userModel = userModelList.get(position);
 
         /*if (user.getType().equals("recipient")){
             holder.requestButton.setVisibility(View.GONE);
         }*/
 
-        holder.userNameTextView.setText(user.getName());
-        holder.userNumberTextView.setText(user.getEmail());
-        holder.userBloodGroupTextView.setText(user.getBlood_group());
+        holder.userNameTextView.setText(userModel.getName());
+        holder.userNumberTextView.setText(userModel.getEmail());
+        holder.userBloodGroupTextView.setText(userModel.getBlood_group());
         //holder.userTypeTextView.setText("Type : "+user.getType());
-        holder.userAddressTextView.setText(user.getAddress());
+        holder.userAddressTextView.setText(userModel.getAddress());
         /*holder.requestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,20 +58,20 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return userModelList.size();
     }
 
-    public void filterList(ArrayList<User> filteredList) {
-        userList = filteredList;
+    public void filterList(ArrayList<UserModel> filteredList) {
+        userModelList = filteredList;
         notifyDataSetChanged();
     }
 
-    public class UserViewHolder extends RecyclerView.ViewHolder {
+    public class UserModelViewHolder extends RecyclerView.ViewHolder {
 
         TextView userNameTextView, userNumberTextView, userBloodGroupTextView,userTypeTextView, userAddressTextView;
         AppCompatButton requestButton;
 
-        public UserViewHolder(@NonNull View itemView) {
+        public UserModelViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userNameTextView = itemView.findViewById(R.id.userNameTextView);
@@ -85,5 +85,4 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
         }
     }
-
 }

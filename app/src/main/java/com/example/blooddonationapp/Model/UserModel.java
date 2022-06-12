@@ -1,14 +1,14 @@
 package com.example.blooddonationapp.Model;
 
-public class User {
+public class UserModel {
 
     String name, number, email, password, confirm_password, country, blood_group, dob, longitude, latitude, last_donate
             ,address, type, search, id, token;
 
-    public User() {
+    public UserModel() {
     }
 
-    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String last_donate, String address, String type, String search, String id, String token) {
+    public UserModel(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String last_donate, String address, String type, String search, String id, String token) {
         this.name = name;
         this.number = number;
         this.email = email;

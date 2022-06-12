@@ -100,17 +100,21 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
 
-                    name = snapshot.child("name").getValue().toString();
-                    nameEditText.setText(name);
+                    try {
+                        name = snapshot.child("name").getValue().toString();
+                        nameEditText.setText(name);
 
-                    number = snapshot.child("number").getValue().toString();
-                    phoneNumberEditText.setText(number);
+                        number = snapshot.child("number").getValue().toString();
+                        phoneNumberEditText.setText(number);
 
-                    last_donate = snapshot.child("last_donate").getValue().toString();
-                    lastDonateEditText.setText(last_donate);
+                        last_donate = snapshot.child("last_donate").getValue().toString();
+                        lastDonateEditText.setText(last_donate);
 
-                    address = snapshot.child("address").getValue().toString();
-                    addressEditText.setText(address);
+                        address = snapshot.child("address").getValue().toString();
+                        addressEditText.setText(address);
+                    }catch (Exception e){
+                        Toast.makeText(UpdateProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                     
                     /*String et_name = nameEditText.getText().toString();
                     HashMap updateProfile = new HashMap<>();

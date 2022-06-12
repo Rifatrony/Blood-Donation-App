@@ -75,14 +75,22 @@ public class ProfileActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
 
-                    name = snapshot.child("name").getValue().toString();
-                    userNameTextView.setText(name);
+                    try {
+                        name = snapshot.child("name").getValue().toString();
+                        userNameTextView.setText(name);
 
-                    number = snapshot.child("number").getValue().toString();
-                    userNumberTextView.setText(number);
+                        number = snapshot.child("number").getValue().toString();
+                        userNumberTextView.setText(number);
 
-                    blood_group = snapshot.child("blood_group").getValue().toString();
-                    userBloodGroupTextView.setText(blood_group);
+                        last_donate = snapshot.child("last_donate").getValue().toString();
+                        userLastDonateTextView.setText(last_donate);
+
+                        blood_group = snapshot.child("blood_group").getValue().toString();
+                        userBloodGroupTextView.setText(blood_group);
+                    }catch (Exception e)
+                    {
+                        Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
 
                     /*//Set date after 4 months from today
@@ -98,8 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
                     try {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-                        last_donate = snapshot.child("last_donate").getValue().toString();
-                        userLastDonateTextView.setText(last_donate);
+
 
                         String d = "2022-06-11";
                         Date date= null;
