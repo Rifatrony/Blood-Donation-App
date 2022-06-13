@@ -9,7 +9,7 @@
     app:cardElevation="6dp"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -17,7 +17,8 @@
 
         <LinearLayout
             android:id="@+id/ll1"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -74,6 +75,17 @@
 
         </LinearLayout>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_check_box"
+            android:src="@drawable/check_box"
+            android:visibility="gone"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_gravity="center"
+            />
+
         <!--<androidx.appcompat.widget.AppCompatButton
             android:id="@+id/requestButton"
             android:layout_width="wrap_content"
@@ -89,7 +101,7 @@
             app:layout_constraintStart_toEndOf="@+id/ll1"
             app:layout_constraintTop_toTopOf="parent" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 
 

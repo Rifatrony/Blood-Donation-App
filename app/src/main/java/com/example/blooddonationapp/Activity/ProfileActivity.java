@@ -53,9 +53,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         initialization();
 
-
-
-
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
 
@@ -73,6 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 if (snapshot.exists()){
 
                     try {
@@ -105,9 +103,6 @@ public class ProfileActivity extends AppCompatActivity {
 
                     try {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-
-
                         String d = "2022-06-11";
                         Date date= null;
                         date = new Date(sdf.parse(d).getTime());

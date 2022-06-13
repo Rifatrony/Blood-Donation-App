@@ -51,49 +51,39 @@
             android:padding="10dp"
             android:orientation="vertical">
 
-            <ScrollView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:orientation="vertical"
+                >
 
-                <FrameLayout
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    >
+                    android:id="@+id/recyclerView"
+                    />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/recyclerView"
-                        />
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    />
 
-                    <ProgressBar
-                        android:id="@+id/progressBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
-                        />
-
-                    <TextView
-                        android:id="@+id/noDataFoundTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="No Data Found"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
-                        />
+                <TextView
+                    android:id="@+id/noRequestFoundTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No Request Found"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    />
 
 
-                </FrameLayout>
+            </FrameLayout>
 
 
-            </ScrollView>
 
             <!--<com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_nav"

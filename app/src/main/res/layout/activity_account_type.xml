@@ -39,8 +39,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/imageBack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/imageBack"
-                />
+                app:layout_constraintTop_toTopOf="@id/imageBack" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

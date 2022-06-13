@@ -36,7 +36,7 @@
         />
     <!--Blood Group Section-->
 
-    <!--<item
+    <item
         android:title="Blood Group">
         <menu>
 
@@ -89,7 +89,7 @@
 
 
         </menu>
-    </item>-->
+    </item>
 
     <!--Communication Section-->
 

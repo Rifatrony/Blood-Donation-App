@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,6 +20,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.SearchView;
@@ -38,6 +42,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,37 +55,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class DonorListActivity extends AppCompatActivity {
+public class DonorListActivity extends AppCompatActivity implements View.OnClickListener {
 
     RecyclerView donorListRecyclerView;
     EditText searchBloodGroupEditText;
 
-    AppCompatImageView imageBack;
-
     AppCompatButton sendRequestButton;
-
     SearchView searchView;
-    GoogleMap map;
-    SupportMapFragment supportMapFragment;
 
-    DatabaseReference dbDonorList;
-
-    UserModelAdapter adapter;
+    UserAdapter adapter;
 
     double currentLat;
     double currentLong;
 
-    double brng = 360;
-    double initialLat = 23.8641225;
-    double initialLng = 90.3990683;
-    double dist = 5.0/6371.0;
-
     double x1, x2, y1, y2;
-
-    DatabaseReference userRef;
-    List<UserModel> userModelList = new ArrayList<>();
-
+    ArrayList<User> userList = new ArrayList<>();
     FusedLocationProviderClient fusedLocationProviderClient;
+
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,20 +80,7 @@ public class DonorListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_donor_list);
 
         initialization();
-
-        imageBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        sendRequestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(DonorListActivity.this, "Request Send", Toast.LENGTH_SHORT).show();
-            }
-        });
+        setListener();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -141,45 +120,45 @@ public class DonorListActivity extends AppCompatActivity {
                         y2 = currentLat - Math.toDegrees(radius/Radius);
 
                         System.out.println("X1 is " + x1 +"\nX2 is " + x2+"\nY1 is " + y1+"\nY2 is " + y2);
-                        //Longitude = addresses.get(0).getLongitude();
-                        //currentLat = addresses.get(0).getLatitude();
-                        //currentLong = addresses.get(0).getLongitude();
-                        //Toast.makeText(DonorListActivity.this, "Current Lat == > " + currentLat +"\nCurrent Long == > " + currentLong, Toast.LENGTH_SHORT).show();
                         System.out.println("Current Lat == > " + currentLat +"\nCurrent Long == > " + currentLong);
-
 
                         donorListRecyclerView = findViewById(R.id.donorListRecyclerView);
                         donorListRecyclerView.setHasFixedSize(true);
                         donorListRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-                        adapter = new UserModelAdapter(DonorListActivity.this, userModelList);
+                        adapter = new UserAdapter(DonorListActivity.this, userList);
                         donorListRecyclerView.setAdapter(adapter);
 
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
-                        //Query query = reference.orderByChild("type").equalTo("donor");
 
                         reference.addValueEventListener(new ValueEventListener() {
                             @SuppressLint("NotifyDataSetChanged")
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                userModelList.clear();
+                                userList.clear();
 
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                                    UserModel user = dataSnapshot.getValue(UserModel.class);
+                                    User user = dataSnapshot.getValue(User.class);
 
-                                    String latitude1 = user.getLatitude();
-                                    double value = Double.parseDouble(latitude1);
+                                    if (!user.getId().equals(firebaseUser.getUid())){
+                                        System.out.println("Token are: " + user.getToken());
+                                        System.out.println("Number of Token are: " + userList.size());
 
-                                    if (value < y1 && value >= y2) {
-                                        System.out.println("Latitudes Are : " + user.getLatitude());
-                                        userModelList.add(user);
+                                        String latitude1 = user.getLatitude();
+                                        double value = Double.parseDouble(latitude1);
+
+                                        if (value < y1 && value >= y2) {
+                                            System.out.println("Latitudes Are : " + user.getLatitude());
+                                            userList.add(user);
+                                        }
                                     }
                                 }
                                 adapter.notifyDataSetChanged();
 
-                                if (userModelList.isEmpty()) {
+                                if (userList.isEmpty()) {
 
                                     Toast.makeText(DonorListActivity.this, "No Donor Found", Toast.LENGTH_SHORT).show();
                                 }
@@ -219,23 +198,35 @@ public class DonorListActivity extends AppCompatActivity {
     }
 
     private void initialization() {
-        imageBack = findViewById(R.id.imageBack);
+
+        mAuth = FirebaseAuth.getInstance();
         sendRequestButton = findViewById(R.id.sendRequestButton);
         searchBloodGroupEditText = findViewById(R.id.searchBloodGroupEditText);
         searchView = findViewById(R.id.sv_location);
     }
 
+    private void setListener(){
+        sendRequestButton.setOnClickListener(this);
+    }
+
     private void filter(String text) {
 
-        ArrayList<UserModel> filteredList = new ArrayList<>();
+        ArrayList<User> filteredList = new ArrayList<>();
 
-        for (UserModel item : userModelList) {
+        for (User item : userList) {
             if (item.getBlood_group().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
-
         adapter.filterList(filteredList);
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id. sendRequestButton:
+                startActivity(new Intent(getApplicationContext(), RequestActivity.class));
+                break;
+        }
+    }
 }

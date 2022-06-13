@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/back_white.xml" value="0.116" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/confirm_button_bg.xml" value="0.1425" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/delete_button_bg.xml" value="0.1425" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/header_color.xml" value="0.167" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/search_background.xml" value="0.1395" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/search_bg.xml" value="0.12" />
@@ -12,24 +14,27 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_account_type.xml" value="0.25416666666666665" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_add_new_donor.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_blood_request.xml" value="0.20102564102564102" />
-        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_donor_list.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_donor_list.xml" value="0.16" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_edit_profile.xml" value="0.25025641025641027" />
-        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_group_wise_blood.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_group_wise_blood.xml" value="0.16" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_login.xml" value="0.25025641025641027" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_map.xml" value="0.17" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_profile.xml" value="0.22" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_recipient.xml" value="0.25" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_register.xml" value="0.22" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_request.xml" value="0.25" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_search_donor.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_update_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/donor_list_layout.xml" value="0.2" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/nav_header.xml" value="0.25416666666666665" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/profile_layout.xml" value="0.22" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/request_sample_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/toolbar.xml" value="0.253125" />
-        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/user_profile_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/user_profile_layout.xml" value="0.16" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/my_navigation_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/profile_navigation.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/select_menu.xml" value="0.22" />
         <entry key="..\:/BloodDonationApp/app/src/main/res/drawable/background_input.xml" value="0.1645" />
         <entry key="..\:/BloodDonationApp/app/src/main/res/drawable/blood_group_background.xml" value="0.153" />
         <entry key="..\:/BloodDonationApp/app/src/main/res/drawable/button_background.xml" value="0.1645" />

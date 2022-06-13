@@ -30,10 +30,9 @@ import com.example.blooddonationapp.Activity.MapActivity;
 import com.example.blooddonationapp.Activity.ProfileActivity;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.User;
-import com.example.blooddonationapp.Utilities.SessionManagement;
-import com.example.blooddonationapp.Utilities.SessionModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -80,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         initialization();
 
+
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                try {
-                   readDonor();
+                   readUser();
                    /*String type = snapshot.child("type").getValue().toString();
                    if (type.equals("donor")){
                        readRecipients();
@@ -144,10 +144,8 @@ public class MainActivity extends AppCompatActivity {
                         h_blood_group = snapshot.child("blood_group").getValue().toString();
                         header_blood_group.setText(h_blood_group);
 
-                        h_type = snapshot.child("type").getValue().toString();
-                        header_type.setText(h_type);
                     }catch (Exception e){
-                        Toast.makeText(MainActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Exception Found "+e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), AddNewDonorActivity.class));
                         break;
 
-                    /*case R.id.nav_A_positive:
+                    case R.id.nav_A_positive:
                         Intent intent1 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
                         intent1.putExtra("group", "A+");
                         startActivity(intent1);
@@ -228,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent8 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
                         intent8.putExtra("group", "O-");
                         startActivity(intent8);
-                        break;*/
+                        break;
 
                     case R.id.nav_profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -284,22 +282,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void readDonor() {
-
+    private void readUser() {
+        final FirebaseUser firebaseUser = mAuth.getCurrentUser();
         progressBar.setVisibility(View.VISIBLE);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
         //Query query = reference.orderByChild("type").equalTo("donor");
 
         reference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userList.clear();
-
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     User user = dataSnapshot.getValue(User.class);
-                    progressBar.setVisibility(View.INVISIBLE);
-                    userList.add(user);
+                    if (!user.getId().equals(firebaseUser.getUid())){
+                        progressBar.setVisibility(View.INVISIBLE);
+                        userList.add(user);
+                    }
                 }
                 adapter.notifyDataSetChanged();
 
@@ -308,7 +308,6 @@ public class MainActivity extends AppCompatActivity {
                     noDataFoundTextView.setVisibility(View.VISIBLE);
                     Toast.makeText(MainActivity.this, "No Donor Found", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -316,41 +315,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void readRecipients(){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
-        Query query = reference.orderByChild("type").equalTo("recipient");
-
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userList.clear();
-
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    progressBar.setVisibility(View.GONE);
-                    try {
-                        User user = dataSnapshot.getValue(User.class);
-                        userList.add(user);
-                    }catch (Exception e){
-                        Toast.makeText(MainActivity.this,"Exception"+ e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-                adapter.notifyDataSetChanged();
-
-                if (userList.isEmpty()){
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(MainActivity.this, "No Data Found", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
     }
 
     private void logOut(){
