@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -18,6 +19,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,10 +41,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class GroupWiseBloodActivity extends AppCompatActivity {
+public class GroupWiseBloodActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView bloodGroupTextView, noDonorFoundTextView;
     AppCompatButton sendRequestButton;
@@ -57,10 +60,16 @@ public class GroupWiseBloodActivity extends AppCompatActivity {
     double x1, x2, y1, y2;
     ArrayList<User> userList = new ArrayList<>();
     FusedLocationProviderClient fusedLocationProviderClient;
+
+    String blood_group;
+    String current_user_name,name, message = "Request for 1 bag AB+ blood";
+    String uid;
+    String currentUserId;
+
+    DatabaseReference dbRequest;
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
     DatabaseReference dbUser;
-    String blood_group;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -68,67 +77,12 @@ public class GroupWiseBloodActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_wise_blood);
 
-        dbUser = FirebaseDatabase.getInstance().getReference().child("User");
-
-        bloodGroupTextView = findViewById(R.id.bloodGroupTextView);
-        imageBack = findViewById(R.id.imageBack);
-        noDonorFoundTextView = findViewById(R.id.noDonorFoundTextView);
-        progressBar = findViewById(R.id.progressBar);
-        sendRequestButton = findViewById(R.id.sendRequestButton);
-
-        imageBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-
-        sendRequestButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(getApplicationContext(), RequestActivity.class));
-                dbUser.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        userList.clear();
-
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                            progressBar.setVisibility(View.GONE);
-                            User user = dataSnapshot.getValue(User.class);
-
-                            if (!user.getId().equals(firebaseUser.getUid())&& user.getBlood_group().equals(blood_group)){
-
-                                System.out.println("Uid is: " + user.getId());
-                                System.out.println("Name is: " + user.getName());
-
-                            }
-                        }
-                        //adapter.notifyDataSetChanged();
-
-                        /*if (userList.isEmpty()) {
-                            progressBar.setVisibility(View.INVISIBLE);
-                            noDonorFoundTextView.setVisibility(View.VISIBLE);
-                            sendRequestButton.setVisibility(View.INVISIBLE);
-                        }*/
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-        });
+        initialization();
+        setListener();
 
         blood_group = getIntent().getStringExtra("group");
         System.out.println("Blood Group is ==== > "+blood_group);
         bloodGroupTextView.setText(blood_group +" Donor List");
-
-        mAuth = FirebaseAuth.getInstance();
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         /*Check Location permission*/
 
@@ -233,5 +187,87 @@ public class GroupWiseBloodActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void initialization(){
+        mAuth = FirebaseAuth.getInstance();
+        dbUser = FirebaseDatabase.getInstance().getReference().child("User");
+
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        bloodGroupTextView = findViewById(R.id.bloodGroupTextView);
+        imageBack = findViewById(R.id.imageBack);
+        noDonorFoundTextView = findViewById(R.id.noDonorFoundTextView);
+        progressBar = findViewById(R.id.progressBar);
+        sendRequestButton = findViewById(R.id.sendRequestButton);
+    }
+
+    private void setListener(){
+        imageBack.setOnClickListener(this);
+        sendRequestButton.setOnClickListener(this);
+    }
+
+    private void sendRequest(){
+        dbUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    progressBar.setVisibility(View.GONE);
+                    User user = dataSnapshot.getValue(User.class);
+
+                    if (!user.getId().equals(firebaseUser.getUid())&& user.getBlood_group().equals(blood_group)){
+                        uid = user.getId();
+                        name = user.getName();
+                        System.out.println("Name is: " + name);
+                    }
+
+                    if (user.getId().equals(firebaseUser.getUid())){
+                        current_user_name = user.getName();
+                        message = current_user_name +" Request you for 1 Bag "+ user.getBlood_group() + " at " + user.getAddress();
+                        System.out.println("My name is " + current_user_name);
+                        System.out.println("Message is ...====> " + message);
+                    }
+
+                    try {
+                        currentUserId = mAuth.getCurrentUser().getUid();
+                        dbRequest = FirebaseDatabase.getInstance().getReference().child("Request").child(currentUserId).child(uid);
+
+                        HashMap request = new HashMap();
+                        request.put("message", message);
+                        request.put("name", name);
+                        request.put("status", "pending");
+                        dbRequest.updateChildren(request).addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(GroupWiseBloodActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                    }catch (Exception e){
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.imageBack:
+                onBackPressed();
+                break;
+            case R.id.sendRequestButton:
+                sendRequest();
+        }
     }
 }

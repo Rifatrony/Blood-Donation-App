@@ -3,12 +3,18 @@ package com.example.blooddonationapp.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class RequestActivity extends AppCompatActivity {
 
@@ -18,17 +24,59 @@ public class RequestActivity extends AppCompatActivity {
 
     String blood_amount, donate_date, donate_time, donate_location, recipient_number, reference;
 
+    String uid;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
 
         initialization();
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkValidation();
+            }
+        });
+
+        bloodDonateDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(RequestActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+
+                        String date;
+                        month = month +1;
+
+                        if (month < 10){
+                            date = day+"/0"+month+"/"+year;
+                            /*THIS PART*/
+                            if (day < 10) {
+                                date = "0"+day+"/0"+month+"/"+year;
+                            }
+                        }
+                        else {
+                            date = day+"/"+month+"/"+year;
+
+                            /*THIS PART*/
+
+                            if (day < 10) {
+                                date = "0"+day+"/0"+month+"/"+year;
+                            }
+                        }
+                        bloodDonateDateEditText.setText(date);
+                    }
+                },year,month,day);
+
+                datePickerDialog.show();
             }
         });
     }
@@ -65,7 +113,7 @@ public class RequestActivity extends AppCompatActivity {
         }
 
         else {
-            showToast("Success");
+            sendRequest();
         }
 
     }
@@ -84,5 +132,10 @@ public class RequestActivity extends AppCompatActivity {
 
     private void showToast(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void sendRequest(){
+        uid = getIntent().getStringExtra("uid");
+        System.out.println(uid);
     }
 }

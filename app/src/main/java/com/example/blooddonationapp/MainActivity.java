@@ -109,13 +109,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                try {
                    readUser();
-                   /*String type = snapshot.child("type").getValue().toString();
-                   if (type.equals("donor")){
-                       readRecipients();
-                   }
-                   else {
-                       readDonor();
-                   }*/
+
                }catch (Exception e){
                    progressBar.setVisibility(View.GONE);
                    Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
@@ -134,7 +128,15 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()){
 
-                    try {
+                    h_name = snapshot.child("name").getValue().toString();
+                    header_name.setText(h_name);
+
+                    h_number = snapshot.child("number").getValue().toString();
+                    header_number.setText(h_number);
+
+                    h_blood_group = snapshot.child("blood_group").getValue().toString();
+                    header_blood_group.setText(h_blood_group);
+                    /*try {
                         h_name = snapshot.child("name").getValue().toString();
                         header_name.setText(h_name);
 
@@ -147,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     }catch (Exception e){
                         Toast.makeText(MainActivity.this, "Exception Found "+e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                     }
-
+*/
 
                 }
             }
