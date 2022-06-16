@@ -220,6 +220,7 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                     if (!user.getId().equals(firebaseUser.getUid())&& user.getBlood_group().equals(blood_group)){
                         uid = user.getId();
                         name = user.getName();
+                        /*Take blood group from here*/
                         System.out.println("Name is: " + name);
                     }
 
@@ -232,17 +233,18 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
 
                     try {
                         currentUserId = mAuth.getCurrentUser().getUid();
-                        dbRequest = FirebaseDatabase.getInstance().getReference().child("Request").child(currentUserId).child(uid);
+                        dbRequest = FirebaseDatabase.getInstance().getReference().child("Request").child(uid).child(currentUserId);//
 
                         HashMap request = new HashMap();
                         request.put("message", message);
                         request.put("name", name);
                         request.put("status", "pending");
+                        request.put("uid", uid);
                         dbRequest.updateChildren(request).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
                                 if (task.isSuccessful()){
-                                    Toast.makeText(GroupWiseBloodActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(GroupWiseBloodActivity.this, "You sent Blood Request", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

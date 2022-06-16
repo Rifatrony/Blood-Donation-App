@@ -14,10 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.Adapter.RequestAdapter;
-import com.example.blooddonationapp.Adapter.UserAdapter;
-import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.RequestModel;
-import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,9 +27,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BloodRequestActivity extends AppCompatActivity implements View.OnClickListener {
+public class ViewRequestActivity extends AppCompatActivity implements View.OnClickListener{
 
-    TextView viewSentRequestTextView;
+    TextView viewYourRequestTextView;
 
     AppCompatImageView imageBack;
     FirebaseAuth mAuth;
@@ -42,12 +39,11 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
 
     DatabaseReference userRef;
     FirebaseUser firebaseUser;
-    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blood_request);
+        setContentView(R.layout.activity_view_request);
 
         initialization();
         setListener();
@@ -84,6 +80,7 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
 
             }
         });
+
     }
 
     private void readUser() {
@@ -101,17 +98,20 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
                 userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     RequestModel user = dataSnapshot.getValue(RequestModel.class);
-                    if (user.getUid().equals(firebaseUser.getUid())){
+                    if (!user.getUid().equals(firebaseUser.getUid())){
+
                         System.out.println("Get uid is : " + firebaseUser.getUid());
+                        //progressBar.setVisibility(View.INVISIBLE);
                         userList.add(user);
                     }
+
                 }
                 adapter.notifyDataSetChanged();
 
                 if (userList.isEmpty()){
                     //progressBar.setVisibility(View.INVISIBLE);
                     //noDataFoundTextView.setVisibility(View.VISIBLE);
-                    Toast.makeText(BloodRequestActivity.this, "No Request Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewRequestActivity.this, "No Request Found", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -124,13 +124,12 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
 
     private void setListener() {
         imageBack.setOnClickListener(this);
-        viewSentRequestTextView.setOnClickListener(this);
     }
 
     private void initialization() {
         imageBack = findViewById(R.id.imageBack);
         recyclerView = findViewById(R.id.recyclerView);
-        viewSentRequestTextView = findViewById(R.id.viewSentRequestTextView);
+        viewYourRequestTextView = findViewById(R.id.viewYourRequestTextView);
 
     }
 
@@ -142,7 +141,7 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
                 onBackPressed();
                 break;
 
-            case R.id.viewSentRequestTextView:
+            case R.id.viewYourRequestTextView:
                 startActivity(new Intent(getApplicationContext(), ViewRequestActivity.class));
                 break;
         }
