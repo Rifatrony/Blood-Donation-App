@@ -57,7 +57,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/background_input"
                     android:padding="16dp"
-                    android:text="AB+"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -74,7 +73,7 @@
                     android:hint="Blood Amount (ex. 1 bag)"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textAutoCorrect"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:textColor="@color/black"
@@ -82,6 +81,25 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bloodGroupTextView"
+                    tools:ignore="TextFields" />
+
+                <EditText
+                    android:id="@+id/patientProblemEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/background_input"
+                    android:hint="Ex. Surgery"
+                    android:imeOptions="actionNext"
+                    android:importantForAutofill="no"
+                    android:inputType="textAutoComplete"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bloodAmountEditText"
                     tools:ignore="TextFields" />
 
                 <EditText
@@ -101,7 +119,7 @@
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bloodAmountEditText"
+                    app:layout_constraintTop_toBottomOf="@+id/patientProblemEditText"
                     tools:ignore="TextFields" />
 
                 <EditText
@@ -113,7 +131,7 @@
                     android:hint="Donate Time (ex. Today 10 AM)"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textAutoComplete"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:textColor="@color/black"
@@ -132,7 +150,7 @@
                     android:hint="Location"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textAutoComplete"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:textColor="@color/black"
@@ -151,7 +169,7 @@
                     android:hint="Number - (Optional)"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
-                    android:inputType="textEmailAddress"
+                    android:inputType="number"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:textColor="@color/black"
@@ -170,7 +188,7 @@
                     android:hint="Reference - (Optional)"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textAutoComplete"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
                     android:textColor="@color/black"

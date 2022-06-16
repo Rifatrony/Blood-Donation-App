@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +33,8 @@ import java.util.List;
 
 public class BloodRequestActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView viewSentRequestTextView;
+    TextView viewSentRequestTextView, noRequestFoundTextView;
+    ProgressBar progressBar;
 
     AppCompatImageView imageBack;
     FirebaseAuth mAuth;
@@ -69,8 +71,11 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
                 try {
                     readUser();
+                    progressBar.setVisibility(View.VISIBLE);
 
                 }catch (Exception e){
                     System.out.println(e.getMessage());
@@ -87,6 +92,7 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void readUser() {
+
         //final FirebaseUser firebaseUser = mAuth.getCurrentUser();
         //progressBar.setVisibility(View.VISIBLE);
 
@@ -98,20 +104,23 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                progressBar.setVisibility(View.GONE);
                 userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     RequestModel user = dataSnapshot.getValue(RequestModel.class);
                     if (user.getUid().equals(firebaseUser.getUid())){
-                        System.out.println("Get uid is : " + firebaseUser.getUid());
-                        userList.add(user);
+                        if (!user.getStatus().equals("ok")){
+                            System.out.println("Get uid is : " + firebaseUser.getUid());
+                            userList.add(user);
+                        }
                     }
                 }
                 adapter.notifyDataSetChanged();
 
                 if (userList.isEmpty()){
-                    //progressBar.setVisibility(View.INVISIBLE);
-                    //noDataFoundTextView.setVisibility(View.VISIBLE);
-                    Toast.makeText(BloodRequestActivity.this, "No Request Found", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    noRequestFoundTextView.setVisibility(View.VISIBLE);
+                    noRequestFoundTextView.setText("No Request Available");
                 }
             }
 
@@ -128,6 +137,10 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void initialization() {
+
+        progressBar = findViewById(R.id.progressBar);
+        noRequestFoundTextView = findViewById(R.id.noRequestFoundTextView);
+
         imageBack = findViewById(R.id.imageBack);
         recyclerView = findViewById(R.id.recyclerView);
         viewSentRequestTextView = findViewById(R.id.viewSentRequestTextView);

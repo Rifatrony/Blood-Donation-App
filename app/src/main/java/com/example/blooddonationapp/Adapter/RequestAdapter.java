@@ -1,5 +1,6 @@
 package com.example.blooddonationapp.Adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +19,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestViewHolder> {
@@ -48,6 +51,55 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
         holder.nameTextView.setText(data.getName()+" (Me)");
         holder.messageTextView.setText(data.getMessage());
+        holder.requestTimeTextView.setText(data.getCurrent_time()+"s");
+        holder.patientProblemTextView.setText("Patient Problem: "+data.getPatient_problem());
+
+        /*holder.confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });*/
+
+        /*This code is ok*/
+        holder.confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.view_request_details);
+
+                dialog.show();
+                if (!data.getStatus().equals("ok")){
+                    HashMap hashMap = new HashMap();
+                    hashMap.put("status", "ok");
+                    DatabaseReference dbRequest = FirebaseDatabase.getInstance().getReference().child("Request").child(data.getUid()).child(data.getRequest_uid());
+                    dbRequest.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+
+                            /*if (task.isSuccessful()){
+                                Toast.makeText(context, "You Confirm to donate Blood ", Toast.LENGTH_SHORT).show();
+                            }*/
+                        if (task.isSuccessful()){
+                            dbRequest.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(context, "You Confirm to donate Blood ", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+
+                        }
+                    });
+                }
+
+
+
+            }
+        });
 
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +125,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
     public class RequestViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTextView, messageTextView;
+        TextView nameTextView, messageTextView, requestTimeTextView,patientProblemTextView;
         AppCompatButton confirmButton, deleteButton;
 
         public RequestViewHolder(@NonNull View itemView) {
@@ -81,6 +133,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
             nameTextView = itemView.findViewById(R.id.nameTextView);
             messageTextView = itemView.findViewById(R.id.messageTextView);
+            requestTimeTextView = itemView.findViewById(R.id.requestTimeTextView);
+            patientProblemTextView = itemView.findViewById(R.id.patientProblemTextView);
             confirmButton = itemView.findViewById(R.id.confirmButton);
             deleteButton = itemView.findViewById(R.id.deleteButton);
 

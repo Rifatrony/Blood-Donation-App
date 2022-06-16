@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="340dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="10dp"
+    app:cardCornerRadius="20dp"
+    >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Request Details"
+                android:gravity="center"
+                android:background="#01579B"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                />
+            <TextView
+                android:id="@+id/requestSenderNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:hint="Rony"
+                android:background="@drawable/background_input"
+                android:textSize="17sp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/patientProblemTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:background="@drawable/background_input"
+                android:hint="Patient Name"
+                android:textSize="17sp"
+                android:layout_marginTop="5dp"
+                />
+            <EditText
+                android:id="@+id/bloodAmountTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Box Pattern"
+                android:padding="16dp"
+                android:background="@drawable/background_input"
+                android:textSize="17sp"
+                android:layout_marginTop="5dp"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Confirm"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:backgroundTint="@color/green"
+                android:id="@+id/updateid"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                />
+
+</LinearLayout>

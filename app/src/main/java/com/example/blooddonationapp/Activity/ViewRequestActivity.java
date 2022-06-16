@@ -40,6 +40,9 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
     DatabaseReference userRef;
     FirebaseUser firebaseUser;
 
+    RequestModel requestModel;
+    String test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,9 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
         userList = new ArrayList<>();
         adapter = new RequestAdapter(this, userList);
         recyclerView.setAdapter(adapter);
+
+        //test = requestModel.getRequest_uid().toString();
+        System.out.println("Test is " + test);
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Request").child(firebaseUser.getUid());
 
@@ -84,7 +90,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void readUser() {
-        //final FirebaseUser firebaseUser = mAuth.getCurrentUser();
+        final FirebaseUser firebaseUser = mAuth.getCurrentUser();
         //progressBar.setVisibility(View.VISIBLE);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Request")
@@ -98,7 +104,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
                 userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     RequestModel user = dataSnapshot.getValue(RequestModel.class);
-                    if (!user.getUid().equals(firebaseUser.getUid())){
+                    if (user.getUid().equals(firebaseUser.getUid())){
 
                         System.out.println("Get uid is : " + firebaseUser.getUid());
                         //progressBar.setVisibility(View.INVISIBLE);

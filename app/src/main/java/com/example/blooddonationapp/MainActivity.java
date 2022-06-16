@@ -28,6 +28,7 @@ import com.example.blooddonationapp.Activity.GroupWiseBloodActivity;
 import com.example.blooddonationapp.Activity.LoginActivity;
 import com.example.blooddonationapp.Activity.MapActivity;
 import com.example.blooddonationapp.Activity.ProfileActivity;
+import com.example.blooddonationapp.Activity.RequestActivity;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.User;
 import com.google.android.material.navigation.NavigationView;
@@ -40,7 +41,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     ProgressBar progressBar;
     TextView noDataFoundTextView;
 
+    String current_time;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initialization();
-
 
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -184,49 +188,49 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_A_positive:
-                        Intent intent1 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+                        Intent intent1 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent1.putExtra("group", "A+");
                         startActivity(intent1);
                         break;
 
                     case R.id.nav_B_positive:
-                        Intent intent2 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+                        Intent intent2 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent2.putExtra("group", "B+");
                         startActivity(intent2);
                         break;
 
                     case R.id.nav_AB_positive:
-                        Intent intent3 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+                        Intent intent3 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent3.putExtra("group", "AB+");
                         startActivity(intent3);
                         break;
 
                     case R.id.nav_O_positive:
-                        Intent intent4 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+                        Intent intent4 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent4.putExtra("group", "O+");
                         startActivity(intent4);
                         break;
 
                     case R.id.nav_A_negative:
-                        Intent intent5 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+                        Intent intent5 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent5.putExtra("group", "A-");
                         startActivity(intent5);
                         break;
 
                     case R.id.nav_B_negative:
-                        Intent intent6 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+                        Intent intent6 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent6.putExtra("group", "B-");
                         startActivity(intent6);
                         break;
 
                     case R.id.nav_AB_negative:
-                        Intent intent7 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+                        Intent intent7 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent7.putExtra("group", "AB-");
                         startActivity(intent7);
                         break;
 
                     case R.id.nav_O_negative:
-                        Intent intent8 = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+                        Intent intent8 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent8.putExtra("group", "O-");
                         startActivity(intent8);
                         break;

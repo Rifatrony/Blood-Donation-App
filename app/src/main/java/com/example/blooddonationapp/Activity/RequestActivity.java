@@ -2,12 +2,15 @@ package com.example.blooddonationapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.Model.User;
@@ -18,13 +21,17 @@ import java.util.Calendar;
 
 public class RequestActivity extends AppCompatActivity {
 
+    AppCompatImageView imageBack;
     AppCompatButton sendButton;
-    EditText bloodAmountEditText, bloodDonateDateEditText, bloodDonateTimeEditText,
-            bloodDonateLocationEditText, bloodRecipientNumberEditText, bloodReferenceEditText;
+    TextView bloodGroupTextView;
+    EditText bloodAmountEditText, bloodDonateDateEditText, bloodDonateTimeEditText, bloodDonateLocationEditText,
+            bloodRecipientNumberEditText, bloodReferenceEditText, patientProblemEditText;
 
-    String blood_amount, donate_date, donate_time, donate_location, recipient_number, reference;
+    String blood_amount, patient_problem, donate_date, donate_time, donate_location, recipient_number, reference;
 
     String uid;
+
+    String blood_group;
 
 
 
@@ -34,10 +41,22 @@ public class RequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request);
 
         initialization();
+
+        blood_group = getIntent().getStringExtra("group");
+        System.out.println("Group is : " + blood_group);
+
+        bloodGroupTextView.setText(String.valueOf(blood_group));
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +102,7 @@ public class RequestActivity extends AppCompatActivity {
 
     private void checkValidation() {
         blood_amount = bloodAmountEditText.getText().toString().trim();
+        patient_problem = patientProblemEditText.getText().toString().trim();
         donate_date = bloodDonateDateEditText.getText().toString().trim();
         donate_time = bloodDonateTimeEditText.getText().toString().trim();
         donate_location = bloodDonateLocationEditText.getText().toString().trim();
@@ -101,17 +121,14 @@ public class RequestActivity extends AppCompatActivity {
             showToast("Need Date");
             return;
         }
-
         if (donate_time.isEmpty()){
             showToast("Need Time");
             return;
         }
-
         if (donate_location.isEmpty()){
             showToast("Give Location");
             return;
         }
-
         else {
             sendRequest();
         }
@@ -119,6 +136,11 @@ public class RequestActivity extends AppCompatActivity {
     }
 
     private void initialization() {
+
+        imageBack = findViewById(R.id.imageBack);
+
+        bloodGroupTextView = findViewById(R.id.bloodGroupTextView);
+        patientProblemEditText = findViewById(R.id.patientProblemEditText);
         bloodAmountEditText = findViewById(R.id.bloodAmountEditText);
         bloodDonateDateEditText = findViewById(R.id.bloodDonateDateEditText);
         bloodDonateTimeEditText = findViewById(R.id.bloodDonateTimeEditText);
@@ -135,7 +157,17 @@ public class RequestActivity extends AppCompatActivity {
     }
 
     private void sendRequest(){
-        uid = getIntent().getStringExtra("uid");
-        System.out.println(uid);
+
+        Intent intent = new Intent(getApplicationContext(), GroupWiseBloodActivity.class);
+        intent.putExtra("blood_group", blood_group);
+        intent.putExtra("patient_problem", patient_problem);
+        intent.putExtra("blood_amount", blood_amount);
+        intent.putExtra("donate_date", donate_date);
+        intent.putExtra("donate_time", donate_time);
+        intent.putExtra("donate_location", donate_location);
+        intent.putExtra("recipient_number", recipient_number);
+        intent.putExtra("reference", reference);
+        startActivity(intent);
+
     }
 }

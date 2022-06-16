@@ -40,7 +40,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -54,6 +57,9 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
     RecyclerView recyclerView;
     UserAdapter adapter;
 
+    String blood_group, patient_problem, blood_amount, donate_date,
+            donate_time, donate_location, recipient_number, reference;
+
     double currentLat;
     double currentLong;
 
@@ -61,7 +67,6 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
     ArrayList<User> userList = new ArrayList<>();
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    String blood_group;
     String current_user_name,name, message = "Request for 1 bag AB+ blood";
     String uid;
     String currentUserId;
@@ -70,6 +75,8 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
     FirebaseAuth mAuth;
     FirebaseUser firebaseUser;
     DatabaseReference dbUser;
+
+    String current_time;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -80,9 +87,31 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
         initialization();
         setListener();
 
-        blood_group = getIntent().getStringExtra("group");
-        System.out.println("Blood Group is ==== > "+blood_group);
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm:ss");
+        current_time = mdformat.format(calendar.getTime());
+        System.out.println(current_time);
+
+        blood_group = getIntent().getStringExtra("blood_group");
+        patient_problem = getIntent().getStringExtra("patient_problem");
+        blood_amount = getIntent().getStringExtra("blood_amount");
+        donate_date = getIntent().getStringExtra("donate_date");
+        donate_time = getIntent().getStringExtra("donate_time");
+        donate_location = getIntent().getStringExtra("donate_location");
+        recipient_number = getIntent().getStringExtra("recipient_number");
+        reference = getIntent().getStringExtra("reference");
+
+        System.out.println("Blood Group is ==== > "+blood_group +"\n");
+        System.out.println("blood_amount is ==== > "+blood_amount +"\n");
+        System.out.println("donate_date is ==== > "+donate_date +"\n");
+        System.out.println("donate_time is ==== > "+donate_time +"\n");
+        System.out.println("donate_location is ==== > "+donate_location +"\n");
+        System.out.println("recipient_number is ==== > "+recipient_number +"\n");
+        System.out.println("reference is ==== > "+reference +"\n");
         bloodGroupTextView.setText(blood_group +" Donor List");
+
+        Date c = Calendar.getInstance().getTime();
+        System.out.println("Current time => " + c);
 
         /*Check Location permission*/
 
@@ -226,7 +255,7 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
 
                     if (user.getId().equals(firebaseUser.getUid())){
                         current_user_name = user.getName();
-                        message = current_user_name +" Request you for 1 Bag "+ user.getBlood_group() + " at " + user.getAddress();
+                        message = current_user_name +" Request you for "+blood_amount+" "+ user.getBlood_group() + " at " + donate_location;
                         System.out.println("My name is " + current_user_name);
                         System.out.println("Message is ...====> " + message);
                     }
@@ -237,9 +266,19 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
 
                         HashMap request = new HashMap();
                         request.put("message", message);
+                        request.put("blood_group", blood_group);
+                        request.put("patient_problem", patient_problem);
+                        request.put("blood_amount", blood_amount);
+                        request.put("donate_date", donate_date);
+                        request.put("donate_time", donate_time);
+                        request.put("donate_location", donate_location);
+                        request.put("recipient_number", recipient_number);
+                        request.put("reference", reference);
+                        request.put("current_time", current_time);
                         request.put("name", name);
                         request.put("status", "pending");
                         request.put("uid", uid);
+                        request.put("request_uid", currentUserId);
                         dbRequest.updateChildren(request).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
