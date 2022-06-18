@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewRequestActivity extends AppCompatActivity implements View.OnClickListener{
+public class ViewSentRequestActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView viewYourRequestTextView;
 
@@ -45,7 +45,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_request);
+        setContentView(R.layout.activity_view_sent_request);
 
         initialization();
         setListener();
@@ -72,7 +72,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try {
-                    readUser();
+                    viewSentRequest();
 
                 }catch (Exception e){
                     System.out.println(e.getMessage());
@@ -89,7 +89,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void readUser() {
+    private void viewSentRequest() {
         final FirebaseUser firebaseUser = mAuth.getCurrentUser();
         //progressBar.setVisibility(View.VISIBLE);
 
@@ -105,7 +105,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     RequestModel user = dataSnapshot.getValue(RequestModel.class);
 
-                    if (user.getUid().equals(firebaseUser.getUid())){
+                    if (user.getRequest_uid().equals(firebaseUser.getUid())){
 
                         System.out.println("Get uid is : " + firebaseUser.getUid());
                         //progressBar.setVisibility(View.INVISIBLE);
@@ -118,7 +118,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
                 if (userList.isEmpty()){
                     //progressBar.setVisibility(View.INVISIBLE);
                     //noDataFoundTextView.setVisibility(View.VISIBLE);
-                    Toast.makeText(ViewRequestActivity.this, "No Request Found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewSentRequestActivity.this, "No Request Found", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -149,7 +149,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
                 break;
 
             case R.id.viewYourRequestTextView:
-                startActivity(new Intent(getApplicationContext(), ViewRequestActivity.class));
+                startActivity(new Intent(getApplicationContext(), ViewSentRequestActivity.class));
                 break;
         }
     }

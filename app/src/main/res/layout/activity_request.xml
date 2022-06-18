@@ -142,19 +142,20 @@
                     tools:ignore="TextFields" />
 
                 <EditText
-                    android:id="@+id/bloodDonateLocationEditText"
+                    android:id="@+id/bloodDonateAddressEditText"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/background_input"
-                    android:hint="Location"
+                    android:hint="Address"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
                     android:inputType="textAutoComplete"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    android:textColor="@color/black"
-                    android:textSize="13sp"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/bloodDonateTimeEditText"
@@ -176,7 +177,7 @@
                     android:textSize="13sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/bloodDonateLocationEditText"
+                    app:layout_constraintTop_toBottomOf="@+id/bloodDonateAddressEditText"
                     tools:ignore="TextFields" />
 
                 <EditText

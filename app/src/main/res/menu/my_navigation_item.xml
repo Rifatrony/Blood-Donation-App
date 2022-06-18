@@ -42,14 +42,14 @@
         android:iconTint="@color/black"
         />
 
-    <item
+    <!--<item
         android:id="@+id/nav_search_blood"
         android:title="Search Blood"
         android:icon="@drawable/search_blood"
-        />
+        />-->
     <!--Blood Group Section-->
 
-    <item
+    <!--<item
         android:title="Send Blood Request">
         <menu>
 
@@ -102,14 +102,14 @@
 
 
         </menu>
-    </item>
+    </item>-->
 
     <!--Communication Section-->
 
     <item
         android:title="Communicate">
         <menu>
-            <item
+            <!--<item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/share"
                 android:title="Share"
@@ -125,7 +125,7 @@
                 android:id="@+id/nav_feedback"
                 android:icon="@drawable/feedback"
                 android:title="Feedback"
-                />
+                />-->
 
             <item
                 android:id="@+id/nav_logout"

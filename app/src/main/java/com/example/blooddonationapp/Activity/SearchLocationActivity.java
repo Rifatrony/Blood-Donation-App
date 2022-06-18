@@ -3,6 +3,7 @@ package com.example.blooddonationapp.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
@@ -27,6 +28,10 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
 
     SearchView searchLocation;
 
+    String searchText;
+
+    AppCompatImageView imageBack;
+
     GoogleMap map;
     FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -39,6 +44,15 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
         setContentView(R.layout.activity_search_location);
 
         searchLocation = findViewById(R.id.searchLocation);
+        imageBack = findViewById(R.id.imageBack);
+
+        imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
 
         blood_group = getIntent().getStringExtra("group");
         System.out.println("Group Is " + blood_group);
@@ -54,6 +68,8 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
                     try {
                         Geocoder geocoder = new Geocoder(SearchLocationActivity.this);
                         addressList = geocoder.getFromLocationName(location, 1);
+                        searchText = searchLocation.getQuery().toString();
+                        System.out.println("Search Text is " + searchText);
                         Toast.makeText(SearchLocationActivity.this, addressList.get(0).getLocality()+" is Address Of search", Toast.LENGTH_SHORT).show();
 
                     } catch (IOException e) {
@@ -73,6 +89,7 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
                     intent.putExtra("lat", String.valueOf(searchLat));
                     intent.putExtra("lng", String.valueOf(searchLng));
                     intent.putExtra("group", String.valueOf(blood_group));
+                    intent.putExtra("address", String.valueOf(searchText));
                     startActivity(intent);
 
                 }

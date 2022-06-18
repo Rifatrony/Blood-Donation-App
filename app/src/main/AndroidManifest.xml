@@ -28,7 +28,7 @@
             android:name=".Activity.AcceptRequestActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.ViewRequestActivity"
+            android:name=".Activity.ViewSentRequestActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.RequestActivity"

@@ -15,10 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.Adapter.RequestAdapter;
-import com.example.blooddonationapp.Adapter.UserAdapter;
-import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.RequestModel;
-import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -158,7 +155,7 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
                 break;
 
             case R.id.viewSentRequestTextView:
-                startActivity(new Intent(getApplicationContext(), ViewRequestActivity.class));
+                startActivity(new Intent(getApplicationContext(), ViewSentRequestActivity.class));
                 break;
         }
     }

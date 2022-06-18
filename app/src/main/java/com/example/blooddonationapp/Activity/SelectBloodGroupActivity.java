@@ -1,8 +1,11 @@
 package com.example.blooddonationapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -15,6 +18,8 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
     TextView A_Positive, B_Positive, AB_Positive, O_Positive,
             A_Negative, B_Negative, AB_Negative, O_Negative;
 
+    AppCompatImageView imageBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +31,9 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
     }
 
     private void initialization() {
+
+        imageBack = findViewById(R.id.imageBack);
+
         A_Positive = findViewById(R.id.A_Positive);
         B_Positive = findViewById(R.id.B_Positive);
         AB_Positive = findViewById(R.id.AB_Positive);
@@ -38,6 +46,9 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
     }
 
     private void setListener() {
+
+        imageBack.setOnClickListener(this);
+
         A_Positive.setOnClickListener(this);
         B_Positive.setOnClickListener(this);
         AB_Positive.setOnClickListener(this);
@@ -49,9 +60,15 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
         O_Negative.setOnClickListener(this);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+
+            case R.id.imageBack:
+                onBackPressed();
+                break;
+
             case R.id.A_Positive:
                 Intent intent1 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent1.putExtra("group", "A+");

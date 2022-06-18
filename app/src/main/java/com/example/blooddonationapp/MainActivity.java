@@ -190,15 +190,15 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), AcceptRequestActivity.class));
                         break;
 
-                    case R.id.nav_search_blood:
+                    /*case R.id.nav_search_blood:
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                        break;
+                        break;*/
 
                     case R.id.nav_add_donor:
                         startActivity(new Intent(getApplicationContext(), AddNewDonorActivity.class));
                         break;
 
-                    case R.id.nav_A_positive:
+                   /* case R.id.nav_A_positive:
                         Intent intent1 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent1.putExtra("group", "A+");
                         startActivity(intent1);
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent8 = new Intent(getApplicationContext(), RequestActivity.class);
                         intent8.putExtra("group", "O-");
                         startActivity(intent8);
-                        break;
+                        break;*/
 
                     case R.id.nav_profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
@@ -258,13 +258,13 @@ public class MainActivity extends AppCompatActivity {
                         logOut();
                         break;
 
-                    case R.id.nav_share:
+                    /*case R.id.nav_share:
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/plain");
                         intent.putExtra(Intent.EXTRA_SUBJECT,"Check this application");
                         intent.putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id=com.whatsapp");
                         startActivity(Intent.createChooser(intent,"Share Via"));
-                        break;
+                        break;*/
 
                     default:
                         return true;

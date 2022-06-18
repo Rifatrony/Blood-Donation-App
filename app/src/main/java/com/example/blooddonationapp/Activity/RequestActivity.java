@@ -22,6 +22,7 @@ public class RequestActivity extends AppCompatActivity {
     AppCompatImageView imageBack;
     AppCompatButton sendButton;
     TextView bloodGroupTextView;
+
     EditText bloodAmountEditText, bloodDonateDateEditText, bloodDonateTimeEditText, bloodDonateLocationEditText,
             bloodRecipientNumberEditText, bloodReferenceEditText, patientProblemEditText;
 
@@ -30,7 +31,7 @@ public class RequestActivity extends AppCompatActivity {
     String uid;
 
     String blood_group;
-    String searchLat, searchLng;
+    String searchLat, searchLng, searchAddress;
 
 
 
@@ -43,8 +44,12 @@ public class RequestActivity extends AppCompatActivity {
 
         searchLat = getIntent().getStringExtra("lat");
         searchLng = getIntent().getStringExtra("lng");
+        searchAddress = getIntent().getStringExtra("address");
         System.out.println("Lat is: "+ searchLat);
         System.out.println("Lng is: "+ searchLng);
+        System.out.println("address is: "+ searchAddress);
+
+        bloodDonateLocationEditText.setText(searchAddress);
 
         blood_group = getIntent().getStringExtra("group");
         System.out.println("Group is : " + blood_group);
@@ -148,7 +153,7 @@ public class RequestActivity extends AppCompatActivity {
         bloodAmountEditText = findViewById(R.id.bloodAmountEditText);
         bloodDonateDateEditText = findViewById(R.id.bloodDonateDateEditText);
         bloodDonateTimeEditText = findViewById(R.id.bloodDonateTimeEditText);
-        bloodDonateLocationEditText = findViewById(R.id.bloodDonateLocationEditText);
+        bloodDonateLocationEditText = findViewById(R.id.bloodDonateAddressEditText);
         bloodRecipientNumberEditText = findViewById(R.id.bloodRecipientNumberEditText);
         bloodReferenceEditText = findViewById(R.id.bloodReferenceEditText);
 
@@ -174,6 +179,7 @@ public class RequestActivity extends AppCompatActivity {
         intent.putExtra("latitude", searchLat);
         intent.putExtra("longitude", searchLng);
         startActivity(intent);
+        finish();
 
     }
 }
