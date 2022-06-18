@@ -8,56 +8,75 @@
     app:cardCornerRadius="20dp"
     >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:text="Request Details"
-                android:gravity="center"
-                android:background="#01579B"
-                android:textSize="25sp"
-                android:textColor="@color/white"
-                />
-            <TextView
-                android:id="@+id/requestSenderNameTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:hint="Rony"
-                android:background="@drawable/background_input"
-                android:textSize="17sp"
-                android:layout_marginTop="10dp"
-                />
-            <TextView
-                android:id="@+id/patientProblemTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:background="@drawable/background_input"
-                android:hint="Patient Name"
-                android:textSize="17sp"
-                android:layout_marginTop="5dp"
-                />
-            <EditText
-                android:id="@+id/bloodAmountTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Box Pattern"
-                android:padding="16dp"
-                android:background="@drawable/background_input"
-                android:textSize="17sp"
-                android:layout_marginTop="5dp"
-                />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Request Details"
+        android:gravity="center"
+        android:background="@color/blue"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        />
+    <TextView
+        android:id="@+id/requestSenderNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:hint="Rony"
+        android:background="@drawable/background_input"
+        android:textSize="14dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:id="@+id/patientProblemTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:padding="14dp"
+        android:textColor="@color/black"
+        android:background="@drawable/background_input"
+        android:hint="Patient Name"
+        android:textSize="14sp"
+        android:layout_marginTop="5dp"
+        />
+    <TextView
+        android:id="@+id/bloodAmountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@drawable/background_input"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Confirm"
-                android:textAllCaps="false"
-                android:textSize="20sp"
-                android:backgroundTint="@color/green"
-                android:id="@+id/updateid"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                />
+
+    <TextView
+        android:id="@+id/donatDateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@drawable/background_input"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="5dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/confirmRequestButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Confirm Request"
+        android:textColor="@color/white"
+        android:background="@drawable/confirm_button_bg"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        />
 
 </LinearLayout>

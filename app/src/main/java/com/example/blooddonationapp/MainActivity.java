@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonationapp.Activity.AcceptRequestActivity;
 import com.example.blooddonationapp.Activity.AddNewDonorActivity;
 import com.example.blooddonationapp.Activity.BloodRequestActivity;
 import com.example.blooddonationapp.Activity.DonorListActivity;
@@ -29,6 +30,8 @@ import com.example.blooddonationapp.Activity.LoginActivity;
 import com.example.blooddonationapp.Activity.MapActivity;
 import com.example.blooddonationapp.Activity.ProfileActivity;
 import com.example.blooddonationapp.Activity.RequestActivity;
+import com.example.blooddonationapp.Activity.SearchLocationActivity;
+import com.example.blooddonationapp.Activity.SelectBloodGroupActivity;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.User;
 import com.google.android.material.navigation.NavigationView;
@@ -177,6 +180,14 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.nav_blood_request:
                         startActivity(new Intent(getApplicationContext(), BloodRequestActivity.class));
+                        break;
+
+                    case R.id.nav_search_location:
+                        startActivity(new Intent(getApplicationContext(), SelectBloodGroupActivity.class));
+                        break;
+
+                    case R.id.nav_accept_request:
+                        startActivity(new Intent(getApplicationContext(), AcceptRequestActivity.class));
                         break;
 
                     case R.id.nav_search_blood:

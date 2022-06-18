@@ -109,10 +109,12 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     RequestModel user = dataSnapshot.getValue(RequestModel.class);
                     if (user.getUid().equals(firebaseUser.getUid())){
-                        if (!user.getStatus().equals("ok")){
+                        System.out.println("Get uid is : " + firebaseUser.getUid());
+                        userList.add(user);
+                        /*if (!user.getStatus().equals("ok")){
                             System.out.println("Get uid is : " + firebaseUser.getUid());
                             userList.add(user);
-                        }
+                        }*/
                     }
                 }
                 adapter.notifyDataSetChanged();

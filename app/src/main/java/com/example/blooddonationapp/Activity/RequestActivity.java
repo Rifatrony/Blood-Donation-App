@@ -13,10 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class RequestActivity extends AppCompatActivity {
@@ -32,6 +30,7 @@ public class RequestActivity extends AppCompatActivity {
     String uid;
 
     String blood_group;
+    String searchLat, searchLng;
 
 
 
@@ -41,6 +40,11 @@ public class RequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request);
 
         initialization();
+
+        searchLat = getIntent().getStringExtra("lat");
+        searchLng = getIntent().getStringExtra("lng");
+        System.out.println("Lat is: "+ searchLat);
+        System.out.println("Lng is: "+ searchLng);
 
         blood_group = getIntent().getStringExtra("group");
         System.out.println("Group is : " + blood_group);
@@ -167,6 +171,8 @@ public class RequestActivity extends AppCompatActivity {
         intent.putExtra("donate_location", donate_location);
         intent.putExtra("recipient_number", recipient_number);
         intent.putExtra("reference", reference);
+        intent.putExtra("latitude", searchLat);
+        intent.putExtra("longitude", searchLng);
         startActivity(intent);
 
     }

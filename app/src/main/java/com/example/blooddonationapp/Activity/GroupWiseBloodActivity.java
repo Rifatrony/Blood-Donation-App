@@ -60,6 +60,8 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
     String blood_group, patient_problem, blood_amount, donate_date,
             donate_time, donate_location, recipient_number, reference;
 
+    String lat, lng;
+
     double currentLat;
     double currentLong;
 
@@ -78,6 +80,8 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
 
     String current_time;
 
+    double searchLatitude, searchLongitude;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +96,8 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
         current_time = mdformat.format(calendar.getTime());
         System.out.println(current_time);
 
+        lat = getIntent().getStringExtra("latitude");
+        lng = getIntent().getStringExtra("longitude");
         blood_group = getIntent().getStringExtra("blood_group");
         patient_problem = getIntent().getStringExtra("patient_problem");
         blood_amount = getIntent().getStringExtra("blood_amount");
@@ -101,6 +107,8 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
         recipient_number = getIntent().getStringExtra("recipient_number");
         reference = getIntent().getStringExtra("reference");
 
+        System.out.println("Get Latitude is ============== > "+lat +"\n");
+        System.out.println("Get Longitude is ============== > "+lng +"\n");
         System.out.println("Blood Group is ==== > "+blood_group +"\n");
         System.out.println("blood_amount is ==== > "+blood_amount +"\n");
         System.out.println("donate_date is ==== > "+donate_date +"\n");
@@ -109,6 +117,12 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
         System.out.println("recipient_number is ==== > "+recipient_number +"\n");
         System.out.println("reference is ==== > "+reference +"\n");
         bloodGroupTextView.setText(blood_group +" Donor List");
+
+        searchLatitude = Double.parseDouble(lat);
+        searchLongitude = Double.parseDouble(lng);
+
+        System.out.println("\n\n\n\nConvert Latitude to double" + searchLatitude);
+        System.out.println("Convert Longitude to double" + searchLongitude);
 
         Date c = Calendar.getInstance().getTime();
         System.out.println("Current time => " + c);
@@ -147,13 +161,13 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
 
                         double Radius = 6371;  // earth radius in km
                         double radius = 5; // km
-                        x1 = currentLong - Math.toDegrees(radius/Radius/Math.cos(Math.toRadians(currentLat)));
-                        x2 = currentLong + Math.toDegrees(radius/Radius/Math.cos(Math.toRadians(currentLat)));
-                        y1 = currentLat + Math.toDegrees(radius/Radius);
-                        y2 = currentLat - Math.toDegrees(radius/Radius);
+                        x1 = searchLongitude - Math.toDegrees(radius/Radius/Math.cos(Math.toRadians(searchLatitude)));
+                        x2 = searchLongitude + Math.toDegrees(radius/Radius/Math.cos(Math.toRadians(searchLatitude)));
+                        y1 = searchLatitude + Math.toDegrees(radius/Radius);
+                        y2 = searchLatitude - Math.toDegrees(radius/Radius);
 
                         System.out.println("X1 is " + x1 +"\nX2 is " + x2+"\nY1 is " + y1+"\nY2 is " + y2);
-                        System.out.println("Current Lat == > " + currentLat +"\nCurrent Long == > " + currentLong);
+                        System.out.println("search Latitude Lat == > " + searchLatitude +"\nsearchLongitude  Long == > " + searchLongitude);
 
                         recyclerView = findViewById(R.id.recyclerView);
                         recyclerView.setHasFixedSize(true);

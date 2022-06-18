@@ -101,6 +101,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                         e.printStackTrace();
                     }
                     Address address = addressList.get(0);
+                    Toast.makeText(MapActivity.this, "Latitude is " + address.getLatitude(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapActivity.this, "Longitude is " + address.getLongitude(), Toast.LENGTH_SHORT).show();
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     map.addMarker(new MarkerOptions().position(latLng).title(location));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));

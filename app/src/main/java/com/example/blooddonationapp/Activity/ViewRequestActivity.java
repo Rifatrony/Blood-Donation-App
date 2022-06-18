@@ -39,8 +39,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
 
     DatabaseReference userRef;
     FirebaseUser firebaseUser;
-
-    RequestModel requestModel;
+    final RequestModel requestModel = new RequestModel();
     String test;
 
     @Override
@@ -65,6 +64,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
 
         //test = requestModel.getRequest_uid().toString();
         System.out.println("Test is " + test);
+        Toast.makeText(this, "Request Model UID is " + requestModel.getUid(), Toast.LENGTH_SHORT).show();
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Request").child(firebaseUser.getUid());
 
@@ -104,6 +104,7 @@ public class ViewRequestActivity extends AppCompatActivity implements View.OnCli
                 userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     RequestModel user = dataSnapshot.getValue(RequestModel.class);
+
                     if (user.getUid().equals(firebaseUser.getUid())){
 
                         System.out.println("Get uid is : " + firebaseUser.getUid());
