@@ -80,14 +80,14 @@ public class ProfileActivity extends AppCompatActivity {
                         number = snapshot.child("number").getValue().toString();
                         userNumberTextView.setText(number);
 
-                        last_donate = snapshot.child("last_donate").getValue().toString();
-                        userLastDonateTextView.setText(last_donate);
+                        /*last_donate = snapshot.child("last_donate").getValue().toString();
+                        userLastDonateTextView.setText(last_donate);*/
 
                         blood_group = snapshot.child("blood_group").getValue().toString();
                         userBloodGroupTextView.setText(blood_group);
                     }catch (Exception e)
                     {
-                        Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileActivity.this, "here"+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -109,7 +109,7 @@ public class ProfileActivity extends AppCompatActivity {
                         date.setMonth(date.getMonth() + 4);
 
                         System.out.println("Date is : "+date);
-                        System.out.println("D is : "+last_donate);
+                        //System.out.println("D is : "+last_donate);
 
                         userNextDonateTextView.setText(date.toString());
 

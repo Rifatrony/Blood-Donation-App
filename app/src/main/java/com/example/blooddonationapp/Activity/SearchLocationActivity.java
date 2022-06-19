@@ -70,7 +70,7 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
                         addressList = geocoder.getFromLocationName(location, 1);
                         searchText = searchLocation.getQuery().toString();
                         System.out.println("Search Text is " + searchText);
-                        Toast.makeText(SearchLocationActivity.this, addressList.get(0).getLocality()+" is Address Of search", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SearchLocationActivity.this, addressList.get(0).getLocality()+" is Address Of search", Toast.LENGTH_SHORT).show();
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -79,8 +79,8 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
                     searchLat = address.getLatitude();
                     searchLng = address.getLongitude();
 
-                    Toast.makeText(SearchLocationActivity.this, "Search Latitude is " + searchLat, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(SearchLocationActivity.this, "Search Longitude is " + searchLng, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SearchLocationActivity.this, "Search Latitude is " + searchLat, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SearchLocationActivity.this, "Search Longitude is " + searchLng, Toast.LENGTH_SHORT).show();
                     /*LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     map.addMarker(new MarkerOptions().position(latLng).title(location));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));*/
@@ -91,6 +91,7 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
                     intent.putExtra("group", String.valueOf(blood_group));
                     intent.putExtra("address", String.valueOf(searchText));
                     startActivity(intent);
+                    finish();
 
                 }
                 else {

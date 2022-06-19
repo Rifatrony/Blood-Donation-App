@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/nav_blood_request"
-        android:title="Blood Request"
+        android:title="My Request"
         android:icon="@drawable/request"
         />
 

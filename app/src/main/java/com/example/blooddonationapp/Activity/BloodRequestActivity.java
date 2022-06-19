@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Request")
                 .child(firebaseUser.getUid());
-        //Query query = reference.orderByChild("type").equalTo("donor");
+        //Query query = reference.orderByChild("uid").equalTo();
 
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -105,8 +106,8 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
                 userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     RequestModel user = dataSnapshot.getValue(RequestModel.class);
+
                     if (user.getUid().equals(firebaseUser.getUid())){
-                        System.out.println("Get uid is : " + firebaseUser.getUid());
                         userList.add(user);
                         /*if (!user.getStatus().equals("ok")){
                             System.out.println("Get uid is : " + firebaseUser.getUid());

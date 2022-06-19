@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.Adapter.RequestAdapter;
+import com.example.blooddonationapp.Adapter.ViewSentRequestAdapter;
+import com.example.blooddonationapp.Model.RequestIdModel;
 import com.example.blooddonationapp.Model.RequestModel;
 import com.example.blooddonationapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,13 +37,13 @@ public class ViewSentRequestActivity extends AppCompatActivity implements View.O
     AppCompatImageView imageBack;
     FirebaseAuth mAuth;
     RecyclerView recyclerView;
-    List<RequestModel> userList;
-    RequestAdapter adapter;
+    List<RequestModel> requestModelList;
+    ViewSentRequestAdapter adapter;
 
-    DatabaseReference userRef;
     FirebaseUser firebaseUser;
-    final RequestModel requestModel = new RequestModel();
-    String test;
+    DatabaseReference dbViewRequest, dbRequestId;
+
+    String requestSentUid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,67 +61,42 @@ public class ViewSentRequestActivity extends AppCompatActivity implements View.O
         layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
 
-        userList = new ArrayList<>();
-        adapter = new RequestAdapter(this, userList);
+        requestModelList = new ArrayList<>();
+        adapter = new ViewSentRequestAdapter(this, requestModelList);
         recyclerView.setAdapter(adapter);
 
-        //test = requestModel.getRequest_uid().toString();
-        System.out.println("Test is " + test);
-        Toast.makeText(this, "Request Model UID is " + requestModel.getUid(), Toast.LENGTH_SHORT).show();
+        dbRequestId = FirebaseDatabase.getInstance().getReference().child("RequestId");
 
-        userRef = FirebaseDatabase.getInstance().getReference().child("Request").child(firebaseUser.getUid());
-
-        userRef.addValueEventListener(new ValueEventListener() {
+        dbRequestId.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    viewSentRequest();
 
-                }catch (Exception e){
-                    System.out.println(e.getMessage());
-                    //progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),"ref"+ e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-
-    private void viewSentRequest() {
-        final FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        //progressBar.setVisibility(View.VISIBLE);
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Request")
-                .child(firebaseUser.getUid());
-        //Query query = reference.orderByChild("type").equalTo("donor");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    RequestModel user = dataSnapshot.getValue(RequestModel.class);
+                    RequestIdModel data = dataSnapshot.getValue(RequestIdModel.class);
+                    requestSentUid = data.getUid().toString();
+                    Toast.makeText(ViewSentRequestActivity.this, "Request send to  " + requestSentUid, Toast.LENGTH_SHORT).show();
 
-                    if (user.getRequest_uid().equals(firebaseUser.getUid())){
+                    dbViewRequest = FirebaseDatabase.getInstance().getReference().child("Request").child(requestSentUid);
+                    dbViewRequest.addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("NotifyDataSetChanged")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            requestModelList.clear();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                RequestModel user = dataSnapshot.getValue(RequestModel.class);
 
-                        System.out.println("Get uid is : " + firebaseUser.getUid());
-                        //progressBar.setVisibility(View.INVISIBLE);
-                        userList.add(user);
-                    }
+                                requestModelList.add(user);
 
-                }
-                adapter.notifyDataSetChanged();
+                            }
+                            adapter.notifyDataSetChanged();
 
-                if (userList.isEmpty()){
-                    //progressBar.setVisibility(View.INVISIBLE);
-                    //noDataFoundTextView.setVisibility(View.VISIBLE);
-                    Toast.makeText(ViewSentRequestActivity.this, "No Request Found", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 
@@ -131,6 +109,7 @@ public class ViewSentRequestActivity extends AppCompatActivity implements View.O
 
     private void setListener() {
         imageBack.setOnClickListener(this);
+        viewYourRequestTextView.setOnClickListener(this);
     }
 
     private void initialization() {
@@ -149,7 +128,7 @@ public class ViewSentRequestActivity extends AppCompatActivity implements View.O
                 break;
 
             case R.id.viewYourRequestTextView:
-                startActivity(new Intent(getApplicationContext(), ViewSentRequestActivity.class));
+                startActivity(new Intent(getApplicationContext(), BloodRequestActivity.class));
                 break;
         }
     }

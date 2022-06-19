@@ -109,7 +109,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new UserAdapter(this, userList);
         recyclerView.setAdapter(adapter);
 
-        userRef = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        userRef = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance()
+                .getCurrentUser().getUid());
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -314,6 +315,9 @@ public class MainActivity extends AppCompatActivity {
                 userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     User user = dataSnapshot.getValue(User.class);
+
+                    /*this line add 19/6/2022*/
+                    assert user != null;
                     if (!user.getId().equals(firebaseUser.getUid())){
                         progressBar.setVisibility(View.INVISIBLE);
                         userList.add(user);

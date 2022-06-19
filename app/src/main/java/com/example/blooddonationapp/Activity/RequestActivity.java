@@ -179,7 +179,6 @@ public class RequestActivity extends AppCompatActivity {
         intent.putExtra("latitude", searchLat);
         intent.putExtra("longitude", searchLng);
         startActivity(intent);
-        finish();
 
     }
 }

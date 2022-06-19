@@ -190,6 +190,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()){
                     showToast("Updated Profile");
+                    finish();
                 }
 
                 else {

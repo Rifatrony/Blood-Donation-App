@@ -29,18 +29,40 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Blood Request"
+                android:text="My Request"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/imageBack"
+                app:layout_constraintStart_toEndOf="@+id/imageBack"
+                app:layout_constraintTop_toTopOf="@id/imageBack"
+                app:layout_constraintVertical_bias="0.533" />
+
+            <TextView
+                android:id="@+id/viewSentRequestTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@color/input_background"
+                android:gravity="end"
+                android:paddingLeft="10dp"
+                android:paddingTop="6dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="6dp"
+                android:text="Sent Request"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/imageBack" />
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/textView"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -50,30 +72,14 @@
             android:layout_below="@id/constraint_layout"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/viewSentRequestTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sent Request"
-                android:textSize="14dp"
-                android:gravity="end"
-                android:layout_marginRight="10dp"
-                android:background="@color/input_background"
-                android:paddingLeft="10dp"
-                android:paddingRight="16dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@+id/frameLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+
 
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="40dp">
+                >
 
                 <ProgressBar
                     android:id="@+id/progressBar"

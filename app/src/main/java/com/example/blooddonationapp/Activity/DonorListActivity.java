@@ -29,7 +29,6 @@ import android.widget.Toast;
 
 import com.example.blooddonationapp.Adapter.DonorListAdapter;
 import com.example.blooddonationapp.Adapter.UserAdapter;
-import com.example.blooddonationapp.Adapter.UserModelAdapter;
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.Model.UserModel;

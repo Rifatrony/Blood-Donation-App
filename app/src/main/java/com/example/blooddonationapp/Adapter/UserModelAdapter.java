@@ -1,3 +1,4 @@
+/*
 package com.example.blooddonationapp.Adapter;
 
 import android.annotation.SuppressLint;
@@ -222,3 +223,4 @@ public class UserModelAdapter extends RecyclerView.Adapter<UserModelAdapter.User
         }
     }
 }
+*/

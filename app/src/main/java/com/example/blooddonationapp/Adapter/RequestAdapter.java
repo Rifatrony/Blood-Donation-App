@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
         return new RequestViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
         RequestModel data = requestModelList.get(position);
@@ -59,7 +61,47 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Delete Successfully", Toast.LENGTH_SHORT).show();
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.custom_dialog_layout);
+
+                dialog.show();
+                dialog.setCancelable(false);
+
+                Button btn_cancel, btn_delete;
+                btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                btn_delete = dialog.findViewById(R.id.btn_delete);
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Toast.makeText(context, "Current Uid is " + data.getUid(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "Request Uid is " + data.getRequest_uid(), Toast.LENGTH_SHORT).show();
+
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("Request").child(data.getUid())
+                                .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(context, "Request Deleted", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            Toast.makeText(context, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                        dialog.dismiss();
+                    }
+                });
+
             }
         });
 
@@ -73,17 +115,27 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 dialog.setContentView(R.layout.view_request_details);
 
                 dialog.show();
+                dialog.setCancelable(false);
 
-                TextView requestSenderNameTextView = dialog.findViewById(R.id.requestSenderNameTextView);
                 TextView patientProblemTextView = dialog.findViewById(R.id.patientProblemTextView);
                 TextView bloodAmountTextView = dialog.findViewById(R.id.bloodAmountTextView);
                 TextView donatDateTextView = dialog.findViewById(R.id.donatDateTextView);
-                AppCompatButton confirmRequestButton = dialog.findViewById(R.id.confirmRequestButton);
+                TextView donateAddressTextView = dialog.findViewById(R.id.donateAddressTextView);
+                Button confirmRequestButton = dialog.findViewById(R.id.confirmRequestButton);
+                Button cancelRequestButton = dialog.findViewById(R.id.cancelRequestButton);
 
-                requestSenderNameTextView.setText(data.getName());
+                //requestSenderNameTextView.setText(data.getName());
                 patientProblemTextView.setText("Patient Problem: "+data.getPatient_problem());
-                bloodAmountTextView.setText("Blood Amount: "+data.getBlood_amount());
-                donatDateTextView.setText("Donate Date: "+data.getDonate_date());
+                bloodAmountTextView.setText("Blood Amount: "+data.getBlood_amount() +" "+ data.getBlood_group());
+                donatDateTextView.setText("Donate Date: "+data.getDonate_date() + "   At " + data.getDonate_time());
+                donateAddressTextView.setText("Address: "+data.getDonate_location());
+
+                cancelRequestButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
 
                 confirmRequestButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -134,42 +186,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                         }
                     }
                 });
-
-                /*confirmRequestButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                        if (!data.getStatus().equals("ok")){
-
-                            HashMap hashMap = new HashMap();
-                            hashMap.put("status", "ok");
-
-                            DatabaseReference dbRequest = FirebaseDatabase.getInstance().getReference().child("Request").child(data.getUid()).child(data.getRequest_uid());
-                            dbRequest.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
-                            @Override
-                            public void onComplete(@NonNull Task task) {
-
-                                if (task.isSuccessful()){
-                                dbRequest.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(context, "You Confirm to donate Blood ", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-
-
-                        }
-                    });
-                }
-
-
-                    }
-                });*/
-
-
-
-
 
             }
         });
