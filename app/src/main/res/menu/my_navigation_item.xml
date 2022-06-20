@@ -30,6 +30,24 @@
         />
 
     <item
+        android:id="@+id/nav_add_coordinator"
+        android:title="Add Coordinator"
+        android:icon="@drawable/group"
+        />
+
+    <item
+        android:id="@+id/nav_add_organization"
+        android:title="Add Organization"
+        android:icon="@drawable/organization"
+        />
+
+    <item
+        android:id="@+id/nav_donate_record"
+        android:title="Donate Record"
+        android:icon="@drawable/organization"
+        />
+
+    <item
         android:id="@+id/nav_add_donor"
         android:title="Add New Donor"
         android:icon="@drawable/add"

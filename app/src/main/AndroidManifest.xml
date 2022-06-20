@@ -19,6 +19,21 @@
         android:theme="@style/Theme.BloodDonationApp"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.AddOrganizationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.DonateRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.OrganizationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.AddNewCoordinatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.CoordinatorActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SelectBloodGroupActivity"
             android:exported="false" />
         <activity

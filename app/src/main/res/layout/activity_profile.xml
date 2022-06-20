@@ -115,7 +115,7 @@
                             android:layout_weight="1"
                             android:padding="10dp"
                             android:textSize="18sp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/red"
                             android:gravity="center"
                             />
 
@@ -146,7 +146,7 @@
                             android:layout_weight="1"
                             android:padding="10dp"
                             android:textSize="18sp"
-                            android:textColor="@color/black"
+                            android:textColor="@color/blue"
                             android:gravity="center"
 
                             />

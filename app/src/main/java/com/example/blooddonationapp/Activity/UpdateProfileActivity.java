@@ -36,7 +36,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
     AppCompatButton updateButton;
     ProgressBar progressBar;
 
-    String name, number, last_donate, address;
+    String name, number, last_donate, next_donate, address;
 
     String update_name, update_number, update_address, update_last_donate;
 
@@ -48,6 +48,9 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
+
+        next_donate = getIntent().getStringExtra("next_donate");
+        System.out.println(next_donate);
 
         initialization();
         setListener();
@@ -115,12 +118,6 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                     }catch (Exception e){
                         Toast.makeText(UpdateProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    
-                    /*String et_name = nameEditText.getText().toString();
-                    HashMap updateProfile = new HashMap<>();
-                    updateProfile.put("name", et_name);
-                    System.out.println("Name is = > " + name);*/
-
                 }
             }
 
@@ -182,6 +179,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         updateMap.put("number", update_number);
         updateMap.put("last_donate", update_last_donate);
         updateMap.put("address", update_address);
+        updateMap.put("next_donate", next_donate);
         //updateMap.put("name", update_name);
 
 

@@ -24,10 +24,13 @@ import android.widget.Toast;
 import com.example.blooddonationapp.Activity.AcceptRequestActivity;
 import com.example.blooddonationapp.Activity.AddNewDonorActivity;
 import com.example.blooddonationapp.Activity.BloodRequestActivity;
+import com.example.blooddonationapp.Activity.CoordinatorActivity;
+import com.example.blooddonationapp.Activity.DonateRecordActivity;
 import com.example.blooddonationapp.Activity.DonorListActivity;
 import com.example.blooddonationapp.Activity.GroupWiseBloodActivity;
 import com.example.blooddonationapp.Activity.LoginActivity;
 import com.example.blooddonationapp.Activity.MapActivity;
+import com.example.blooddonationapp.Activity.OrganizationActivity;
 import com.example.blooddonationapp.Activity.ProfileActivity;
 import com.example.blooddonationapp.Activity.RequestActivity;
 import com.example.blooddonationapp.Activity.SearchLocationActivity;
@@ -199,53 +202,17 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), AddNewDonorActivity.class));
                         break;
 
-                   /* case R.id.nav_A_positive:
-                        Intent intent1 = new Intent(getApplicationContext(), RequestActivity.class);
-                        intent1.putExtra("group", "A+");
-                        startActivity(intent1);
+                    case R.id.nav_add_coordinator:
+                        startActivity(new Intent(getApplicationContext(), CoordinatorActivity.class));
                         break;
 
-                    case R.id.nav_B_positive:
-                        Intent intent2 = new Intent(getApplicationContext(), RequestActivity.class);
-                        intent2.putExtra("group", "B+");
-                        startActivity(intent2);
+                    case R.id.nav_add_organization:
+                        startActivity(new Intent(getApplicationContext(), OrganizationActivity.class));
                         break;
 
-                    case R.id.nav_AB_positive:
-                        Intent intent3 = new Intent(getApplicationContext(), RequestActivity.class);
-                        intent3.putExtra("group", "AB+");
-                        startActivity(intent3);
+                    case R.id.nav_donate_record:
+                        startActivity(new Intent(getApplicationContext(), DonateRecordActivity.class));
                         break;
-
-                    case R.id.nav_O_positive:
-                        Intent intent4 = new Intent(getApplicationContext(), RequestActivity.class);
-                        intent4.putExtra("group", "O+");
-                        startActivity(intent4);
-                        break;
-
-                    case R.id.nav_A_negative:
-                        Intent intent5 = new Intent(getApplicationContext(), RequestActivity.class);
-                        intent5.putExtra("group", "A-");
-                        startActivity(intent5);
-                        break;
-
-                    case R.id.nav_B_negative:
-                        Intent intent6 = new Intent(getApplicationContext(), RequestActivity.class);
-                        intent6.putExtra("group", "B-");
-                        startActivity(intent6);
-                        break;
-
-                    case R.id.nav_AB_negative:
-                        Intent intent7 = new Intent(getApplicationContext(), RequestActivity.class);
-                        intent7.putExtra("group", "AB-");
-                        startActivity(intent7);
-                        break;
-
-                    case R.id.nav_O_negative:
-                        Intent intent8 = new Intent(getApplicationContext(), RequestActivity.class);
-                        intent8.putExtra("group", "O-");
-                        startActivity(intent8);
-                        break;*/
 
                     case R.id.nav_profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));

@@ -145,7 +145,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                                 dbRequest.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(context, "You Confirm to Donate Blood", Toast.LENGTH_SHORT).show();
 
                                         HashMap acceptRequest = new HashMap();
                                         acceptRequest.put("name", data.getName());

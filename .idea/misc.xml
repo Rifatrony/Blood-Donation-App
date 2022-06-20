@@ -18,14 +18,19 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/accept_request_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_accept_request.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_account_type.xml" value="0.25416666666666665" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_add_new_coordinator.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_add_new_donor.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_add_organization.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_blood_request.xml" value="0.22" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_coordinator.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_donate_record.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_donor_list.xml" value="0.16" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_edit_profile.xml" value="0.25025641025641027" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_group_wise_blood.xml" value="0.16" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_login.xml" value="0.25025641025641027" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_map.xml" value="0.17" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_organization.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_profile.xml" value="0.22" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_recipient.xml" value="0.25" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_register.xml" value="0.22" />
@@ -36,6 +41,7 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_update_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_view_request.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_view_sent_request.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/coordiantor_details_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/custom_dialog_layout.xml" value="0.203125" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/donor_list_layout.xml" value="0.2" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/nav_header.xml" value="0.25416666666666665" />
@@ -45,7 +51,7 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/user_profile_layout.xml" value="0.16" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/view_request_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/view_sent_request_layout.xml" value="0.22" />
-        <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/my_navigation_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/my_navigation_item.xml" value="0.25" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/profile_navigation.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/select_menu.xml" value="0.22" />
         <entry key="..\:/BloodDonationApp/app/src/main/res/drawable/background_input.xml" value="0.1645" />

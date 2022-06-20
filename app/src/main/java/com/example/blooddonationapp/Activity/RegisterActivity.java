@@ -350,6 +350,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 userInfo.put("longitude", String.valueOf(Longitude));
                 userInfo.put("latitude", String.valueOf(latitude));
                 userInfo.put("address", address1);
+                userInfo.put("last_donate", "");
+                userInfo.put("next_donate", "");
                 //userInfo.put("type", "donor");
                 //userInfo.put("search", "donor" + blood_group);
                 userInfo.put("token", token);

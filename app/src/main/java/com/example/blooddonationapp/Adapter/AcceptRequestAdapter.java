@@ -19,6 +19,9 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
     Context context;
     List<AcceptRequestModel> acceptRequestModelList;
 
+    public AcceptRequestAdapter() {
+    }
+
     public AcceptRequestAdapter(Context context, List<AcceptRequestModel> acceptRequestModelList) {
         this.context = context;
         this.acceptRequestModelList = acceptRequestModelList;

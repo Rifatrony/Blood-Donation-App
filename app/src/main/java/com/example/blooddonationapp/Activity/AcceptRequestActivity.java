@@ -57,7 +57,7 @@ public class AcceptRequestActivity extends AppCompatActivity implements View.OnC
 
         user_id = user.getUid();
 
-        System.out.println("\n\n\n\nUSer is " + user_id);
+        System.out.println("\n\n\n\nUser is " + user_id);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
@@ -81,7 +81,6 @@ public class AcceptRequestActivity extends AppCompatActivity implements View.OnC
                     if (acceptRequestModel.getUid().equals(user.getUid())){
                         acceptRequestModelList.add(acceptRequestModel);
                     }
-                    acceptRequestModelList.add(acceptRequestModel);
 
                 }
                 adapter.notifyDataSetChanged();
