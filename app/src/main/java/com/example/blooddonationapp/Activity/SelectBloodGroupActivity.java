@@ -73,48 +73,56 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
                 Intent intent1 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent1.putExtra("group", "A+");
                 startActivity(intent1);
+                finish();
                 break;
 
             case R.id.B_Positive:
                 Intent intent2 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent2.putExtra("group", "B+");
                 startActivity(intent2);
+                finish();
                 break;
 
             case R.id.AB_Positive:
                 Intent intent3 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent3.putExtra("group", "AB+");
                 startActivity(intent3);
+                finish();
                 break;
 
             case R.id.O_Positive:
                 Intent intent4 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent4.putExtra("group", "O+");
                 startActivity(intent4);
+                finish();
                 break;
 
             case R.id.A_Negative:
                 Intent intent5 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent5.putExtra("group", "A-");
                 startActivity(intent5);
+                finish();
                 break;
 
             case R.id.B_Negative:
                 Intent intent6 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent6.putExtra("group", "B-");
                 startActivity(intent6);
+                finish();
                 break;
 
             case R.id.AB_Negative:
                 Intent intent7 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent7.putExtra("group", "AB-");
                 startActivity(intent7);
+                finish();
                 break;
 
             case R.id.O_Negative:
                 Intent intent8 = new Intent(getApplicationContext(), SearchLocationActivity.class);
                 intent8.putExtra("group", "O-");
                 startActivity(intent8);
+                finish();
                 break;
         }
     }

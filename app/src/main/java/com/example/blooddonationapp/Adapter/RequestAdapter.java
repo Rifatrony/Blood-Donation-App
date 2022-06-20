@@ -71,12 +71,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 btn_cancel = dialog.findViewById(R.id.btn_cancel);
                 btn_delete = dialog.findViewById(R.id.btn_delete);
 
-                btn_cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
+                btn_cancel.setOnClickListener(view1 -> dialog.dismiss());
                 btn_delete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -86,15 +81,13 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
                         FirebaseDatabase.getInstance().getReference()
                                 .child("Request").child(data.getUid())
-                                .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()){
-                                            Toast.makeText(context, "Request Deleted", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
-                                            Toast.makeText(context, task.getException().toString(), Toast.LENGTH_SHORT).show();
-                                        }
+                                .removeValue().addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(context, "Request Deleted", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else {
+                                        Toast.makeText(context, task.getException().toString(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -137,53 +130,47 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     }
                 });
 
-                confirmRequestButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                        if (!data.getStatus().equals("ok")){
-                            HashMap hashMap = new HashMap();
-                            hashMap.put("status", "ok");
+                confirmRequestButton.setOnClickListener(view12 -> {
+                    dialog.dismiss();
+                    if (!data.getStatus().equals("ok")){
+                        HashMap hashMap = new HashMap();
+                        hashMap.put("status", "ok");
 
-                            DatabaseReference dbRequest = FirebaseDatabase.getInstance().getReference()
-                                    .child("Request").child(data.getUid()).child(data.getRequest_uid());
+                        DatabaseReference dbRequest = FirebaseDatabase.getInstance().getReference()
+                                .child("Request").child(data.getUid()).child(data.getRequest_uid());
 
-                            dbRequest.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
-                                @Override
-                                public void onComplete(@NonNull Task task) {
-                                    if (task.isSuccessful()){
+                        dbRequest.updateChildren(hashMap).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()){
 
-                                        dbRequest.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                dbRequest.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Toast.makeText(context, "You Confirm to Donate Blood", Toast.LENGTH_SHORT).show();
+
+                                        HashMap acceptRequest = new HashMap();
+                                        acceptRequest.put("name", data.getName());
+                                        acceptRequest.put("message", " accept your request to donate 1 Bag " );
+                                        acceptRequest.put("blood_group", data.getBlood_group()+" blood.");
+                                        acceptRequest.put("uid", data.getRequest_uid());
+
+                                        System.out.println("\n\nUid is " + data.getUid());
+
+                                        DatabaseReference dbAcceptRequest = FirebaseDatabase.getInstance().getReference()
+                                                .child("Accept Request").child(data.getRequest_uid()).child(data.getUid());
+
+                                        dbAcceptRequest.updateChildren(acceptRequest).addOnCompleteListener(new OnCompleteListener() {
                                             @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(context, "You Confirm to Donate Blood", Toast.LENGTH_SHORT).show();
-
-                                                HashMap acceptRequest = new HashMap();
-                                                acceptRequest.put("name", data.getName());
-                                                acceptRequest.put("message", " accept your request to donate 1 Bag " );
-                                                acceptRequest.put("blood_group", data.getBlood_group()+" blood.");
-                                                acceptRequest.put("uid", data.getRequest_uid());
-
-                                                System.out.println("\n\nUid is " + data.getUid());
-
-                                                DatabaseReference dbAcceptRequest = FirebaseDatabase.getInstance().getReference()
-                                                        .child("Accept Request").child(data.getRequest_uid()).child(data.getUid());
-
-                                                dbAcceptRequest.updateChildren(acceptRequest).addOnCompleteListener(new OnCompleteListener() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task task) {
-                                                        if (task.isSuccessful()){
-                                                            Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                });
+                                            public void onComplete(@NonNull Task task) {
+                                                if (task.isSuccessful()){
+                                                    Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
                                         });
                                     }
-                                }
-                            });
+                                });
+                            }
+                        });
 
-                        }
                     }
                 });
 

@@ -35,7 +35,7 @@
                 android:layout_marginStart="8dp"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="View Send Request"
+                android:text="Send Request"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -62,7 +62,7 @@
                 app:layout_constraintHorizontal_bias="0.448"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.428" />
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="No Request Found"
+                    android:text="No Sent Request"
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView

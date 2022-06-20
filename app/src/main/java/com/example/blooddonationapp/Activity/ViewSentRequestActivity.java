@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ import java.util.List;
 public class ViewSentRequestActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView viewYourRequestTextView;
+    ProgressBar progressBar;
+    TextView noRequestFoundTextView;
 
     AppCompatImageView imageBack;
     FirebaseAuth mAuth;
@@ -70,22 +73,27 @@ public class ViewSentRequestActivity extends AppCompatActivity implements View.O
         dbRequestId.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                requestModelList.clear();
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
                     RequestIdModel data = dataSnapshot.getValue(RequestIdModel.class);
                     requestSentUid = data.getUid().toString();
-                    Toast.makeText(ViewSentRequestActivity.this, "Request send to  " + requestSentUid, Toast.LENGTH_SHORT).show();
 
-                    dbViewRequest = FirebaseDatabase.getInstance().getReference().child("Request").child(requestSentUid);
+                    dbViewRequest = FirebaseDatabase.getInstance().getReference()
+                            .child("Request").child(requestSentUid);
                     dbViewRequest.addValueEventListener(new ValueEventListener() {
                         @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            requestModelList.clear();
+
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                                 RequestModel user = dataSnapshot.getValue(RequestModel.class);
+                                if (!user.getUid().equals(mAuth.getUid())){
+                                    requestModelList.add(user);
+                                }
 
-                                requestModelList.add(user);
+
 
                             }
                             adapter.notifyDataSetChanged();

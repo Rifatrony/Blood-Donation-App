@@ -108,25 +108,10 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
         recipient_number = getIntent().getStringExtra("recipient_number");
         reference = getIntent().getStringExtra("reference");
 
-        /*System.out.println("Get Latitude is ============== > "+lat +"\n");
-        System.out.println("Get Longitude is ============== > "+lng +"\n");
-        System.out.println("Blood Group is ==== > "+blood_group +"\n");
-        System.out.println("blood_amount is ==== > "+blood_amount +"\n");
-        System.out.println("donate_date is ==== > "+donate_date +"\n");
-        System.out.println("donate_time is ==== > "+donate_time +"\n");
-        System.out.println("donate_location is ==== > "+donate_location +"\n");
-        System.out.println("recipient_number is ==== > "+recipient_number +"\n");
-        System.out.println("reference is ==== > "+reference +"\n");
-        bloodGroupTextView.setText(blood_group +" Donor List");*/
-
         searchLatitude = Double.parseDouble(lat);
         searchLongitude = Double.parseDouble(lng);
 
-        /*System.out.println("\n\n\n\nConvert Latitude to double" + searchLatitude);
-        System.out.println("Convert Longitude to double" + searchLongitude);*/
-
         Date c = Calendar.getInstance().getTime();
-
 
         if (ContextCompat.checkSelfPermission(GroupWiseBloodActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -195,7 +180,6 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                                             sendRequestButton.setVisibility(View.VISIBLE);
                                         }
                                     }
-
                                     adapter.notifyDataSetChanged();
 
                                     if (userList.isEmpty()) {
@@ -203,28 +187,6 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                                         noDonorFoundTextView.setVisibility(View.VISIBLE);
                                         sendRequestButton.setVisibility(View.INVISIBLE);
                                     }
-
-                                    /*DatabaseReference dbStatus = FirebaseDatabase.getInstance()
-                                            .getReference().child("Request").child(user.getId());*/
-
-                                    /*dbStatus.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            for (DataSnapshot dataSnapshot1 : snapshot.getChildren()){
-                                                RequestModel requestModel = dataSnapshot1.getValue(RequestModel.class);
-
-
-
-                                            }
-
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });*/
-
                                 }
                             }
 
@@ -278,7 +240,7 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
 
                     if (user.getId().equals(firebaseUser.getUid())){
                         current_user_name = user.getName();
-                        message = current_user_name +" Request you for "+blood_amount+" "+ user.getBlood_group() + " at " + donate_location;
+                        message = current_user_name +" Request for "+blood_amount+" "+ user.getBlood_group() + " at " + donate_location;
 
                     }
 
@@ -321,7 +283,9 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                             @Override
                             public void onComplete(@NonNull Task task) {
                                 if (task.isSuccessful()){
-                                    startActivity(new Intent(getApplicationContext(), ViewSentRequestActivity.class));
+
+                                    // here have to write the code of notification send
+                                    finish();
                                     Toast.makeText(GroupWiseBloodActivity.this, "You sent Blood Request", Toast.LENGTH_SHORT).show();
                                 }
                             }

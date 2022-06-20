@@ -43,12 +43,13 @@ public class ViewSentRequestAdapter extends RecyclerView.Adapter<ViewSentRequest
         return new ViewSentRequestViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewSentRequestViewHolder holder, int position) {
         RequestModel data = requestModelList.get(position);
         holder.nameTextView.setText(data.getName());
-        holder.messageTextView.setText(data.getMessage());
-        holder.requestTimeTextView.setText(data.getCurrent_time());
+        holder.messageTextView.setText("You send a request to "+data.getName()+" for " + data.getBlood_amount()+" "+data.getBlood_group() + " blood At "+ data.getDonate_location());
+        holder.requestTimeTextView.setText(data.getCurrent_time()+" s");
 
         holder.cancel_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,12 +89,12 @@ public class ViewSentRequestAdapter extends RecyclerView.Adapter<ViewSentRequest
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()){
-
-                                            notifyDataSetChanged();
                                             Toast.makeText(context, "Request Cancel Successfully", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
+
+
 
                         dialog.dismiss();
                     }

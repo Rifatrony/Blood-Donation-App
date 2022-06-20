@@ -63,39 +63,43 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
                 String location = searchLocation.getQuery().toString();
                 List<Address> addressList = null;
 
-                if (location != null && !location.equals("")) {
+                try {
+                    if (location != null && !location.equals("")) {
 
-                    try {
-                        Geocoder geocoder = new Geocoder(SearchLocationActivity.this);
-                        addressList = geocoder.getFromLocationName(location, 1);
-                        searchText = searchLocation.getQuery().toString();
-                        System.out.println("Search Text is " + searchText);
-                        //Toast.makeText(SearchLocationActivity.this, addressList.get(0).getLocality()+" is Address Of search", Toast.LENGTH_SHORT).show();
+                        try {
+                            Geocoder geocoder = new Geocoder(SearchLocationActivity.this);
+                            addressList = geocoder.getFromLocationName(location, 1);
+                            searchText = searchLocation.getQuery().toString();
+                            System.out.println("Search Text is " + searchText);
+                            //Toast.makeText(SearchLocationActivity.this, addressList.get(0).getLocality()+" is Address Of search", Toast.LENGTH_SHORT).show();
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Address address = addressList.get(0);
-                    searchLat = address.getLatitude();
-                    searchLng = address.getLongitude();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Address address = addressList.get(0);
+                        searchLat = address.getLatitude();
+                        searchLng = address.getLongitude();
 
-                    //Toast.makeText(SearchLocationActivity.this, "Search Latitude is " + searchLat, Toast.LENGTH_SHORT).show();
-                    //Toast.makeText(SearchLocationActivity.this, "Search Longitude is " + searchLng, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SearchLocationActivity.this, "Search Latitude is " + searchLat, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SearchLocationActivity.this, "Search Longitude is " + searchLng, Toast.LENGTH_SHORT).show();
                     /*LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     map.addMarker(new MarkerOptions().position(latLng).title(location));
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18));*/
 
-                    Intent intent = new Intent(getApplicationContext(), RequestActivity.class);
-                    intent.putExtra("lat", String.valueOf(searchLat));
-                    intent.putExtra("lng", String.valueOf(searchLng));
-                    intent.putExtra("group", String.valueOf(blood_group));
-                    intent.putExtra("address", String.valueOf(searchText));
-                    startActivity(intent);
-                    finish();
+                        Intent intent = new Intent(getApplicationContext(), RequestActivity.class);
+                        intent.putExtra("lat", String.valueOf(searchLat));
+                        intent.putExtra("lng", String.valueOf(searchLng));
+                        intent.putExtra("group", String.valueOf(blood_group));
+                        intent.putExtra("address", String.valueOf(searchText));
+                        startActivity(intent);
+                        finish();
 
-                }
-                else {
-                    Toast.makeText(SearchLocationActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(SearchLocationActivity.this, "Not Found", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    Toast.makeText(SearchLocationActivity.this, "No Address Found", Toast.LENGTH_SHORT).show();
                 }
 
                 return false;
