@@ -93,8 +93,6 @@ public class ViewSentRequestActivity extends AppCompatActivity implements View.O
                                     requestModelList.add(user);
                                 }
 
-
-
                             }
                             adapter.notifyDataSetChanged();
 

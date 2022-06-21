@@ -1,6 +1,9 @@
 package com.example.blooddonationapp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +40,25 @@ public class CoordinatorAdapter extends RecyclerView.Adapter<CoordinatorAdapter.
         return new CoordinatorViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CoordinatorViewHolder holder, int position) {
         CoordinatorModel data = coordinatorModelList.get(position);
         holder.nameTextView.setText(data.getName());
         holder.numberTextView.setText(data.getNumber());
+        holder.totalMemberTextView.setText(data.getAddress());
+
+        holder.callCoordinatorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                //intent.setData(Uri.parse("tel:+8801772333793"));
+
+                String num = "tel:"+data.getNumber();
+                intent.setData(Uri.parse(num));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -51,7 +68,7 @@ public class CoordinatorAdapter extends RecyclerView.Adapter<CoordinatorAdapter.
 
     public class CoordinatorViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTextView, numberTextView;
+        TextView nameTextView, numberTextView, totalMemberTextView;
         AppCompatImageView callCoordinatorButton;
 
         public CoordinatorViewHolder(@NonNull View itemView) {
@@ -59,6 +76,7 @@ public class CoordinatorAdapter extends RecyclerView.Adapter<CoordinatorAdapter.
 
             nameTextView = itemView.findViewById(R.id.nameTextView);
             numberTextView = itemView.findViewById(R.id.numberTextView);
+            totalMemberTextView = itemView.findViewById(R.id.totalMemberTextView);
             callCoordinatorButton = itemView.findViewById(R.id.callCoordinatorButton);
 
         }

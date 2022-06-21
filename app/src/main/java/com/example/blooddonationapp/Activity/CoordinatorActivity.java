@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.blooddonationapp.Adapter.CoordinatorAdapter;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.CoordinatorModel;
+import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +43,8 @@ public class CoordinatorActivity extends AppCompatActivity implements View.OnCli
     FirebaseUser user;
     String added_by;
 
+    DatabaseReference dbRole;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,36 @@ public class CoordinatorActivity extends AppCompatActivity implements View.OnCli
 
         initialization();
         setListener();
+
+        dbRole = FirebaseDatabase.getInstance().getReference().child("User");
+        dbRole.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    User user = dataSnapshot.getValue(User.class);
+
+                    if (user.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                        if (user.getRole().equals("user")){
+                            fabAddCoordinator.setVisibility(View.INVISIBLE);
+                        } else {
+                            fabAddCoordinator.setVisibility(View.VISIBLE);
+                        }
+
+                        Toast.makeText(CoordinatorActivity.this, user.getRole(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 

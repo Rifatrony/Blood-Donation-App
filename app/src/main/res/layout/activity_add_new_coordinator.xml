@@ -110,6 +110,22 @@
                         android:textSize="13sp"
                         />
 
+                    <EditText
+                        android:id="@+id/coordinatorAddressEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/background_input"
+                        android:hint="Address"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:inputType="textAutoCorrect"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        />
+
 
                     <FrameLayout
                         android:layout_width="match_parent"

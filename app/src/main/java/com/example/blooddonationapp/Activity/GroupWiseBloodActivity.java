@@ -59,7 +59,7 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
     UserAdapter adapter;
 
     String blood_group, patient_problem, blood_amount, donate_date,
-            donate_time, donate_location, recipient_number, reference;
+            donate_time, donate_location, recipient_number, reference, number;
 
     String lat, lng;
 
@@ -178,6 +178,8 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                                             userList.add(user);
                                             noDonorFoundTextView.setVisibility(View.INVISIBLE);
                                             sendRequestButton.setVisibility(View.VISIBLE);
+                                            number = user.getNumber();
+                                            Toast.makeText(GroupWiseBloodActivity.this, user.getNumber(), Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                     adapter.notifyDataSetChanged();
@@ -278,6 +280,7 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                         request.put("name", name);
                         request.put("status", "pending");
                         request.put("uid", uid);
+                        request.put("number", number);
                         request.put("request_uid", currentUserId);
                         dbRequest.updateChildren(request).addOnCompleteListener(new OnCompleteListener() {
                             @Override

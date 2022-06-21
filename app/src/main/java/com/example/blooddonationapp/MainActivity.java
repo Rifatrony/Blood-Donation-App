@@ -27,13 +27,9 @@ import com.example.blooddonationapp.Activity.BloodRequestActivity;
 import com.example.blooddonationapp.Activity.CoordinatorActivity;
 import com.example.blooddonationapp.Activity.DonateRecordActivity;
 import com.example.blooddonationapp.Activity.DonorListActivity;
-import com.example.blooddonationapp.Activity.GroupWiseBloodActivity;
 import com.example.blooddonationapp.Activity.LoginActivity;
-import com.example.blooddonationapp.Activity.MapActivity;
 import com.example.blooddonationapp.Activity.OrganizationActivity;
 import com.example.blooddonationapp.Activity.ProfileActivity;
-import com.example.blooddonationapp.Activity.RequestActivity;
-import com.example.blooddonationapp.Activity.SearchLocationActivity;
 import com.example.blooddonationapp.Activity.SelectBloodGroupActivity;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.User;
@@ -44,13 +40,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
-    String email, password;
     String h_name, h_number, h_blood_group, h_type;
 
     FirebaseAuth mAuth;
@@ -82,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     TextView noDataFoundTextView;
 
     String current_time;
+    String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initialization();
+
+        /*Check Location Permission start*/
 
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -102,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /*Check Location Permission end*/
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -133,6 +128,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("User");
+
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    User user = dataSnapshot.getValue(User.class);
+
+                    if (user.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                        if (user.getRole().equals("user")){
+
+                            navigationView.getMenu().clear();
+                            navigationView.inflateMenu(R.menu.user_menu);
+
+                        } else {
+                            navigationView.getMenu().clear();
+                            navigationView.inflateMenu(R.menu.admin_menu);
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         /*Header Start*/
         userRef.addValueEventListener(new ValueEventListener() {
@@ -148,21 +177,6 @@ public class MainActivity extends AppCompatActivity {
 
                     h_blood_group = snapshot.child("blood_group").getValue().toString();
                     header_blood_group.setText(h_blood_group);
-                    /*try {
-                        h_name = snapshot.child("name").getValue().toString();
-                        header_name.setText(h_name);
-
-                        h_number = snapshot.child("number").getValue().toString();
-                        header_number.setText(h_number);
-
-                        h_blood_group = snapshot.child("blood_group").getValue().toString();
-                        header_blood_group.setText(h_blood_group);
-
-                    }catch (Exception e){
-                        Toast.makeText(MainActivity.this, "Exception Found "+e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                    }
-*/
-
                 }
             }
 
@@ -171,6 +185,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        /*Header Closed*/
+
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
@@ -187,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_search_location:
+
                         startActivity(new Intent(getApplicationContext(), SelectBloodGroupActivity.class));
                         break;
 
@@ -207,6 +226,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_add_organization:
+                        setVisible(true);
+                        //setVisibility(View.VISIBLE);
                         startActivity(new Intent(getApplicationContext(), OrganizationActivity.class));
                         break;
 
@@ -240,7 +261,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

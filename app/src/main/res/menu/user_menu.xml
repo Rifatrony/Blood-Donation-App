@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    >
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/profile"
+        android:title="Profile"
+        />
+
+    <item
+        android:id="@+id/nav_blood_request"
+        android:title="My Request"
+        android:icon="@drawable/request"
+        />
+
+
+    <item
+        android:id="@+id/nav_accept_request"
+        android:title="Accept Request"
+        android:icon="@drawable/accept"
+        />
+
+    <item
+        android:id="@+id/nav_add_coordinator"
+        android:title="Coordinator List"
+        android:icon="@drawable/group"
+        />
+
+    <item
+        android:id="@+id/nav_add_organization"
+        android:title="Organization List"
+        android:icon="@drawable/organization"
+        />
+
+    <item
+        android:id="@+id/nav_search_location"
+        android:title="Search Blood"
+        android:icon="@drawable/search"
+        />
+
+    <item
+        android:id="@+id/nav_donate_record"
+        android:title="Donate Record"
+        android:icon="@drawable/organization"
+        />
+
+    <item
+        android:id="@+id/nav_DonorList"
+        android:title="Donor List"
+        android:icon="@drawable/list"
+        android:iconTint="@color/black"
+        />
+
+
+    <!--Communication Section-->
+
+    <item
+        android:title="Communicate">
+        <menu>
+            <!--<item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/share"
+                android:title="Share"
+                />
+
+            <item
+                android:id="@+id/nav_contact"
+                android:icon="@drawable/contact_us"
+                android:title="Contact"
+                />
+
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/feedback"
+                android:title="Feedback"
+                />-->
+
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/logout"
+                android:title="Logout"
+                />
+
+            <!--<item
+                android:id="@+id/nav_about_us"
+                android:icon="@drawable/about_us"
+                android:title="About Us"
+                />-->
+
+        </menu>
+    </item>
+
+
+
+</menu>

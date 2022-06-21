@@ -2,16 +2,17 @@ package com.example.blooddonationapp.Model;
 
 public class OrganizationModel {
 
-    String name, number, uid, added_by;
+    String name, number, uid, added_by, total_member;
 
     public OrganizationModel() {
     }
 
-    public OrganizationModel(String name, String number, String uid, String added_by) {
+    public OrganizationModel(String name, String number, String uid, String added_by, String total_member) {
         this.name = name;
         this.number = number;
         this.uid = uid;
         this.added_by = added_by;
+        this.total_member = total_member;
     }
 
     public String getName() {
@@ -44,5 +45,13 @@ public class OrganizationModel {
 
     public void setAdded_by(String added_by) {
         this.added_by = added_by;
+    }
+
+    public String getTotal_member() {
+        return total_member;
+    }
+
+    public void setTotal_member(String total_member) {
+        this.total_member = total_member;
     }
 }

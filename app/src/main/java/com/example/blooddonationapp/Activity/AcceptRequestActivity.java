@@ -78,7 +78,7 @@ public class AcceptRequestActivity extends AppCompatActivity implements View.OnC
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     AcceptRequestModel acceptRequestModel = dataSnapshot.getValue(AcceptRequestModel.class);
 
-                    if (acceptRequestModel.getUid().equals(user.getUid())){
+                    if (acceptRequestModel.getMy_uid().equals(user.getUid())){
                         acceptRequestModelList.add(acceptRequestModel);
                     }
 

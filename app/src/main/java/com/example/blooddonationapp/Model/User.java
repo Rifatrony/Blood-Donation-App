@@ -2,13 +2,13 @@ package com.example.blooddonationapp.Model;
 
 public class User {
 
-    String name, number, email, password, confirm_password, country, blood_group, dob, longitude, latitude, last_donate
-            ,address, type, search, id, token;
+    String name, number, email, password, confirm_password, country, blood_group, dob, longitude,
+            latitude, last_donate,address, type, search, id, token, organization, role, total_member;
 
     public User() {
     }
 
-    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String last_donate, String address, String type, String search, String id, String token) {
+    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String last_donate, String address, String type, String search, String id, String token, String organization, String role, String total_member) {
         this.name = name;
         this.number = number;
         this.email = email;
@@ -25,6 +25,9 @@ public class User {
         this.search = search;
         this.id = id;
         this.token = token;
+        this.organization = organization;
+        this.role = role;
+        this.total_member = total_member;
     }
 
     public String getName() {
@@ -153,5 +156,29 @@ public class User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getTotal_member() {
+        return total_member;
+    }
+
+    public void setTotal_member(String total_member) {
+        this.total_member = total_member;
     }
 }

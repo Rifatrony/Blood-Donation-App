@@ -123,12 +123,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 donatDateTextView.setText("Donate Date: "+data.getDonate_date() + "   At " + data.getDonate_time());
                 donateAddressTextView.setText("Address: "+data.getDonate_location());
 
-                cancelRequestButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
+                cancelRequestButton.setOnClickListener(view13 -> dialog.dismiss());
 
                 confirmRequestButton.setOnClickListener(view12 -> {
                     dialog.dismiss();
@@ -150,7 +145,14 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                                         acceptRequest.put("name", data.getName());
                                         acceptRequest.put("message", " accept your request to donate 1 Bag " );
                                         acceptRequest.put("blood_group", data.getBlood_group()+" blood.");
-                                        acceptRequest.put("uid", data.getRequest_uid());
+                                        acceptRequest.put("my_uid", data.getRequest_uid());
+                                        acceptRequest.put("accepted_uid", data.getUid());
+                                        acceptRequest.put("blood_amount", data.getBlood_amount());
+                                        acceptRequest.put("donate_location", data.getDonate_location());
+                                        acceptRequest.put("donate_time", data.getDonate_time());
+                                        acceptRequest.put("patient_problem", data.getPatient_problem());
+                                        acceptRequest.put("recipient_number", data.getRecipient_number());
+                                        acceptRequest.put("number", data.getNumber());
 
                                         System.out.println("\n\nUid is " + data.getUid());
 

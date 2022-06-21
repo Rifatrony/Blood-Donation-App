@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.MainActivity;
+import com.example.blooddonationapp.Model.OrganizationModel;
 import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -40,12 +41,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hbb20.CountryCodePicker;
+import com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +65,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     TextView haveAccountTextView;
     EditText nameEditText, emailEditText, phoneNumberEditText, passwordEditText,
             confirmPasswordEditText, dobEditText, addressEditText;
+
+    Spinner organizationSpinner;
 
     TextView longitudeTextView, latitudeTextView;
 
@@ -75,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     CountryCodePicker countryCodePicker;
 
-    String ccp, name, email, number, password, confirm_password, dob, address, blood_group, token;
+    String ccp, name, email, number, password, confirm_password, dob, address, blood_group, token, organization;
     String uid;
 
     ArrayAdapter<String> adapter;
@@ -88,6 +96,18 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     FusedLocationProviderClient fusedLocationProviderClient;
 
+    DatabaseReference dbOrganization;
+    List<String> organizationList;
+    ArrayAdapter<String> organizationAdapter;
+    String selectedOrganizationUid = null;
+    ArrayList<String> organizationUidList;
+    ArrayList<String> organizationNameList;
+    ArrayList<String> organizationTotalMember;
+
+    String totalMember, organizationName;
+    int intTotal = 0;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +115,43 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         initialization();
         setListener();
+
+        organizationList = new ArrayList<>();
+        organizationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, organizationList);
+        organizationSpinner.setAdapter(organizationAdapter);
+
+        organizationUidList = new ArrayList<>();
+        organizationNameList = new ArrayList<>();
+        organizationTotalMember = new ArrayList<>();
+
+        dbOrganization.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                organizationList.clear();
+                for (DataSnapshot medicineCategory : snapshot.getChildren()){
+
+                    OrganizationModel data = medicineCategory.getValue(OrganizationModel.class);
+
+                    if (data != null)
+                    {
+                        organizationList.add(data.getName());
+                        organizationUidList.add(data.getUid());
+                        organizationTotalMember.add(data.getTotal_member());
+                        //Toast.makeText(RegisterActivity.this, "Count is " + data.getTotal_member(), Toast.LENGTH_SHORT).show();
+                    }
+                    //supplierList.add(Objects.requireNonNull(menudata.getValue()).toString());
+                }
+
+                setOrganization(organizationList, organizationUidList, organizationTotalMember);
+                organizationAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -216,15 +273,45 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         // Get new FCM registration token
                         token = task.getResult();
 
-                        Toast.makeText(RegisterActivity.this, token, Toast.LENGTH_SHORT).show();
                         System.out.println("Token is : " + token);
                     }
                 });
 
     }
 
+    private void setOrganization(List<String> organizationList, ArrayList<String> organizationUidList, ArrayList<String> organizationTotalMember) {
+        organizationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, organizationList);
+        organizationSpinner.setAdapter(organizationAdapter);
+
+        organizationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                totalMember = organizationTotalMember.get(i);
+                organizationName = organizationList.get(i);
+
+                selectedOrganizationUid = organizationUidList.get(i);
+
+                Toast.makeText(RegisterActivity.this, "Total member is "  + totalMember + " of " + organizationName, Toast.LENGTH_SHORT).show();
+
+                //selectedAccountUid = parAccountBalance;
+                System.out.println("Selected Account Uid----->"+selectedOrganizationUid);
+                Toast.makeText(RegisterActivity.this, "Clicked is " + selectedOrganizationUid, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+    }
+
     private void initialization(){
 
+        dbOrganization = FirebaseDatabase.getInstance().getReference().child("Organization");
+
+        organizationSpinner = findViewById(R.id.organizationSpinner);
         radioGroup = findViewById(R.id.radioGroup);
 
         progressBar = findViewById(R.id.progressBar);
@@ -286,6 +373,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void checkValidation() {
+        if (organizationSpinner.getSelectedItemPosition()<0){
+            organization = "";
+
+            totalMember = "";
+
+        }
+        else {
+            organization = organizationSpinner.getSelectedItem().toString();
+        }
+
         name = nameEditText.getText().toString().trim();
         email = emailEditText.getText().toString().trim();
         number = phoneNumberEditText.getText().toString().trim();
@@ -336,6 +433,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public void onComplete(@NonNull Task<AuthResult> task) {
                 String currentUserId = mAuth.getCurrentUser().getUid();
                 dbUserInfo = FirebaseDatabase.getInstance().getReference().child("User").child(currentUserId);
+                int convert = 0;
+                try {
+                     convert = Integer.parseInt(totalMember);
+                }
+                catch (Exception e){
+
+                }
+                //intTotal = Integer.parseInt(totalMember);
+                intTotal = convert+1;
+                Toast.makeText(RegisterActivity.this, "Count is "+ intTotal, Toast.LENGTH_SHORT).show();
 
                 HashMap userInfo = new HashMap();
                 userInfo.put("id", currentUserId);
@@ -352,6 +459,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 userInfo.put("address", address1);
                 userInfo.put("last_donate", "");
                 userInfo.put("next_donate", "");
+                userInfo.put("total_member", String.valueOf(intTotal));
+                userInfo.put("organization", organization);
+                userInfo.put("role", "user");
                 //userInfo.put("type", "donor");
                 //userInfo.put("search", "donor" + blood_group);
                 userInfo.put("token", token);
@@ -365,6 +475,27 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         finish();
                         progressBar.setVisibility(View.GONE);
                         registerButton.setVisibility(View.VISIBLE);
+
+                        HashMap hashMap= new HashMap();
+                        hashMap.put("total_member", String.valueOf(intTotal));
+
+                        DatabaseReference dbUpdateOrganization = FirebaseDatabase.getInstance()
+                                .getReference().child("Organization").child(selectedOrganizationUid);
+
+                        if (selectedOrganizationUid.isEmpty()){
+                            Toast.makeText(RegisterActivity.this, "No Organization fournd", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else {
+                            dbUpdateOrganization.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(RegisterActivity.this, "Member Updated", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        }
                     }
 
                 }).addOnFailureListener(new OnFailureListener() {

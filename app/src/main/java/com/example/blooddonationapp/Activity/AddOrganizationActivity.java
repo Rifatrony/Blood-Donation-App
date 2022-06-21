@@ -90,13 +90,14 @@ public class AddOrganizationActivity extends AppCompatActivity implements View.O
 
         System.out.println("KEy is : " + uid);
 
-        OrganizationModel organizationModel = new OrganizationModel(name, number, uid, added_by);
+        OrganizationModel organizationModel = new OrganizationModel(name, number, uid, added_by,"");
 
         dbOrganization.child(uid).setValue(organizationModel).addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 organizationNameEditText.setText("");
                 organizationPhoneNumberEditText.setText("");
                 showToast("Added");
+                finish();
             }
             else {
                 showToast(task.getException().toString());
