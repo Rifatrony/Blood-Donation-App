@@ -24,6 +24,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -99,6 +101,11 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
 
                         DatabaseReference dbConfirm = FirebaseDatabase.getInstance().getReference().child("Confirm Blood");
 
+                        Calendar c = Calendar.getInstance();
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        String strDate = sdf.format(c.getTime());
+                        Toast.makeText(context, "Date is " + strDate, Toast.LENGTH_SHORT).show();
+
                         HashMap hashMap = new HashMap();
                         hashMap.put("name", data.getName());
                         hashMap.put("accepted_id", data.getAccepted_uid());
@@ -110,11 +117,22 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                         hashMap.put("number", data.getNumber());
                         hashMap.put("patient_problem", data.getPatient_problem());
                         hashMap.put("recipient_number", data.getRecipient_number());
+                        hashMap.put("donate_date", strDate);
 
                         dbConfirm.child(data.getAccepted_uid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
                                 Toast.makeText(context, "Confirm Blood", Toast.LENGTH_SHORT).show();
+
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("Accept Request").child(data.getMy_uid()).removeValue()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(context, "Confirm and Removed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
                             }
                         });
 

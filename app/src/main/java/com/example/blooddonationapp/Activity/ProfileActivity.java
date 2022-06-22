@@ -5,17 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -37,13 +44,19 @@ public class ProfileActivity extends AppCompatActivity {
 
     String name, number, blood_group, last_donate, next_donate, address;
 
-    DatabaseReference userRef;
+    DatabaseReference userRef, dbReadyDonor, dbUser;
     FirebaseUser user;
 
     Toolbar toolbar;
 
     Date date;
     String afterFourMonthsDate;
+
+    String dialog_address, dialog_time;
+
+    EditText addressEditText, timeEditText;
+    Button btn_cancel, btn_confirm;
+    String uid, today_date;
 
 
     @Override
@@ -61,6 +74,9 @@ public class ProfileActivity extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = FirebaseDatabase.getInstance().getReference().child("User")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+        dbUser = FirebaseDatabase.getInstance().getReference().child("User");
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -109,11 +125,6 @@ public class ProfileActivity extends AppCompatActivity {
                     catch (Exception e) {
                         Toast.makeText(ProfileActivity.this, "here"+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-
-
-
-
                 }
             }
 
@@ -151,8 +162,99 @@ public class ProfileActivity extends AppCompatActivity {
                 intent.putExtra("next_donate", afterFourMonthsDate);
                 startActivity(intent);
                 break;
+
+            case R.id.nav_ready_donor:
+                ReadyDonor();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void ReadyDonor() {
+
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.profile_layout);
+        dialog.setCancelable(false);
+
+        addressEditText = dialog.findViewById(R.id.addressEditText);
+        timeEditText = dialog.findViewById(R.id.timeEditText);
+
+        btn_confirm = dialog.findViewById(R.id.btn_confirm);
+        btn_cancel = dialog.findViewById(R.id.btn_cancel);
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+
+            }
+        });
+
+        btn_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dbReadyDonor = FirebaseDatabase.getInstance().getReference().child("Today Ready");
+                uid = dbReadyDonor.push().getKey();
+
+                dialog_address = addressEditText.getText().toString().trim();
+                dialog_time = timeEditText.getText().toString().trim();
+
+                System.out.println("Address "+dialog_address);
+                System.out.println(dialog_time);
+
+                dbUser.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            User user = dataSnapshot.getValue(User.class);
+
+                            Calendar c = Calendar.getInstance();
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            today_date = sdf.format(c.getTime());
+
+                            if (user.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                                HashMap hashMap = new HashMap();
+                                hashMap.put("name", user.getName());
+                                hashMap.put("number", user.getNumber());
+                                hashMap.put("address", user.getAddress());
+                                hashMap.put("location", dialog_address);
+                                hashMap.put("time", dialog_time);
+                                hashMap.put("blood_group", user.getBlood_group());
+                                hashMap.put("id", user.getId());
+                                hashMap.put("uid", uid);
+                                hashMap.put("date", today_date);
+
+                                dbReadyDonor.child(uid).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                                    @Override
+                                    public void onComplete(@NonNull Task task) {
+                                        if (task.isSuccessful()){
+                                            dialog.dismiss();
+                                            addressEditText.setText("");
+                                            timeEditText.setText("");
+                                            Toast.makeText(ProfileActivity.this, "You can donate blood Today", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        dialog.show();
+
+
     }
 }

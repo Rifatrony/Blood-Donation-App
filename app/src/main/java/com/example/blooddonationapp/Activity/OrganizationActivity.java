@@ -2,6 +2,7 @@ package com.example.blooddonationapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +32,7 @@ import java.util.List;
 
 public class OrganizationActivity extends AppCompatActivity {
 
+    AppCompatImageView imageBack;
     RecyclerView recyclerView;
     ProgressBar progressBar;
     TextView noOrganizationTextView;
@@ -78,6 +80,8 @@ public class OrganizationActivity extends AppCompatActivity {
             }
         });
 
+        imageBack.setOnClickListener(view -> onBackPressed());
+
         fabAddOrganization.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AddOrganizationActivity.class)));
 
         recyclerView.setHasFixedSize(true);
@@ -113,6 +117,8 @@ public class OrganizationActivity extends AppCompatActivity {
     }
 
     private void initialization() {
+
+        imageBack = findViewById(R.id.imageBack);
         fabAddOrganization = findViewById(R.id.fabAddOrganization);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);

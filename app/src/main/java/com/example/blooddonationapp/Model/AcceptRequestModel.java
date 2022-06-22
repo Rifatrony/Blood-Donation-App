@@ -3,12 +3,12 @@ package com.example.blooddonationapp.Model;
 public class AcceptRequestModel {
 
     String name, message, blood_group, my_uid, accepted_uid, recipient_number,
-            donate_location, donate_time, number, patient_problem;
+            donate_location, donate_time, number, patient_problem, donate_date;
 
     public AcceptRequestModel() {
     }
 
-    public AcceptRequestModel(String name, String message, String blood_group, String my_uid, String accepted_uid, String donate_location, String donate_time, String number, String patient_problem, String recipient_number) {
+    public AcceptRequestModel(String name, String message, String blood_group, String my_uid, String accepted_uid, String donate_location, String donate_time, String number, String patient_problem, String recipient_number, String donate_date) {
         this.name = name;
         this.message = message;
         this.blood_group = blood_group;
@@ -19,6 +19,7 @@ public class AcceptRequestModel {
         this.number = number;
         this.patient_problem = patient_problem;
         this.recipient_number = recipient_number;
+        this.donate_date = donate_date;
     }
 
     public String getName() {
@@ -99,5 +100,13 @@ public class AcceptRequestModel {
 
     public void setRecipient_number(String recipient_number) {
         this.recipient_number = recipient_number;
+    }
+
+    public String getDonate_date() {
+        return donate_date;
+    }
+
+    public void setDonate_date(String donate_date) {
+        this.donate_date = donate_date;
     }
 }

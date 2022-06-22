@@ -31,6 +31,7 @@ import com.example.blooddonationapp.Activity.LoginActivity;
 import com.example.blooddonationapp.Activity.OrganizationActivity;
 import com.example.blooddonationapp.Activity.ProfileActivity;
 import com.example.blooddonationapp.Activity.SelectBloodGroupActivity;
+import com.example.blooddonationapp.Activity.TodayReadyDonorActivity;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.User;
 import com.google.android.material.navigation.NavigationView;
@@ -199,6 +200,10 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawer(GravityCompat.START);
 
                 switch (id){
+
+                    case R.id.nav_today_ready_donor:
+                        startActivity(new Intent(getApplicationContext(), TodayReadyDonorActivity.class));
+                        break;
 
                     case R.id.nav_blood_request:
                         startActivity(new Intent(getApplicationContext(), BloodRequestActivity.class));

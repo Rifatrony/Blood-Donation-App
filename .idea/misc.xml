@@ -39,9 +39,11 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_search_donor.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_search_location.xml" value="0.22" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_select_blood_group.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_today_ready_donor.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_update_profile.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_view_request.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_view_sent_request.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/confirm_blood_layout.xml" value="0.203125" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/coordiantor_details_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/custom_dialog_layout.xml" value="0.203125" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/donor_list_layout.xml" value="0.2" />
@@ -53,6 +55,7 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/user_profile_layout.xml" value="0.16" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/view_request_details.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/view_sent_request_layout.xml" value="0.22" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/admin_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/my_navigation_item.xml" value="0.25" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/profile_navigation.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/menu/select_menu.xml" value="0.22" />
