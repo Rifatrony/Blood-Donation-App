@@ -183,7 +183,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
 
     @Override
     public int getItemCount() {
-        return requestModelList.size();
+        return  requestModelList == null ? 0 : requestModelList.size();
     }
 
     public static class RequestViewHolder extends RecyclerView.ViewHolder {

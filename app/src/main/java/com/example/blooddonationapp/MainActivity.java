@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -32,9 +33,11 @@ import com.example.blooddonationapp.Activity.OrganizationActivity;
 import com.example.blooddonationapp.Activity.ProfileActivity;
 import com.example.blooddonationapp.Activity.SelectBloodGroupActivity;
 import com.example.blooddonationapp.Activity.TodayReadyDonorActivity;
+import com.example.blooddonationapp.Adapter.MyViewPagerAdapter;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.User;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -76,12 +79,44 @@ public class MainActivity extends AppCompatActivity {
     String current_time;
     String role;
 
+    TabLayout tabLayout;
+    ViewPager2 viewPager2;
+    MyViewPagerAdapter viewPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initialization();
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+
+                super.onPageSelected(position);
+
+                tabLayout.getTabAt(position).select();
+
+            }
+        });
 
         /*Check Location Permission start*/
 
@@ -102,11 +137,11 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(layoutManager);
+        /*recyclerView.setLayoutManager(layoutManager);
 
         userList = new ArrayList<>();
         adapter = new UserAdapter(this, userList);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);*/
 
         userRef = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance()
                 .getCurrentUser().getUid());
@@ -115,10 +150,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                try {
-                   readUser();
+                   //readUser();
 
                }catch (Exception e){
-                   progressBar.setVisibility(View.GONE);
+                   //progressBar.setVisibility(View.GONE);
                    Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                }
             }
@@ -277,10 +312,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialization() {
 
-        progressBar = findViewById(R.id.progressBar);
-        noDataFoundTextView = findViewById(R.id.noDataFoundTextView);
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager2 = findViewById(R.id.view_pager);
 
-        recyclerView = findViewById(R.id.recyclerView);
+        viewPagerAdapter = new MyViewPagerAdapter(this);
+        viewPager2.setAdapter(viewPagerAdapter);
+
+        //progressBar = findViewById(R.id.progressBar);
+        //noDataFoundTextView = findViewById(R.id.noDataFoundTextView);
+
+        //recyclerView = findViewById(R.id.recyclerView);
 
         toolbar = findViewById(R.id.topAppBar);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -295,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void readUser() {
         final FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        progressBar.setVisibility(View.VISIBLE);
+        //progressBar.setVisibility(View.VISIBLE);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
         //Query query = reference.orderByChild("type").equalTo("donor");
@@ -311,15 +352,15 @@ public class MainActivity extends AppCompatActivity {
                     /*this line add 19/6/2022*/
                     assert user != null;
                     if (!user.getId().equals(firebaseUser.getUid())){
-                        progressBar.setVisibility(View.INVISIBLE);
+                        //progressBar.setVisibility(View.INVISIBLE);
                         userList.add(user);
                     }
                 }
                 adapter.notifyDataSetChanged();
 
                 if (userList.isEmpty()){
-                    progressBar.setVisibility(View.INVISIBLE);
-                    noDataFoundTextView.setVisibility(View.VISIBLE);
+                   /* progressBar.setVisibility(View.INVISIBLE);
+                    noDataFoundTextView.setVisibility(View.VISIBLE);*/
                     Toast.makeText(MainActivity.this, "No Donor Found", Toast.LENGTH_SHORT).show();
                 }
             }

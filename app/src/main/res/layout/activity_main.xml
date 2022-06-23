@@ -29,14 +29,60 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/appBarLayout"
             android:orientation="vertical">
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tabBackground="@color/red"
+                app:tabIndicatorColor="@color/white"
+                app:tabSelectedTextColor="@color/input_background"
+                app:tabTextColor="@color/white">
 
-            <FrameLayout
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Blood Request" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Today Ready" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Coordinator" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Organization" />
+
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/view_pager"
+                android:layout_below="@id/tab_layout"
+                android:layout_marginTop="10dp"
+                />
+
+
+            <!-- <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -65,7 +111,7 @@
                     android:visibility="gone" />
 
 
-            </FrameLayout>
+            </FrameLayout>-->
 
 
             <!--<com.google.android.material.bottomnavigation.BottomNavigationView
@@ -84,7 +130,7 @@
                 />-->
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
 
     </RelativeLayout>
