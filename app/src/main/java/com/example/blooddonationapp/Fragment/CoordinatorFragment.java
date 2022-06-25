@@ -1,6 +1,7 @@
 package com.example.blooddonationapp.Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.blooddonationapp.Activity.AddNewCoordinatorActivity;
 import com.example.blooddonationapp.Activity.CoordinatorActivity;
 import com.example.blooddonationapp.Adapter.CoordinatorAdapter;
 import com.example.blooddonationapp.Model.CoordinatorModel;
@@ -65,6 +67,13 @@ public class CoordinatorFragment extends Fragment {
         noCoordinatorFoundTextView = view.findViewById(R.id.noCoordinatorFoundTextView);
         progressBar = view.findViewById(R.id.progressBar);
         fabAddCoordinator = view.findViewById(R.id.fabAddCoordinator);
+
+        fabAddCoordinator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AddNewCoordinatorActivity.class));
+            }
+        });
 
         dbRole = FirebaseDatabase.getInstance().getReference().child("User");
         dbRole.addValueEventListener(new ValueEventListener() {

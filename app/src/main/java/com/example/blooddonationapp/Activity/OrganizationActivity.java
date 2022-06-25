@@ -9,13 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.Adapter.OrganizationAdapter;
 import com.example.blooddonationapp.MainActivity;
+import com.example.blooddonationapp.Model.CoordinatorModel;
 import com.example.blooddonationapp.Model.OrganizationModel;
 import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
@@ -31,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizationActivity extends AppCompatActivity {
+
+    EditText searchOrganizationEditText;
 
     AppCompatImageView imageBack;
     RecyclerView recyclerView;
@@ -113,12 +119,41 @@ public class OrganizationActivity extends AppCompatActivity {
             }
         });
 
+        searchOrganizationEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
+
+    }
+
+    private void filter(String text) {
+        ArrayList<OrganizationModel> filteredList = new ArrayList<>();
+
+        for (OrganizationModel item : organizationModelList) {
+            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        adapter.filterList(filteredList);
     }
 
     private void initialization() {
 
         imageBack = findViewById(R.id.imageBack);
+        searchOrganizationEditText = findViewById(R.id.searchOrganizationEditText);
         fabAddOrganization = findViewById(R.id.fabAddOrganization);
         recyclerView = findViewById(R.id.recyclerView);
         progressBar = findViewById(R.id.progressBar);

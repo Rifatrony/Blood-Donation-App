@@ -2,13 +2,13 @@ package com.example.blooddonationapp.Model;
 
 public class User {
 
-    String name, number, email, password, confirm_password, country, blood_group, dob, longitude,
-            latitude, last_donate,address, type, search, id, token, organization, role, total_member;
+    String name, number, email, password, confirm_password, country, blood_group, dob, longitude, latitude,
+            last_donate,address, type, search, id, token, organization, role, total_member, next_donate;
 
     public User() {
     }
 
-    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String last_donate, String address, String type, String search, String id, String token, String organization, String role, String total_member) {
+    public User(String name, String number, String email, String password, String confirm_password, String country, String blood_group, String dob, String longitude, String latitude, String last_donate, String address, String type, String search, String id, String token, String organization, String role, String total_member, String next_donate) {
         this.name = name;
         this.number = number;
         this.email = email;
@@ -28,6 +28,7 @@ public class User {
         this.organization = organization;
         this.role = role;
         this.total_member = total_member;
+        this.next_donate = next_donate;
     }
 
     public String getName() {
@@ -180,5 +181,13 @@ public class User {
 
     public void setTotal_member(String total_member) {
         this.total_member = total_member;
+    }
+
+    public String getNext_donate() {
+        return next_donate;
+    }
+
+    public void setNext_donate(String next_donate) {
+        this.next_donate = next_donate;
     }
 }

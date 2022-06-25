@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,7 +15,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,7 +29,6 @@ import android.widget.Toast;
 
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.OrganizationModel;
-import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -48,7 +45,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hbb20.CountryCodePicker;
-import com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -140,7 +136,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         organizationTotalMember.add(data.getTotal_member());
                         //Toast.makeText(RegisterActivity.this, "Count is " + data.getTotal_member(), Toast.LENGTH_SHORT).show();
                     }
-                    //supplierList.add(Objects.requireNonNull(menudata.getValue()).toString());
                 }
 
                 setOrganization(organizationList, organizationUidList, organizationTotalMember);
@@ -431,79 +426,85 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                String currentUserId = mAuth.getCurrentUser().getUid();
-                dbUserInfo = FirebaseDatabase.getInstance().getReference().child("User").child(currentUserId);
-                int convert = 0;
-                try {
-                     convert = Integer.parseInt(totalMember);
-                }
-                catch (Exception e){
+                if (task.isSuccessful()){
+                    String currentUserId = mAuth.getCurrentUser().getUid();
+                    dbUserInfo = FirebaseDatabase.getInstance().getReference().child("User").child(currentUserId);
+                    int convert = 0;
+                    try {
+                        convert = Integer.parseInt(totalMember);
+                    }
+                    catch (Exception e){
 
-                }
-                //intTotal = Integer.parseInt(totalMember);
-                intTotal = convert+1;
-                Toast.makeText(RegisterActivity.this, "Count is "+ intTotal, Toast.LENGTH_SHORT).show();
+                    }
+                    //intTotal = Integer.parseInt(totalMember);
+                    intTotal = convert+1;
+                    Toast.makeText(RegisterActivity.this, "Count is "+ intTotal, Toast.LENGTH_SHORT).show();
 
-                HashMap userInfo = new HashMap();
-                userInfo.put("id", currentUserId);
-                userInfo.put("country", ccp);
-                userInfo.put("name", name);
-                userInfo.put("email", email);
-                userInfo.put("number", number);
-                userInfo.put("password", password);
-                userInfo.put("confirm_password", confirm_password);
-                userInfo.put("blood_group", blood_group);
-                userInfo.put("dob", dob);
-                userInfo.put("longitude", String.valueOf(Longitude));
-                userInfo.put("latitude", String.valueOf(latitude));
-                userInfo.put("address", address1);
-                userInfo.put("last_donate", "");
-                userInfo.put("next_donate", "");
-                userInfo.put("total_member", String.valueOf(intTotal));
-                userInfo.put("organization", organization);
-                userInfo.put("role", "user");
-                //userInfo.put("type", "donor");
-                //userInfo.put("search", "donor" + blood_group);
-                userInfo.put("token", token);
+                    HashMap userInfo = new HashMap();
+                    userInfo.put("id", currentUserId);
+                    userInfo.put("country", ccp);
+                    userInfo.put("name", name);
+                    userInfo.put("email", email);
+                    userInfo.put("number", number);
+                    userInfo.put("password", password);
+                    userInfo.put("confirm_password", confirm_password);
+                    userInfo.put("blood_group", blood_group);
+                    userInfo.put("dob", dob);
+                    userInfo.put("longitude", String.valueOf(Longitude));
+                    userInfo.put("latitude", String.valueOf(latitude));
+                    userInfo.put("address", address1);
+                    userInfo.put("last_donate", "");
+                    userInfo.put("next_donate", "");
+                    userInfo.put("total_member", String.valueOf(intTotal));
+                    userInfo.put("organization", organization);
+                    userInfo.put("role", "user");
+                    //userInfo.put("type", "donor");
+                    //userInfo.put("search", "donor" + blood_group);
+                    userInfo.put("token", token);
 
-                dbUserInfo.updateChildren(userInfo).addOnCompleteListener(task1 -> {
+                    dbUserInfo.updateChildren(userInfo).addOnCompleteListener(task1 -> {
 
-                    if (task1.isSuccessful()) {
-                        showToast("Registration Complete");
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                        progressBar.setVisibility(View.GONE);
-                        registerButton.setVisibility(View.VISIBLE);
+                        if (task1.isSuccessful()) {
+                            showToast("Registration Complete");
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                            progressBar.setVisibility(View.GONE);
+                            registerButton.setVisibility(View.VISIBLE);
 
-                        HashMap hashMap= new HashMap();
-                        hashMap.put("total_member", String.valueOf(intTotal));
+                            HashMap hashMap= new HashMap();
+                            hashMap.put("total_member", String.valueOf(intTotal));
 
-                        DatabaseReference dbUpdateOrganization = FirebaseDatabase.getInstance()
-                                .getReference().child("Organization").child(selectedOrganizationUid);
+                            DatabaseReference dbUpdateOrganization = FirebaseDatabase.getInstance()
+                                    .getReference().child("Organization").child(selectedOrganizationUid);
 
-                        if (selectedOrganizationUid.isEmpty()){
-                            Toast.makeText(RegisterActivity.this, "No Organization fournd", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        else {
-                            dbUpdateOrganization.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
-                                @Override
-                                public void onComplete(@NonNull Task task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(RegisterActivity.this, "Member Updated", Toast.LENGTH_SHORT).show();
+                            if (selectedOrganizationUid.isEmpty()){
+                                Toast.makeText(RegisterActivity.this, "No Organization found", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            else {
+                                dbUpdateOrganization.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                                    @Override
+                                    public void onComplete(@NonNull Task task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(RegisterActivity.this, "Member Updated", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
                         }
-                    }
 
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        showToast(e.getMessage());
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            showToast(e.getMessage());
+                        }
+                    });
+                }
+
+                else {
+                    Toast.makeText(RegisterActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                }
 
             }
         }).addOnFailureListener(new OnFailureListener() {

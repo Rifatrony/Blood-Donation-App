@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="8dp"
     android:layout_marginStart="6dp"
@@ -31,22 +31,36 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name Is Rifat Ahmed Rony" />
+                android:text="Name Is Rifat Ahmed Rony"
+                android:textColor="@color/black"
+                />
 
             <TextView
                 android:id="@+id/numberTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/nameTextView"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/black"
                 android:text="01628979644" />
 
             <TextView
-                android:id="@+id/totalMemberTextView"
+                android:id="@+id/typeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Country"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/addressTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/numberTextView"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/black"
                 android:text="0" />
 
         </LinearLayout>

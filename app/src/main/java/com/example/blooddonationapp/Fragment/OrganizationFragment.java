@@ -10,9 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +42,8 @@ public class OrganizationFragment extends Fragment {
 
     View view;
 
+    EditText searchOrganizationEditText;
+
     RecyclerView recyclerView;
     ProgressBar progressBar;
     TextView noOrganizationTextView;
@@ -56,6 +61,7 @@ public class OrganizationFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_organization, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        searchOrganizationEditText = view.findViewById(R.id.searchOrganizationEditText);
         fabAddOrganization = view.findViewById(R.id.fabAddOrganization);
         progressBar = view.findViewById(R.id.progressBar);
         noOrganizationTextView = view.findViewById(R.id.noOrganizationTextView);
@@ -130,6 +136,34 @@ public class OrganizationFragment extends Fragment {
             }
         });
 
+        searchOrganizationEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
         return view;
+    }
+
+    private void filter(String text) {
+        ArrayList<OrganizationModel> filteredList = new ArrayList<>();
+
+        for (OrganizationModel item : organizationModelList) {
+            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        adapter.filterList(filteredList);
     }
 }

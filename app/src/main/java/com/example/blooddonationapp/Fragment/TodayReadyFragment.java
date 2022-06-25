@@ -24,7 +24,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class TodayReadyFragment extends Fragment {
@@ -40,6 +42,8 @@ public class TodayReadyFragment extends Fragment {
     TextView noRequestFoundTextView;
     ProgressBar progressBar;
 
+    String today_date;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,6 +54,10 @@ public class TodayReadyFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         noRequestFoundTextView = view.findViewById(R.id.noRequestFoundTextView);
         progressBar = view.findViewById(R.id.progressBar);
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        today_date = sdf.format(c.getTime());
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -67,7 +75,7 @@ public class TodayReadyFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     TodayReadyModel todayReadyModel = dataSnapshot.getValue(TodayReadyModel.class);
-                    if (!todayReadyModel.getId().equals(FirebaseAuth.getInstance().getUid())){
+                    if (!todayReadyModel.getId().equals(FirebaseAuth.getInstance().getUid()) && todayReadyModel.getDate().equals(today_date)){
                         progressBar.setVisibility(View.INVISIBLE);
                         todayReadyModelList.add(todayReadyModel);
                     }
@@ -79,7 +87,7 @@ public class TodayReadyFragment extends Fragment {
 
                     progressBar.setVisibility(View.INVISIBLE);
                     noRequestFoundTextView.setVisibility(View.VISIBLE);
-                    noRequestFoundTextView.setText("No Request Available");
+                    noRequestFoundTextView.setText("No one is Available Today");
                 }
             }
 

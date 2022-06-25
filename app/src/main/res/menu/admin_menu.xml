@@ -42,6 +42,12 @@
         />
 
     <item
+        android:id="@+id/nav_add_coordinator_type"
+        android:title="Add Coordinator Type"
+        android:icon="@drawable/group"
+        />
+
+    <item
         android:id="@+id/nav_add_organization"
         android:title="Add Organization"
         android:icon="@drawable/organization"
@@ -53,11 +59,11 @@
         android:icon="@drawable/organization"
         />
 
-    <item
+    <!--<item
         android:id="@+id/nav_add_donor"
         android:title="Add New Donor"
         android:icon="@drawable/add"
-        />
+        />-->
 
     <item
         android:id="@+id/nav_DonorList"

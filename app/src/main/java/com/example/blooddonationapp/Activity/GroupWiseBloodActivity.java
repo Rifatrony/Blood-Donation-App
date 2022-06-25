@@ -41,6 +41,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -82,6 +83,9 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
     String current_time;
 
     double searchLatitude, searchLongitude;
+
+    String today_date;
+    Date todayDate, nextDonateDate;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -171,15 +175,47 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
 
                                     if (!user.getId().equals(firebaseUser.getUid())&& user.getBlood_group().equals(blood_group)){
 
-                                        String latitude1 = user.getLatitude();
-                                        double value = Double.parseDouble(latitude1);
+                                        if (user.getLast_donate().isEmpty()){
+                                            String latitude1 = user.getLatitude();
+                                            double value = Double.parseDouble(latitude1);
 
-                                        if (value < y1 && value >= y2) {
-                                            userList.add(user);
-                                            noDonorFoundTextView.setVisibility(View.INVISIBLE);
-                                            sendRequestButton.setVisibility(View.VISIBLE);
-                                            number = user.getNumber();
-                                            Toast.makeText(GroupWiseBloodActivity.this, user.getNumber(), Toast.LENGTH_SHORT).show();
+                                            if (value < y1 && value >= y2) {
+                                                userList.add(user);
+                                                noDonorFoundTextView.setVisibility(View.INVISIBLE);
+                                                sendRequestButton.setVisibility(View.VISIBLE);
+                                                number = user.getNumber();
+                                            }
+                                        }
+                                        else if (!user.getLast_donate() .isEmpty()){
+
+                                            String nextDonate = user.getNext_donate();
+
+                                            Calendar c = Calendar.getInstance();
+                                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                            today_date = sdf.format(c.getTime());
+
+                                            try {
+                                                todayDate = sdf.parse(today_date);
+                                                nextDonateDate = sdf.parse(nextDonate);
+                                            } catch (ParseException e) {
+                                                e.printStackTrace();
+                                            }
+                                            Toast.makeText(getApplicationContext(), "Today Date is " + today_date, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(GroupWiseBloodActivity.this, "Last Donate Date is " + user.getLast_donate(), Toast.LENGTH_SHORT).show();
+
+                                            if (todayDate.after(nextDonateDate)){
+                                                String latitude1 = user.getLatitude();
+                                                double value = Double.parseDouble(latitude1);
+
+                                                if (value < y1 && value >= y2) {
+
+
+                                                    userList.add(user);
+                                                    noDonorFoundTextView.setVisibility(View.INVISIBLE);
+                                                    sendRequestButton.setVisibility(View.VISIBLE);
+                                                    number = user.getNumber();
+                                                }
+                                            }
                                         }
                                     }
                                     adapter.notifyDataSetChanged();

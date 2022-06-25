@@ -60,6 +60,7 @@ public class DonorListActivity extends AppCompatActivity implements View.OnClick
     EditText searchBloodGroupEditText;
 
     AppCompatButton sendRequestButton;
+    AppCompatImageView imageBack;
     SearchView searchView;
 
     UserAdapter adapter;
@@ -198,14 +199,16 @@ public class DonorListActivity extends AppCompatActivity implements View.OnClick
 
     private void initialization() {
 
+        imageBack = findViewById(R.id.imageBack);
+
         mAuth = FirebaseAuth.getInstance();
-        sendRequestButton = findViewById(R.id.sendRequestButton);
         searchBloodGroupEditText = findViewById(R.id.searchBloodGroupEditText);
         searchView = findViewById(R.id.sv_location);
     }
 
     private void setListener(){
-        sendRequestButton.setOnClickListener(this);
+
+        imageBack.setOnClickListener(this);
     }
 
     private void filter(String text) {
@@ -220,11 +223,15 @@ public class DonorListActivity extends AppCompatActivity implements View.OnClick
         adapter.filterList(filteredList);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id. sendRequestButton:
                 startActivity(new Intent(getApplicationContext(), RequestActivity.class));
+                break;
+            case R.id. imageBack:
+                onBackPressed();
                 break;
         }
     }

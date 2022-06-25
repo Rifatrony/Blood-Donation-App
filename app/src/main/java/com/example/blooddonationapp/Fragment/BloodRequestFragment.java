@@ -79,8 +79,10 @@ public class BloodRequestFragment extends Fragment {
 
                     if (user.getUid().equals(firebaseUser.getUid())){
                         progressBar.setVisibility(View.INVISIBLE);
+                        noRequestFoundTextView.setVisibility(View.INVISIBLE);
                         userList.add(user);
                     }
+                    adapter.notifyDataSetChanged();
                 }
                 adapter.notifyDataSetChanged();
 

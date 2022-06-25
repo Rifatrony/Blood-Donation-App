@@ -14,8 +14,10 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blooddonationapp.Model.CoordinatorModel;
+import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CoordinatorAdapter extends RecyclerView.Adapter<CoordinatorAdapter.CoordinatorViewHolder> {
@@ -44,9 +46,10 @@ public class CoordinatorAdapter extends RecyclerView.Adapter<CoordinatorAdapter.
     @Override
     public void onBindViewHolder(@NonNull CoordinatorViewHolder holder, int position) {
         CoordinatorModel data = coordinatorModelList.get(position);
-        holder.nameTextView.setText(data.getName());
-        holder.numberTextView.setText(data.getNumber());
-        holder.totalMemberTextView.setText(data.getAddress());
+        holder.nameTextView.setText("Name: "+data.getName());
+        holder.numberTextView.setText("Number: "+data.getNumber());
+        holder.addressTextView.setText("Address: "+data.getAddress());
+        holder.typeTextView.setText("Coordinator Type: "+data.getType());
 
         holder.callCoordinatorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,9 +69,16 @@ public class CoordinatorAdapter extends RecyclerView.Adapter<CoordinatorAdapter.
         return coordinatorModelList.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterList(ArrayList<CoordinatorModel> filteredList) {
+        coordinatorModelList = filteredList;
+        notifyDataSetChanged();
+    }
+
+
     public class CoordinatorViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nameTextView, numberTextView, totalMemberTextView;
+        TextView nameTextView, numberTextView, addressTextView, typeTextView;
         AppCompatImageView callCoordinatorButton;
 
         public CoordinatorViewHolder(@NonNull View itemView) {
@@ -76,7 +86,8 @@ public class CoordinatorAdapter extends RecyclerView.Adapter<CoordinatorAdapter.
 
             nameTextView = itemView.findViewById(R.id.nameTextView);
             numberTextView = itemView.findViewById(R.id.numberTextView);
-            totalMemberTextView = itemView.findViewById(R.id.totalMemberTextView);
+            typeTextView = itemView.findViewById(R.id.typeTextView);
+            addressTextView = itemView.findViewById(R.id.addressTextView);
             callCoordinatorButton = itemView.findViewById(R.id.callCoordinatorButton);
 
         }

@@ -8,20 +8,29 @@ import androidx.appcompat.widget.AppCompatImageView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.Model.CoordinatorModel;
+import com.example.blooddonationapp.Model.CoordinatorTypeModel;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.kenmeidearu.searchablespinnerlibrary.SearchableSpinner;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AddNewCoordinatorActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,13 +39,18 @@ public class AddNewCoordinatorActivity extends AppCompatActivity implements View
     ProgressBar progressBar;
     AppCompatImageView imageBack;
 
-    String name, number, address;
+    Spinner coordinatorTypeSpinner;
 
-    DatabaseReference dbCoordinator;
+    String name, number,type, address;
+
+    DatabaseReference dbCoordinator, dbType;
     FirebaseAuth mAuth;
     FirebaseUser user;
 
     String uid, added_by;
+
+    List<String> coordinatorTypeList;
+    ArrayAdapter<String> coordinatorTypeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +60,37 @@ public class AddNewCoordinatorActivity extends AppCompatActivity implements View
         initialization();
         setListener();
 
+        coordinatorTypeList = new ArrayList<>();
+        coordinatorTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, coordinatorTypeList);
+        coordinatorTypeSpinner.setAdapter(coordinatorTypeAdapter);
+
+        dbType.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                coordinatorTypeList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    CoordinatorTypeModel coordinatorTypeModel = dataSnapshot.getValue(CoordinatorTypeModel.class);
+                    if (coordinatorTypeModel != null)
+                    {
+                        coordinatorTypeList.add(coordinatorTypeModel.getType());
+
+                        //Toast.makeText(RegisterActivity.this, "Count is " + data.getTotal_member(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+                coordinatorTypeAdapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     private void initialization() {
+        coordinatorTypeSpinner = findViewById(R.id.coordinatorTypeSpinner);
         coordinatorNameEditText = findViewById(R.id.coordinatorNameEditText);
         coordinatorPhoneNumberEditText = findViewById(R.id.coordinatorPhoneNumberEditText);
         coordinatorAddressEditText = findViewById(R.id.coordinatorAddressEditText);
@@ -57,7 +99,7 @@ public class AddNewCoordinatorActivity extends AppCompatActivity implements View
         imageBack = findViewById(R.id.imageBack);
 
         dbCoordinator = FirebaseDatabase.getInstance().getReference().child("Coordinator");
-
+        dbType = FirebaseDatabase.getInstance().getReference().child("Coordinator Type");
 
     }
 
@@ -81,9 +123,13 @@ public class AddNewCoordinatorActivity extends AppCompatActivity implements View
     }
 
     private void checkValidation() {
+        type = coordinatorTypeSpinner.getSelectedItem().toString().trim();
+
         name = coordinatorNameEditText.getText().toString().trim();
         number = coordinatorPhoneNumberEditText.getText().toString().trim();
         address = coordinatorAddressEditText.getText().toString().trim();
+
+        Toast.makeText(this, "Spinner item is " + type, Toast.LENGTH_SHORT).show();
 
         if (name.isEmpty()){
             showToast("Enter Name");
@@ -117,7 +163,7 @@ public class AddNewCoordinatorActivity extends AppCompatActivity implements View
 
         System.out.println("KEY is : " + uid);
 
-        CoordinatorModel coordinatorModel = new CoordinatorModel(name, number, uid, added_by, address);
+        CoordinatorModel coordinatorModel = new CoordinatorModel(name, number, uid, added_by, address, type);
 
         dbCoordinator.child(uid).setValue(coordinatorModel).addOnCompleteListener(task -> {
             if (task.isSuccessful()){

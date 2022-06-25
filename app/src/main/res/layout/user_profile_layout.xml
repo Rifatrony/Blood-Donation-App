@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:padding="20dp"
-    android:layout_margin="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="4dp"
     app:cardCornerRadius="10dp"
-    app:cardElevation="6dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -29,7 +31,6 @@
                 android:id="@+id/userNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:text="@string/name"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -39,7 +40,6 @@
                 android:id="@+id/userNumberTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:text="@string/number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -48,27 +48,15 @@
                 android:id="@+id/userBloodGroupTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:text="Blood Group"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <!--<TextView
-                android:id="@+id/userTypeTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="4dp"
-                android:text="Type"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                />-->
 
             <TextView
                 android:id="@+id/userAddressTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:text="Address"
                 android:textColor="@color/black"
                 android:textSize="16sp" />

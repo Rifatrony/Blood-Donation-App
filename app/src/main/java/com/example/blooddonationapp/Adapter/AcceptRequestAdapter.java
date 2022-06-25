@@ -18,14 +18,17 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blooddonationapp.Model.AcceptRequestModel;
+import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,6 +36,9 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
 
     Context context;
     List<AcceptRequestModel> acceptRequestModelList;
+
+    Date date;
+    String afterThreeMonthsDate;
 
     public AcceptRequestAdapter() {
     }
@@ -102,9 +108,26 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                         DatabaseReference dbConfirm = FirebaseDatabase.getInstance().getReference().child("Confirm Blood");
 
                         Calendar c = Calendar.getInstance();
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                         String strDate = sdf.format(c.getTime());
                         Toast.makeText(context, "Date is " + strDate, Toast.LENGTH_SHORT).show();
+
+
+                        try {
+                            date = sdf.parse(strDate);
+                        }
+                        catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.MONTH, +3);
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+                        afterThreeMonthsDate = date.format(calendar.getTime());
+
+                        Toast.makeText(context, "Request Uid is " + data.getAccepted_uid(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "My Uid is " + data.getMy_uid(), Toast.LENGTH_SHORT).show();
 
                         HashMap hashMap = new HashMap();
                         hashMap.put("name", data.getName());
@@ -129,7 +152,30 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(context, "Confirm and Removed", Toast.LENGTH_SHORT).show();
+
+                                                if (task.isSuccessful()){
+
+
+                                                    Toast.makeText(context, "Confirm and Removed", Toast.LENGTH_SHORT).show();
+
+                                                    DatabaseReference dbUser = FirebaseDatabase.getInstance().getReference()
+                                                            .child("User").child(data.getAccepted_uid());
+
+                                                    HashMap updateUser = new HashMap();
+                                                    updateUser.put("last_donate", strDate);
+                                                    updateUser.put("next_donate", afterThreeMonthsDate);
+
+                                                    dbUser.updateChildren(updateUser).addOnCompleteListener(new OnCompleteListener() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task task) {
+
+                                                            if (task.isSuccessful()){
+                                                                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        }
+                                                    });
+
+                                                }
                                             }
                                         });
 

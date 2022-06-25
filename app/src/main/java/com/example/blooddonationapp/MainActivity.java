@@ -26,6 +26,7 @@ import com.example.blooddonationapp.Activity.AcceptRequestActivity;
 import com.example.blooddonationapp.Activity.AddNewDonorActivity;
 import com.example.blooddonationapp.Activity.BloodRequestActivity;
 import com.example.blooddonationapp.Activity.CoordinatorActivity;
+import com.example.blooddonationapp.Activity.CoordinatorTypeActivity;
 import com.example.blooddonationapp.Activity.DonateRecordActivity;
 import com.example.blooddonationapp.Activity.DonorListActivity;
 import com.example.blooddonationapp.Activity.LoginActivity;
@@ -257,12 +258,16 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), MapActivity.class));
                         break;*/
 
-                    case R.id.nav_add_donor:
+                    /*case R.id.nav_add_donor:
                         startActivity(new Intent(getApplicationContext(), AddNewDonorActivity.class));
-                        break;
+                        break;*/
 
                     case R.id.nav_add_coordinator:
                         startActivity(new Intent(getApplicationContext(), CoordinatorActivity.class));
+                        break;
+
+                    case R.id.nav_add_coordinator_type:
+                        startActivity(new Intent(getApplicationContext(), CoordinatorTypeActivity.class));
                         break;
 
                     case R.id.nav_add_organization:

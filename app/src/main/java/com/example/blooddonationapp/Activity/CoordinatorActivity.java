@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.blooddonationapp.Adapter.CoordinatorAdapter;
@@ -34,6 +37,8 @@ public class CoordinatorActivity extends AppCompatActivity implements View.OnCli
     FloatingActionButton fabAddCoordinator;
     AppCompatImageView imageBack;
 
+    EditText searchCoordinatorEditText;
+
     RecyclerView recyclerView;
     CoordinatorAdapter adapter;
     List<CoordinatorModel> coordinatorModelList;
@@ -54,6 +59,7 @@ public class CoordinatorActivity extends AppCompatActivity implements View.OnCli
         setListener();
 
         dbRole = FirebaseDatabase.getInstance().getReference().child("User");
+
         dbRole.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -124,11 +130,40 @@ public class CoordinatorActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        searchCoordinatorEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
+            }
+        });
+
+
+    }
+
+    private void filter(String text) {
+        ArrayList<CoordinatorModel> filteredList = new ArrayList<>();
+
+        for (CoordinatorModel item : coordinatorModelList) {
+            if (item.getAddress().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        adapter.filterList(filteredList);
     }
 
 
     private void initialization() {
+        searchCoordinatorEditText = findViewById(R.id.searchCoordinatorEditText);
         recyclerView = findViewById(R.id.recyclerView);
         fabAddCoordinator = findViewById(R.id.fabAddCoordinator);
         imageBack = findViewById(R.id.imageBack);

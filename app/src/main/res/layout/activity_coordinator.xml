@@ -50,12 +50,36 @@
             android:layout_below="@id/constraint_layout"
             android:orientation="vertical">
 
+            <EditText
+                android:id="@+id/searchCoordinatorEditText"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:hint="Search by Address"
+                android:textSize="14sp"
+                android:inputType="text"
+                android:textColor="@color/black"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:drawableEnd="@drawable/search"
+                android:drawablePadding="10dp"
+                android:background="@drawable/search_bg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="70dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/searchCoordinatorEditText">
 
                 <ProgressBar
                     android:id="@+id/progressBar"

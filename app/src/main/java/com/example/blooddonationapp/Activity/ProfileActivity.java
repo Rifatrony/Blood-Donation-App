@@ -50,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     Toolbar toolbar;
 
     Date date;
-    String afterFourMonthsDate;
+    //String afterFourMonthsDate;
 
     String dialog_address, dialog_time;
 
@@ -92,7 +92,12 @@ public class ProfileActivity extends AppCompatActivity {
                         userNumberTextView.setText(number);
 
                         last_donate = snapshot.child("last_donate").getValue().toString();
-                        userLastDonateTextView.setText(last_donate);
+                        if (last_donate.isEmpty()){
+                            userLastDonateTextView.setText("You never Donate");
+                        }
+                        else {
+                            userLastDonateTextView.setText(last_donate);
+                        }
 
 
                         @SuppressLint("SimpleDateFormat")
@@ -105,12 +110,12 @@ public class ProfileActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        Calendar calendar = Calendar.getInstance();
+                        /*Calendar calendar = Calendar.getInstance();
                         calendar.setTime(date);
                         calendar.add(Calendar.MONTH, +4);
-                        SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
                         afterFourMonthsDate = date.format(calendar.getTime());
-                        System.out.println("After 4 months date is---------->"+afterFourMonthsDate);
+                        System.out.println("After 4 months date is---------->"+afterFourMonthsDate);*/
 
                         blood_group = snapshot.child("blood_group").getValue().toString();
                         userBloodGroupTextView.setText(blood_group);
@@ -118,12 +123,11 @@ public class ProfileActivity extends AppCompatActivity {
                         address = snapshot.child("address").getValue().toString();
                         userAddressTextView.setText(address);
 
-                        userNextDonateTextView.setText(afterFourMonthsDate);
+                        //userNextDonateTextView.setText(afterFourMonthsDate);
 
 
                     }
                     catch (Exception e) {
-                        Toast.makeText(ProfileActivity.this, "here"+e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -159,7 +163,7 @@ public class ProfileActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.nav_edit_profile:
                 Intent intent = new Intent(getApplicationContext(), UpdateProfileActivity.class);
-                intent.putExtra("next_donate", afterFourMonthsDate);
+                //intent.putExtra("next_donate", afterFourMonthsDate);
                 startActivity(intent);
                 break;
 

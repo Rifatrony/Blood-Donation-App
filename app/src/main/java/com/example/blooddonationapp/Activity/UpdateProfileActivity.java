@@ -49,8 +49,8 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_profile);
 
-        next_donate = getIntent().getStringExtra("next_donate");
-        System.out.println(next_donate);
+        /*next_donate = getIntent().getStringExtra("next_donate");
+        System.out.println(next_donate);*/
 
         initialization();
         setListener();
@@ -179,7 +179,7 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
         updateMap.put("number", update_number);
         updateMap.put("last_donate", update_last_donate);
         updateMap.put("address", update_address);
-        updateMap.put("next_donate", next_donate);
+        //updateMap.put("next_donate", next_donate);
         //updateMap.put("name", update_name);
 
 

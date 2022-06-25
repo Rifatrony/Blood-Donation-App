@@ -18,7 +18,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class TodayReadyDonorActivity extends AppCompatActivity {
@@ -29,12 +31,20 @@ public class TodayReadyDonorActivity extends AppCompatActivity {
 
     DatabaseReference dbTodayDonor;
 
+    String today_date;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_ready_donor);
 
         initialization();
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        today_date = sdf.format(c.getTime());
+
+        System.out.println(today_date);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -48,7 +58,7 @@ public class TodayReadyDonorActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     TodayReadyModel todayReadyModel = dataSnapshot.getValue(TodayReadyModel.class);
-                    if (!todayReadyModel.getId().equals(FirebaseAuth.getInstance().getUid())){
+                    if (!todayReadyModel.getId().equals(FirebaseAuth.getInstance().getUid()) && today_date.equals(todayReadyModel.getDate())){
 
                         todayReadyModelList.add(todayReadyModel);
                     }

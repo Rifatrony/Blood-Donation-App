@@ -2,17 +2,18 @@ package com.example.blooddonationapp.Model;
 
 public class CoordinatorModel {
 
-    String name, number, uid, added_by, address;
+    String name, number, uid, added_by, address, type;
 
     public CoordinatorModel() {
     }
 
-    public CoordinatorModel(String name, String number, String uid, String added_by, String address) {
+    public CoordinatorModel(String name, String number, String uid, String added_by, String address, String type) {
         this.name = name;
         this.number = number;
         this.uid = uid;
         this.added_by = added_by;
         this.address = address;
+        this.type = type;
     }
 
     public String getName() {
@@ -53,5 +54,13 @@ public class CoordinatorModel {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

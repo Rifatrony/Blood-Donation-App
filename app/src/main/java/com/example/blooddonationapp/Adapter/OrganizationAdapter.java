@@ -1,5 +1,6 @@
 package com.example.blooddonationapp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.blooddonationapp.Model.OrganizationModel;
 import com.example.blooddonationapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapter.OrganizationViewHolder> {
@@ -47,6 +49,12 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
     @Override
     public int getItemCount() {
         return organizationModelList.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filterList(ArrayList<OrganizationModel> filteredList) {
+        organizationModelList = filteredList;
+        notifyDataSetChanged();
     }
 
     public class OrganizationViewHolder extends RecyclerView.ViewHolder {
