@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Model.CoordinatorModel;
 import com.example.blooddonationapp.Model.CoordinatorTypeModel;
 import com.example.blooddonationapp.R;
@@ -175,6 +176,7 @@ public class AddNewCoordinatorActivity extends AppCompatActivity implements View
                 coordinatorPhoneNumberEditText.setText("");
                 showToast("Added");
                 finish();
+                Animatoo.animateSwipeRight(AddNewCoordinatorActivity.this);
             }
             else {
                 showToast(task.getException().toString());
@@ -186,4 +188,11 @@ public class AddNewCoordinatorActivity extends AppCompatActivity implements View
     private void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(AddNewCoordinatorActivity.this);
+    }
+
 }

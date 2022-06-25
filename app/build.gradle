@@ -54,4 +54,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.github.kenmeidearu:SearchableSpinner:1.5.5'
 
+    implementation 'com.github.mohammadatif:Animatoo:master'
+
+
 }

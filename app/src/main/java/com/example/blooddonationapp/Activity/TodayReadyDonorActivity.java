@@ -2,13 +2,17 @@ package com.example.blooddonationapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.TodayReadyAdapter;
+import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.TodayReadyModel;
 import com.example.blooddonationapp.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +30,7 @@ import java.util.List;
 public class TodayReadyDonorActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    AppCompatImageView imageBack;
     List<TodayReadyModel> todayReadyModelList;
     TodayReadyAdapter adapter;
 
@@ -39,6 +44,14 @@ public class TodayReadyDonorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_today_ready_donor);
 
         initialization();
+
+        imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+
+            }
+        });
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -81,5 +94,16 @@ public class TodayReadyDonorActivity extends AppCompatActivity {
         dbTodayDonor = FirebaseDatabase.getInstance().getReference().child("Today Ready");
 
         recyclerView = findViewById(R.id.recyclerView);
+        imageBack = findViewById(R.id.imageBack);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+
+        Animatoo.animateSwipeRight(TodayReadyDonorActivity.this);
+
     }
 }

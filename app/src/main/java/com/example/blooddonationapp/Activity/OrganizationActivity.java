@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.OrganizationAdapter;
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.CoordinatorModel;
@@ -88,7 +89,10 @@ public class OrganizationActivity extends AppCompatActivity {
 
         imageBack.setOnClickListener(view -> onBackPressed());
 
-        fabAddOrganization.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), AddOrganizationActivity.class)));
+        fabAddOrganization.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(), AddOrganizationActivity.class));
+            Animatoo.animateSwipeRight(OrganizationActivity.this);
+        });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -159,4 +163,12 @@ public class OrganizationActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         noOrganizationTextView = findViewById(R.id.noOrganizationTextView);
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(OrganizationActivity.this);
+    }
+
 }

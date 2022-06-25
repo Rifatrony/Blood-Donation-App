@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.AcceptRequestAdapter;
 import com.example.blooddonationapp.Adapter.RequestAdapter;
 import com.example.blooddonationapp.Model.AcceptRequestModel;
@@ -117,4 +118,11 @@ public class AcceptRequestActivity extends AppCompatActivity implements View.OnC
             onBackPressed();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(AcceptRequestActivity.this);
+    }
+
 }

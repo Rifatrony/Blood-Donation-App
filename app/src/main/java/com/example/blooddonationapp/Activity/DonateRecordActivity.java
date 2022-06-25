@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.ConfirmBloodAdapter;
 import com.example.blooddonationapp.Model.ConfirmBloodModel;
 import com.example.blooddonationapp.R;
@@ -55,7 +56,6 @@ public class DonateRecordActivity extends AppCompatActivity {
 
         //user = auth.getCurrentUser();
 
-
         dbConfirmBlood = FirebaseDatabase.getInstance().getReference().child("Confirm Blood");
 
         dbConfirmBlood.addValueEventListener(new ValueEventListener() {
@@ -78,12 +78,16 @@ public class DonateRecordActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void initialization() {
         recyclerView = findViewById(R.id.recyclerView);
         imageBack = findViewById(R.id.imageBack);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(DonateRecordActivity.this);
     }
 }

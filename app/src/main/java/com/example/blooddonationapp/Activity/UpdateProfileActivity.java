@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -190,17 +191,20 @@ public class UpdateProfileActivity extends AppCompatActivity implements View.OnC
                     showToast("Updated Profile");
                     finish();
                 }
-
                 else {
                     showToast(task.getException().toString());
                 }
             }
         });
-
-
     }
 
     private void showToast(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(UpdateProfileActivity.this);
     }
 }

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.R;
 
 import java.util.Calendar;
@@ -179,7 +180,15 @@ public class RequestActivity extends AppCompatActivity {
         intent.putExtra("latitude", searchLat);
         intent.putExtra("longitude", searchLng);
         startActivity(intent);
-        finish();
+        Animatoo.animateSwipeLeft(RequestActivity.this);
 
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(RequestActivity.this);
     }
 }

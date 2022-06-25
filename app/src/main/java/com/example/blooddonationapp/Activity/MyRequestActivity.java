@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.RequestAdapter;
 import com.example.blooddonationapp.Model.RequestModel;
 import com.example.blooddonationapp.R;
@@ -23,13 +24,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BloodRequestActivity extends AppCompatActivity implements View.OnClickListener {
+public class MyRequestActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView viewSentRequestTextView, noRequestFoundTextView;
     ProgressBar progressBar;
@@ -157,7 +157,14 @@ public class BloodRequestActivity extends AppCompatActivity implements View.OnCl
 
             case R.id.viewSentRequestTextView:
                 startActivity(new Intent(getApplicationContext(), ViewSentRequestActivity.class));
-                break;
+                Animatoo.animateSwipeLeft(MyRequestActivity.this);
+
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(MyRequestActivity.this);
     }
 }

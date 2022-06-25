@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.CoordinatorAdapter;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.CoordinatorModel;
@@ -184,8 +185,16 @@ public class CoordinatorActivity extends AppCompatActivity implements View.OnCli
 
             case R.id.fabAddCoordinator:
                 startActivity(new Intent(getApplicationContext(), AddNewCoordinatorActivity.class));
+                Animatoo.animateSwipeLeft(CoordinatorActivity.this);
                 break;
 
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(CoordinatorActivity.this);
     }
 }

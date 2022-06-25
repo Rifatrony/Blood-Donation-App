@@ -22,11 +22,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Activity.AcceptRequestActivity;
-import com.example.blooddonationapp.Activity.AddNewDonorActivity;
-import com.example.blooddonationapp.Activity.BloodRequestActivity;
+import com.example.blooddonationapp.Activity.MyRequestActivity;
 import com.example.blooddonationapp.Activity.CoordinatorActivity;
 import com.example.blooddonationapp.Activity.CoordinatorTypeActivity;
+import com.example.blooddonationapp.Activity.DashBoardActivity;
 import com.example.blooddonationapp.Activity.DonateRecordActivity;
 import com.example.blooddonationapp.Activity.DonorListActivity;
 import com.example.blooddonationapp.Activity.LoginActivity;
@@ -47,7 +48,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    TextView header_name, header_number, header_blood_group, header_type;
+    TextView header_name, header_number, header_blood_group, header_total_member;
 
     DatabaseReference userRef;
 
@@ -239,53 +239,60 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.nav_today_ready_donor:
                         startActivity(new Intent(getApplicationContext(), TodayReadyDonorActivity.class));
+                        //Animatoo.animateSplit(MainActivity.this);
+                        Animatoo.animateSwipeLeft(MainActivity.this);
+                        //Animatoo.animateSlideDown(MainActivity.this);
                         break;
 
-                    case R.id.nav_blood_request:
-                        startActivity(new Intent(getApplicationContext(), BloodRequestActivity.class));
+                    case R.id.nav_today_dashboard:
+                        startActivity(new Intent(getApplicationContext(), DashBoardActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
+                        break;
+
+                    case R.id.nav_my_request:
+                        startActivity(new Intent(getApplicationContext(), MyRequestActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 
                     case R.id.nav_search_location:
 
                         startActivity(new Intent(getApplicationContext(), SelectBloodGroupActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 
                     case R.id.nav_accept_request:
                         startActivity(new Intent(getApplicationContext(), AcceptRequestActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
-
-                    /*case R.id.nav_search_blood:
-                        startActivity(new Intent(getApplicationContext(), MapActivity.class));
-                        break;*/
-
-                    /*case R.id.nav_add_donor:
-                        startActivity(new Intent(getApplicationContext(), AddNewDonorActivity.class));
-                        break;*/
 
                     case R.id.nav_add_coordinator:
                         startActivity(new Intent(getApplicationContext(), CoordinatorActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 
                     case R.id.nav_add_coordinator_type:
                         startActivity(new Intent(getApplicationContext(), CoordinatorTypeActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 
                     case R.id.nav_add_organization:
-                        setVisible(true);
-                        //setVisibility(View.VISIBLE);
                         startActivity(new Intent(getApplicationContext(), OrganizationActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 
                     case R.id.nav_donate_record:
                         startActivity(new Intent(getApplicationContext(), DonateRecordActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 
                     case R.id.nav_profile:
                         startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 
                     case R.id.nav_DonorList:
                         startActivity(new Intent(getApplicationContext(), DonorListActivity.class));
+                        Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 
                     case R.id.nav_logout:
@@ -323,11 +330,6 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter = new MyViewPagerAdapter(this);
         viewPager2.setAdapter(viewPagerAdapter);
 
-        //progressBar = findViewById(R.id.progressBar);
-        //noDataFoundTextView = findViewById(R.id.noDataFoundTextView);
-
-        //recyclerView = findViewById(R.id.recyclerView);
-
         toolbar = findViewById(R.id.topAppBar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
@@ -341,10 +343,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void readUser() {
         final FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        //progressBar.setVisibility(View.VISIBLE);
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("User");
-        //Query query = reference.orderByChild("type").equalTo("donor");
 
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -354,18 +353,14 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     User user = dataSnapshot.getValue(User.class);
 
-                    /*this line add 19/6/2022*/
                     assert user != null;
                     if (!user.getId().equals(firebaseUser.getUid())){
-                        //progressBar.setVisibility(View.INVISIBLE);
                         userList.add(user);
                     }
                 }
                 adapter.notifyDataSetChanged();
 
                 if (userList.isEmpty()){
-                   /* progressBar.setVisibility(View.INVISIBLE);
-                    noDataFoundTextView.setVisibility(View.VISIBLE);*/
                     Toast.makeText(MainActivity.this, "No Donor Found", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -381,6 +376,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth.signOut();
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        Animatoo.animateSwipeRight(MainActivity.this);
         finish();
 
     }

@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.R;
 import com.example.blooddonationapp.Utilities.SessionManagement;
@@ -73,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     finish();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
+                    Animatoo.animateSwipeLeft(LoginActivity.this);
                 }
 
             }
@@ -112,6 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.noAccountTextView:
                 Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
+                Animatoo.animateSwipeLeft(LoginActivity.this);
                 break;
             case R.id.loginButton:
                 checkValidation();
@@ -153,6 +156,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     showToast("Login Successfully");
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
+
+                    Animatoo.animateSwipeLeft(LoginActivity.this);
 
                     finish();
 

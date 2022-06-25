@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.OrganizationModel;
 import com.example.blooddonationapp.R;
@@ -326,9 +327,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         dobEditText = findViewById(R.id.dobEditText);
         addressEditText = findViewById(R.id.addressEditText);
 
-        /*latitudeTextView = findViewById(R.id.latitudeTextView);
-        longitudeTextView = findViewById(R.id.longitudeTextView);*/
-
         registerButton = findViewById(R.id.registerButton);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -361,6 +359,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             case R.id.haveAccountTextView:
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
+                Animatoo.animateSwipeRight(RegisterActivity.this);
                 break;
             case R.id.registerButton:
                 checkValidation();
@@ -412,8 +411,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
         else {
-            /*Intent intent = new Intent(RegisterActivity.this, EditProfileActivity.class);
-            startActivity(intent);*/
             registerNewUser();
         }
     }

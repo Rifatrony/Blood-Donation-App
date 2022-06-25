@@ -19,6 +19,9 @@
         android:theme="@style/Theme.BloodDonationApp"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.DashBoardActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.CoordinatorTypeActivity"
             android:exported="false" />
         <activity
@@ -55,10 +58,7 @@
             android:name=".Activity.RequestActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.AddNewDonorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.BloodRequestActivity"
+            android:name=".Activity.MyRequestActivity"
             android:exported="false" />
 
         <uses-library
@@ -76,25 +76,13 @@
             android:name=".Activity.GroupWiseBloodActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.RecipientActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activity.DonorListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.AccountTypeActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.UpdateProfileActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.SearchDonorActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.RegisterActivity"

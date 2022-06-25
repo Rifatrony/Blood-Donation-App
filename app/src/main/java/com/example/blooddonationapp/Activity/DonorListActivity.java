@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.DonorListAdapter;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.MainActivity;
@@ -235,4 +236,12 @@ public class DonorListActivity extends AppCompatActivity implements View.OnClick
                 break;
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(DonorListActivity.this);
+    }
+
 }

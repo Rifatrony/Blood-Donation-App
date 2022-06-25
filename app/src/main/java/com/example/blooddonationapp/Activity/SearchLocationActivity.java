@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -92,6 +93,8 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
                         intent.putExtra("group", String.valueOf(blood_group));
                         intent.putExtra("address", String.valueOf(searchText));
                         startActivity(intent);
+                        Animatoo.animateSwipeLeft(SearchLocationActivity.this);
+
                         finish();
 
                     }
@@ -117,5 +120,11 @@ public class SearchLocationActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map = googleMap;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(SearchLocationActivity.this);
     }
 }

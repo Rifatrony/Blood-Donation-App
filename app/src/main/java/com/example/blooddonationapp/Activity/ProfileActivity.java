@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.Model.UserRegisterModel;
 import com.example.blooddonationapp.R;
@@ -120,11 +121,11 @@ public class ProfileActivity extends AppCompatActivity {
                         blood_group = snapshot.child("blood_group").getValue().toString();
                         userBloodGroupTextView.setText(blood_group);
 
+                        next_donate = snapshot.child("next_donate").getValue().toString();
+                        userNextDonateTextView.setText(next_donate);
+
                         address = snapshot.child("address").getValue().toString();
                         userAddressTextView.setText(address);
-
-                        //userNextDonateTextView.setText(afterFourMonthsDate);
-
 
                     }
                     catch (Exception e) {
@@ -165,6 +166,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), UpdateProfileActivity.class);
                 //intent.putExtra("next_donate", afterFourMonthsDate);
                 startActivity(intent);
+                Animatoo.animateSwipeLeft(ProfileActivity.this);
                 break;
 
             case R.id.nav_ready_donor:
@@ -242,9 +244,6 @@ public class ProfileActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-
-
-
                             }
                         }
                     }
@@ -260,5 +259,11 @@ public class ProfileActivity extends AppCompatActivity {
         dialog.show();
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(ProfileActivity.this);
     }
 }

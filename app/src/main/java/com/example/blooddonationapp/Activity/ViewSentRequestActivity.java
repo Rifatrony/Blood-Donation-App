@@ -12,9 +12,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.blooddonationapp.Adapter.RequestAdapter;
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.ViewSentRequestAdapter;
 import com.example.blooddonationapp.Model.RequestIdModel;
 import com.example.blooddonationapp.Model.RequestModel;
@@ -25,7 +24,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -134,8 +132,17 @@ public class ViewSentRequestActivity extends AppCompatActivity implements View.O
                 break;
 
             case R.id.viewYourRequestTextView:
-                startActivity(new Intent(getApplicationContext(), BloodRequestActivity.class));
+                startActivity(new Intent(getApplicationContext(), MyRequestActivity.class));
+                Animatoo.animateSwipeRight(ViewSentRequestActivity.this);
+                finish();
                 break;
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(ViewSentRequestActivity.this);
     }
 }

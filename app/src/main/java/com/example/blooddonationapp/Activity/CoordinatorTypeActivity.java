@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -84,7 +85,6 @@ public class CoordinatorTypeActivity extends AppCompatActivity implements View.O
         else {
             saveType();
         }
-
     }
 
     private void saveType() {
@@ -101,9 +101,23 @@ public class CoordinatorTypeActivity extends AppCompatActivity implements View.O
                 if (task.isSuccessful()){
                     coordinatorTypeEditText.setText("");
                     Toast.makeText(CoordinatorTypeActivity.this, "Type Added Successfully", Toast.LENGTH_SHORT).show();
+
+                    finish();
+                    Animatoo.animateSwipeRight(CoordinatorTypeActivity.this);
+
+                }
+                else {
+                    Toast.makeText(CoordinatorTypeActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(CoordinatorTypeActivity.this);
+    }
+
 }

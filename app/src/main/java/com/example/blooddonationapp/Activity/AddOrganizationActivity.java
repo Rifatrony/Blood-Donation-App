@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Model.CoordinatorModel;
 import com.example.blooddonationapp.Model.OrganizationModel;
 import com.example.blooddonationapp.R;
@@ -97,7 +98,7 @@ public class AddOrganizationActivity extends AppCompatActivity implements View.O
                 organizationNameEditText.setText("");
                 organizationPhoneNumberEditText.setText("");
                 showToast("Added");
-                finish();
+
             }
             else {
                 showToast(task.getException().toString());
@@ -107,6 +108,13 @@ public class AddOrganizationActivity extends AppCompatActivity implements View.O
 
     private void showToast(String message){
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(AddOrganizationActivity.this);
     }
 
 }

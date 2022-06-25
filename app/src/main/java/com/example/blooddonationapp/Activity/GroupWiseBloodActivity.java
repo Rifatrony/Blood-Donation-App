@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.UserAdapter;
 import com.example.blooddonationapp.Model.RequestModel;
 import com.example.blooddonationapp.Model.User;
@@ -355,5 +356,11 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                 sendRequest();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Animatoo.animateSwipeRight(GroupWiseBloodActivity.this);
     }
 }
