@@ -58,31 +58,41 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:orientation="vertical"
             android:gravity="center"
             >
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/callImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/call_background"
                 android:padding="10dp"
-                android:gravity="center"
                 android:src="@drawable/call"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/confirmButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Confirm"/>
-        </LinearLayout>
+                android:text="Confirm"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/callImageView" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

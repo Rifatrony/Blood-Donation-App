@@ -2,9 +2,13 @@ package com.example.blooddonationapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,15 +24,21 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class DashBoardActivity extends AppCompatActivity {
+public class DashBoardActivity extends AppCompatActivity implements View.OnClickListener {
 
-    DatabaseReference dbTotalUser, dbTodayTotalDonate;
+    AppCompatImageView imageBack;
 
-    TextView totalUserTextView, totalTodayDonateTextView;
+    CardView totalMemberCardView, todayTotalDonateCardView, totalCoordinatorCardView, totalOrganizationCardView;
+
+    DatabaseReference dbTotalUser, dbTodayTotalDonate, dbCoordinator, dbOrganization;
+
+    TextView totalUserTextView, totalTodayDonateTextView, totalCoordinatorTextView, totalOrganizationTextView;
 
     long count, total;
+    int totalOrganization, totalCoordinator;
 
     String donateDate, todayDate;
+    Calendar c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +47,53 @@ public class DashBoardActivity extends AppCompatActivity {
 
         initialization();
 
-        Calendar c = Calendar.getInstance();
+        setListener();
+
+        getTotalUser();
+        TotalTodayDonate();
+        getTotalCoordinator();
+        getTotalOrganization();
+
+        c = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         todayDate = sdf.format(c.getTime());
         Toast.makeText(getApplicationContext(), "Today Date is " + todayDate, Toast.LENGTH_SHORT).show();
 
+
+    }
+
+    private void initialization() {
+
+        dbTotalUser = FirebaseDatabase.getInstance().getReference().child("User");
+        dbTodayTotalDonate = FirebaseDatabase.getInstance().getReference().child("Confirm Blood");
+        dbCoordinator = FirebaseDatabase.getInstance().getReference().child("Coordinator");
+        dbOrganization = FirebaseDatabase.getInstance().getReference().child("Organization");
+
+        imageBack = findViewById(R.id.imageBack);
+
+        totalUserTextView = findViewById(R.id.totalUserTextView);
+        totalTodayDonateTextView = findViewById(R.id.totalTodayDonateTextView);
+        totalCoordinatorTextView = findViewById(R.id.totalCoordinatorTextView);
+        totalOrganizationTextView = findViewById(R.id.totalOrganizationTextView);
+
+        totalMemberCardView = findViewById(R.id.totalMemberCardView);
+        todayTotalDonateCardView = findViewById(R.id.todayTotalDonateCardView);
+        totalCoordinatorCardView = findViewById(R.id.totalCoordinatorCardView);
+        totalOrganizationCardView = findViewById(R.id.totalOrganizationCardView);
+
+    }
+
+    private void setListener(){
+
+        imageBack.setOnClickListener(this);
+        totalMemberCardView.setOnClickListener(this);
+        todayTotalDonateCardView.setOnClickListener(this);
+        totalCoordinatorCardView.setOnClickListener(this);
+        totalOrganizationCardView.setOnClickListener(this);
+
+    }
+
+    private void getTotalUser() {
         dbTotalUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -50,7 +102,6 @@ public class DashBoardActivity extends AppCompatActivity {
                     count = snapshot.getChildrenCount();
                     totalUserTextView.setText(String.valueOf(count));
                 }
-
             }
 
             @Override
@@ -58,8 +109,9 @@ public class DashBoardActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-
+    private void TotalTodayDonate() {
         dbTodayTotalDonate.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -69,14 +121,11 @@ public class DashBoardActivity extends AppCompatActivity {
                     donateDate = confirmBloodModel.getDonate_date();
 
                     if (donateDate.equals(todayDate)){
-
                         //int num = confirmBloodModel.getAccepted_id()
                         total = snapshot.getChildrenCount();
                         totalTodayDonateTextView.setText(String.valueOf(total));
                     }
-
                 }
-
             }
 
             @Override
@@ -84,17 +133,43 @@ public class DashBoardActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
-    private void initialization() {
+    private void getTotalCoordinator() {
+        dbCoordinator.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    totalCoordinator = (int) snapshot.getChildrenCount();
+                    totalCoordinatorTextView.setText(String.valueOf(totalCoordinator));
+                }
+            }
 
-        dbTotalUser = FirebaseDatabase.getInstance().getReference().child("User");
-        dbTodayTotalDonate = FirebaseDatabase.getInstance().getReference().child("Confirm Blood");
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        totalUserTextView = findViewById(R.id.totalUserTextView);
-        totalTodayDonateTextView = findViewById(R.id.totalTodayDonateTextView);
+            }
+        });
     }
+
+    private void getTotalOrganization() {
+        dbOrganization.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    totalOrganization = (int) snapshot.getChildrenCount();
+                    totalOrganizationTextView.setText(String.valueOf(totalOrganization));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -102,4 +177,33 @@ public class DashBoardActivity extends AppCompatActivity {
         Animatoo.animateSwipeRight(DashBoardActivity.this);
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.imageBack:
+                onBackPressed();
+                return;
+
+            case R.id.totalMemberCardView:
+                startActivity(new Intent(DashBoardActivity.this, DonorListActivity.class));
+                Animatoo.animateSwipeLeft(DashBoardActivity.this);
+                return;
+
+            case R.id.todayTotalDonateCardView:
+                startActivity(new Intent(DashBoardActivity.this, TodayReadyDonorActivity.class));
+                Animatoo.animateSwipeLeft(DashBoardActivity.this);
+                return;
+
+            case R.id.totalCoordinatorCardView:
+                startActivity(new Intent(DashBoardActivity.this, CoordinatorActivity.class));
+                Animatoo.animateSwipeLeft(DashBoardActivity.this);
+                return;
+
+            case R.id.totalOrganizationCardView:
+                startActivity(new Intent(DashBoardActivity.this, OrganizationActivity.class));
+                Animatoo.animateSwipeLeft(DashBoardActivity.this);
+                return;
+        }
+    }
 }

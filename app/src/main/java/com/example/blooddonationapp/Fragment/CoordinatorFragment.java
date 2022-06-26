@@ -90,14 +90,9 @@ public class CoordinatorFragment extends Fragment {
                         } else {
                             fabAddCoordinator.setVisibility(View.VISIBLE);
                         }
-
-                        Toast.makeText(getContext(), user.getRole(), Toast.LENGTH_SHORT).show();
                     }
-
                 }
-
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -139,9 +134,6 @@ public class CoordinatorFragment extends Fragment {
                     progressBar.setVisibility(View.INVISIBLE);
                     noCoordinatorFoundTextView.setVisibility(View.VISIBLE);
                     noCoordinatorFoundTextView.setText("No Coordinator Found");
-
-
-                    Toast.makeText(getContext(), "No Data", Toast.LENGTH_SHORT).show();
                 }
 
             }

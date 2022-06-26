@@ -11,6 +11,7 @@ import com.example.blooddonationapp.Fragment.OrganizationFragment;
 import com.example.blooddonationapp.Fragment.TodayReadyFragment;
 
 public class MyViewPagerAdapter extends FragmentStateAdapter {
+
     public MyViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }

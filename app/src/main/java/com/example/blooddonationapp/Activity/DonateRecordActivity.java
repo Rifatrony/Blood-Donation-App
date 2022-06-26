@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -12,8 +13,10 @@ import android.view.View;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.ConfirmBloodAdapter;
+import com.example.blooddonationapp.Adapter.RecordViewPagerAdapter;
 import com.example.blooddonationapp.Model.ConfirmBloodModel;
 import com.example.blooddonationapp.R;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,8 +38,10 @@ public class DonateRecordActivity extends AppCompatActivity {
 
     DatabaseReference dbConfirmBlood;
 
-    FirebaseAuth auth;
-    FirebaseUser user;
+    TabLayout tabLayout;
+    ViewPager2 viewPager2;
+
+    RecordViewPagerAdapter recordViewPagerAdapter;
 
 
     @Override
@@ -46,42 +51,44 @@ public class DonateRecordActivity extends AppCompatActivity {
 
         initialization();
 
-        imageBack.setOnClickListener(view -> onBackPressed());
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        confirmBloodModelList = new ArrayList<>();
-        adapter = new ConfirmBloodAdapter(this, confirmBloodModelList);
-        recyclerView.setAdapter(adapter);
-
-        //user = auth.getCurrentUser();
-
-        dbConfirmBlood = FirebaseDatabase.getInstance().getReference().child("Confirm Blood");
-
-        dbConfirmBlood.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    ConfirmBloodModel confirmBloodModel = dataSnapshot.getValue(ConfirmBloodModel.class);
-                    assert confirmBloodModel != null;
-                    if (confirmBloodModel.getAccepted_id().equals(FirebaseAuth.getInstance().getUid())){
-
-                        confirmBloodModelList.add(confirmBloodModel);
-                    }
-                }
-                adapter.notifyDataSetChanged();
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
+
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+
+                tabLayout.getTabAt(position).select();
+            }
+        });
+
+        imageBack.setOnClickListener(view -> onBackPressed());
+
     }
 
     private void initialization() {
-        recyclerView = findViewById(R.id.recyclerView);
+
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager2 = findViewById(R.id.view_pager);
+
+        recordViewPagerAdapter = new RecordViewPagerAdapter(this);
+        viewPager2.setAdapter(recordViewPagerAdapter);
+
         imageBack = findViewById(R.id.imageBack);
     }
 

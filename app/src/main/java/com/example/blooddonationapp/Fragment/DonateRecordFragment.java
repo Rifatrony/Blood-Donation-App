@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.blooddonationapp.Adapter.TodayReadyAdapter;
-import com.example.blooddonationapp.Model.TodayReadyModel;
+import com.example.blooddonationapp.Adapter.ConfirmBloodAdapter;
+import com.example.blooddonationapp.Model.ConfirmBloodModel;
 import com.example.blooddonationapp.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,77 +24,64 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-public class TodayReadyFragment extends Fragment {
+public class DonateRecordFragment extends Fragment {
 
     View view;
 
     RecyclerView recyclerView;
-    List<TodayReadyModel> todayReadyModelList;
-    TodayReadyAdapter adapter;
+    List<ConfirmBloodModel> confirmBloodModelList;
+    ConfirmBloodAdapter adapter;
 
-    DatabaseReference dbTodayDonor;
+    DatabaseReference dbConfirmBlood;
 
-    TextView noRequestFoundTextView;
+    TextView noDataFoundTextView;
     ProgressBar progressBar;
-
-    String today_date;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_today_ready, container, false);
+        view = inflater.inflate(R.layout.fragment_donate_record, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        noRequestFoundTextView = view.findViewById(R.id.noRequestFoundTextView);
+        noDataFoundTextView = view.findViewById(R.id.noDataFoundTextView);
         progressBar = view.findViewById(R.id.progressBar);
-
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        today_date = sdf.format(c.getTime());
-        System.out.println(today_date);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        todayReadyModelList = new ArrayList<>();
-        adapter = new TodayReadyAdapter(getContext(), todayReadyModelList);
+        confirmBloodModelList = new ArrayList<>();
+        adapter = new ConfirmBloodAdapter(getContext(), confirmBloodModelList);
         recyclerView.setAdapter(adapter);
 
         progressBar.setVisibility(View.VISIBLE);
 
-        dbTodayDonor = FirebaseDatabase.getInstance().getReference().child("Today Ready");
+        dbConfirmBlood = FirebaseDatabase.getInstance().getReference().child("Confirm Blood");
 
-        dbTodayDonor.addValueEventListener(new ValueEventListener() {
+        dbConfirmBlood.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                todayReadyModelList.clear();
-
+                //confirmBloodModelList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    TodayReadyModel todayReadyModel = dataSnapshot.getValue(TodayReadyModel.class);
-                    if (!todayReadyModel.getId().equals(FirebaseAuth.getInstance().getUid()) && todayReadyModel.getDate().equals(today_date)){
+                    ConfirmBloodModel confirmBloodModel = dataSnapshot.getValue(ConfirmBloodModel.class);
+                    assert confirmBloodModel != null;
+                    if (confirmBloodModel.getAccepted_id().equals(FirebaseAuth.getInstance().getUid())){
+
+                        confirmBloodModelList.add(confirmBloodModel);
                         progressBar.setVisibility(View.INVISIBLE);
-                        todayReadyModelList.add(todayReadyModel);
                     }
                 }
-
                 adapter.notifyDataSetChanged();
 
-                if (todayReadyModelList.isEmpty()){
+                if (confirmBloodModelList.isEmpty()){
                     progressBar.setVisibility(View.INVISIBLE);
-                    noRequestFoundTextView.setVisibility(View.VISIBLE);
-                    noRequestFoundTextView.setText("No one is Available Today");
+                    noDataFoundTextView.setVisibility(View.VISIBLE);
+                    noDataFoundTextView.setText("You Never Donate Blood");
                 }
-
-
             }
 
             @Override

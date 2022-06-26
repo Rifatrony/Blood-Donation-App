@@ -54,7 +54,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
         RequestModel data = requestModelList.get(position);
 
         holder.nameTextView.setText(data.getName()+" (Me)");
-        holder.messageTextView.setText(data.getMessage());
+        holder.messageTextView.setText("I have a request of 1 Bag " +  data.getBlood_group()
+                + " blood at " + data.getDonate_location() + " ( time " + data.getDonate_time()+" )");
         holder.requestTimeTextView.setText(data.getCurrent_time()+"s");
         holder.patientProblemTextView.setText("Patient Problem: "+data.getPatient_problem());
 

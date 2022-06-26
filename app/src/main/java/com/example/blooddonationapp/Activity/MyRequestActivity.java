@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,9 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.blooddonationapp.Adapter.RecordViewPagerAdapter;
 import com.example.blooddonationapp.Adapter.RequestAdapter;
+import com.example.blooddonationapp.Adapter.RequestViewPagerAdapter;
 import com.example.blooddonationapp.Model.RequestModel;
 import com.example.blooddonationapp.R;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,18 +35,12 @@ import java.util.List;
 
 public class MyRequestActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView viewSentRequestTextView, noRequestFoundTextView;
-    ProgressBar progressBar;
+    TabLayout tabLayout;
+    ViewPager2 viewPager2;
 
     AppCompatImageView imageBack;
-    FirebaseAuth mAuth;
-    RecyclerView recyclerView;
-    List<RequestModel> userList;
-    RequestAdapter adapter;
 
-    DatabaseReference userRef;
-    FirebaseUser firebaseUser;
-    FirebaseUser user;
+    RequestViewPagerAdapter requestViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,98 +50,46 @@ public class MyRequestActivity extends AppCompatActivity implements View.OnClick
         initialization();
         setListener();
 
-        mAuth = FirebaseAuth.getInstance();
-        firebaseUser = mAuth.getCurrentUser();
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(layoutManager);
-
-        userList = new ArrayList<>();
-        adapter = new RequestAdapter(this, userList);
-        recyclerView.setAdapter(adapter);
-
-        userRef = FirebaseDatabase.getInstance().getReference().child("Request").child(firebaseUser.getUid());
-
-        userRef.addValueEventListener(new ValueEventListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                try {
-                    readUser();
-                    progressBar.setVisibility(View.VISIBLE);
-
-                }catch (Exception e){
-                    System.out.println(e.getMessage());
-                    //progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),"ref"+ e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-                }
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });
-    }
 
-    private void readUser() {
-
-        //final FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        //progressBar.setVisibility(View.VISIBLE);
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Request")
-                .child(firebaseUser.getUid());
-        //Query query = reference.orderByChild("uid").equalTo();
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                progressBar.setVisibility(View.GONE);
-                userList.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    RequestModel user = dataSnapshot.getValue(RequestModel.class);
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
 
-                    if (user.getUid().equals(firebaseUser.getUid())){
-                        userList.add(user);
-                        /*if (!user.getStatus().equals("ok")){
-                            System.out.println("Get uid is : " + firebaseUser.getUid());
-                            userList.add(user);
-                        }*/
-                    }
-                }
-                adapter.notifyDataSetChanged();
-
-                if (userList.isEmpty()){
-                    progressBar.setVisibility(View.INVISIBLE);
-                    noRequestFoundTextView.setVisibility(View.VISIBLE);
-                    noRequestFoundTextView.setText("No Request Available");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+                tabLayout.getTabAt(position).select();
             }
         });
+
     }
 
     private void setListener() {
         imageBack.setOnClickListener(this);
-        viewSentRequestTextView.setOnClickListener(this);
     }
 
     private void initialization() {
 
-        progressBar = findViewById(R.id.progressBar);
-        noRequestFoundTextView = findViewById(R.id.noRequestFoundTextView);
-
         imageBack = findViewById(R.id.imageBack);
-        recyclerView = findViewById(R.id.recyclerView);
-        viewSentRequestTextView = findViewById(R.id.viewSentRequestTextView);
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager2 = findViewById(R.id.view_pager);
+
+        requestViewPagerAdapter = new RequestViewPagerAdapter(this);
+        viewPager2.setAdapter(requestViewPagerAdapter);
 
     }
 
@@ -154,11 +100,6 @@ public class MyRequestActivity extends AppCompatActivity implements View.OnClick
             case R.id.imageBack:
                 onBackPressed();
                 break;
-
-            case R.id.viewSentRequestTextView:
-                startActivity(new Intent(getApplicationContext(), ViewSentRequestActivity.class));
-                Animatoo.animateSwipeLeft(MyRequestActivity.this);
-
         }
     }
 
