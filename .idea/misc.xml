@@ -34,6 +34,7 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_map.xml" value="0.17" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_organization.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_organization_name_list.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_profile.xml" value="0.22" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_recipient.xml" value="0.25" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_register.xml" value="0.22" />
@@ -62,6 +63,7 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/fragment_view_sent_request.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/nav_header.xml" value="0.25416666666666665" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/organization_layout.xml" value="0.203125" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/organization_name_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/profile_layout.xml" value="0.22" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/request_sample_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/today_ready_details_layout.xml" value="0.203125" />

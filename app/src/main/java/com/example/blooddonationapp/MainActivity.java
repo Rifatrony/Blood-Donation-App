@@ -386,6 +386,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (backPressedTime + 2000 >System.currentTimeMillis()){
             super.onBackPressed();
+            Animatoo.animateSwipeLeft(MainActivity.this);
             return;
         }
         else {

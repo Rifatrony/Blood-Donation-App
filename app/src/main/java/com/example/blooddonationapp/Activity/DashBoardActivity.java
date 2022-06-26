@@ -28,7 +28,7 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
 
     AppCompatImageView imageBack;
 
-    CardView totalMemberCardView, todayTotalDonateCardView, totalCoordinatorCardView, totalOrganizationCardView;
+    CardView totalMemberCardView, totalCoordinatorCardView, totalOrganizationCardView;
 
     DatabaseReference dbTotalUser, dbTodayTotalDonate, dbCoordinator, dbOrganization;
 
@@ -50,7 +50,6 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
         setListener();
 
         getTotalUser();
-        TotalTodayDonate();
         getTotalCoordinator();
         getTotalOrganization();
 
@@ -72,12 +71,10 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
         imageBack = findViewById(R.id.imageBack);
 
         totalUserTextView = findViewById(R.id.totalUserTextView);
-        totalTodayDonateTextView = findViewById(R.id.totalTodayDonateTextView);
         totalCoordinatorTextView = findViewById(R.id.totalCoordinatorTextView);
         totalOrganizationTextView = findViewById(R.id.totalOrganizationTextView);
 
         totalMemberCardView = findViewById(R.id.totalMemberCardView);
-        todayTotalDonateCardView = findViewById(R.id.todayTotalDonateCardView);
         totalCoordinatorCardView = findViewById(R.id.totalCoordinatorCardView);
         totalOrganizationCardView = findViewById(R.id.totalOrganizationCardView);
 
@@ -87,7 +84,6 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
 
         imageBack.setOnClickListener(this);
         totalMemberCardView.setOnClickListener(this);
-        todayTotalDonateCardView.setOnClickListener(this);
         totalCoordinatorCardView.setOnClickListener(this);
         totalOrganizationCardView.setOnClickListener(this);
 
@@ -190,10 +186,6 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
                 Animatoo.animateSwipeLeft(DashBoardActivity.this);
                 return;
 
-            case R.id.todayTotalDonateCardView:
-                startActivity(new Intent(DashBoardActivity.this, TodayReadyDonorActivity.class));
-                Animatoo.animateSwipeLeft(DashBoardActivity.this);
-                return;
 
             case R.id.totalCoordinatorCardView:
                 startActivity(new Intent(DashBoardActivity.this, CoordinatorActivity.class));

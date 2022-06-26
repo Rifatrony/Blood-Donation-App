@@ -36,11 +36,7 @@ public class ViewSentRequestFragment extends Fragment {
 
     View view;
 
-    TextView viewYourRequestTextView;
-    ProgressBar progressBar;
-    TextView noRequestFoundTextView;
 
-    AppCompatImageView imageBack;
     FirebaseAuth mAuth;
     RecyclerView recyclerView;
     List<RequestModel> requestModelList;
@@ -57,9 +53,6 @@ public class ViewSentRequestFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_view_sent_request, container, false);
 
-        imageBack = view.findViewById(R.id.imageBack);
-        noRequestFoundTextView = view.findViewById(R.id.noRequestFoundTextView);
-        progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recyclerView);
 
         mAuth = FirebaseAuth.getInstance();
@@ -73,7 +66,6 @@ public class ViewSentRequestFragment extends Fragment {
         requestModelList = new ArrayList<>();
         adapter = new ViewSentRequestAdapter(getContext(), requestModelList);
         recyclerView.setAdapter(adapter);
-        progressBar.setVisibility(View.VISIBLE);
 
         dbRequestId = FirebaseDatabase.getInstance().getReference().child("RequestId");
 
@@ -86,7 +78,7 @@ public class ViewSentRequestFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
 
                     RequestIdModel data = dataSnapshot.getValue(RequestIdModel.class);
-                    requestSentUid = data.getUid();
+                    requestSentUid = data.getUid().toString();
 
                     if (!data.getUid().isEmpty()){
                         dbViewRequest = FirebaseDatabase.getInstance().getReference()
@@ -103,16 +95,11 @@ public class ViewSentRequestFragment extends Fragment {
                                     RequestModel user = dataSnapshot.getValue(RequestModel.class);
                                     if (!user.getUid().equals(mAuth.getUid())){
                                         requestModelList.add(user);
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        noRequestFoundTextView.setVisibility(View.INVISIBLE);
                                     }
-
                                 }
                                 adapter.notifyDataSetChanged();
                                 if (requestModelList.isEmpty()){
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                    noRequestFoundTextView.setVisibility(View.VISIBLE);
-                                    noRequestFoundTextView.setText("No Sent Request Found");
+
                                 }
 
                             }
@@ -124,7 +111,6 @@ public class ViewSentRequestFragment extends Fragment {
                         });
                     }
                 }
-
             }
 
             @Override

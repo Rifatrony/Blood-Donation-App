@@ -19,6 +19,9 @@
         android:theme="@style/Theme.BloodDonationApp"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.OrganizationNameListActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.SearchByActivity"
             android:exported="false" />
         <activity

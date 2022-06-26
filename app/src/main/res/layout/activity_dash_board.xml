@@ -107,52 +107,6 @@
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/todayTotalDonateCardView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardBackgroundColor="@color/red"
-                        app:cardCornerRadius="10dp"
-                        android:layout_marginTop="16dp"
-
-                        >
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            >
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:paddingTop="16dp"
-                                android:paddingBottom="6dp"
-                                android:textSize="16sp"
-                                android:textStyle="bold"
-                                android:text="Today Total Donate"
-                                android:textColor="@color/white"
-                                />
-
-                            <TextView
-                                android:id="@+id/totalTodayDonateTextView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingStart="16dp"
-                                android:paddingEnd="16dp"
-                                android:paddingTop="6dp"
-                                android:paddingBottom="16dp"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textColor="@color/white"
-                                />
-
-                        </LinearLayout>
-
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
                         android:id="@+id/totalCoordinatorCardView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
