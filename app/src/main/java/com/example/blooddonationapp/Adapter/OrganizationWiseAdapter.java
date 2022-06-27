@@ -16,7 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.blooddonationapp.Model.TodayReadyModel;
+import com.example.blooddonationapp.Activity.RegisterActivity;
+import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,46 +30,45 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class TodayReadyAdapter extends RecyclerView.Adapter<TodayReadyAdapter.TodayReadyViewHolder> {
+public class OrganizationWiseAdapter extends RecyclerView.Adapter<OrganizationWiseAdapter.OrganizationWiseViewHolder> {
 
     Context context;
-    List<TodayReadyModel> todayReadyModelList;
+    List<User> userList;
 
     String name, blood_amount, blood_group, current_time, donate_date, donate_location, donate_time, message,
             number, patient_problem, recipient_number, reference, status = "pending", uid;
 
-    public TodayReadyAdapter() {
+    public OrganizationWiseAdapter() {
     }
 
-    public TodayReadyAdapter(Context context, List<TodayReadyModel> todayReadyModelList) {
+    public OrganizationWiseAdapter(Context context, List<User> userList) {
         this.context = context;
-        this.todayReadyModelList = todayReadyModelList;
+        this.userList = userList;
     }
 
     @NonNull
     @Override
-    public TodayReadyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public OrganizationWiseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.user_profile_layout, parent, false);
-        return new TodayReadyViewHolder(view);
+        return new OrganizationWiseViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TodayReadyViewHolder holder, int position) {
-        TodayReadyModel data = todayReadyModelList.get(position);
+    public void onBindViewHolder(@NonNull OrganizationWiseViewHolder holder, int position) {
+        User data = userList.get(position);
         holder.userNameTextView.setText(data.getName());
-        holder.userNumberTextView.setText(data.getNumber());
+        holder.userNumberTextView.setText(data.getEmail());
         holder.userBloodGroupTextView.setText(data.getBlood_group());
         holder.userAddressTextView.setText(data.getAddress());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-
                 Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.today_ready_details_layout);
                 dialog.setCancelable(false);
+
+                dialog.show();
 
                 TextView nameAndBloodGroupTextView = dialog.findViewById(R.id.nameAndBloodGroupTextView);
                 EditText bloodAmountEditText = dialog.findViewById(R.id.bloodAmountEditText);
@@ -83,8 +83,6 @@ public class TodayReadyAdapter extends RecyclerView.Adapter<TodayReadyAdapter.To
                 Button sendRequestButton = dialog.findViewById(R.id.sendRequestButton);
 
                 nameAndBloodGroupTextView.setText(data.getName()+" ( "+data.getBlood_group()+" )");
-
-                /*Add listener with Date Edit Text*/
 
                 Calendar calendar = Calendar.getInstance();
                 final int year = calendar.get(Calendar.YEAR);
@@ -195,34 +193,30 @@ public class TodayReadyAdapter extends RecyclerView.Adapter<TodayReadyAdapter.To
                             }
                         });
 
-
                     }
                 });
 
-
-                dialog.show();
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
-        return todayReadyModelList.size();
+        return userList.size();
     }
 
-    public class TodayReadyViewHolder extends RecyclerView.ViewHolder {
+    public class OrganizationWiseViewHolder extends RecyclerView.ViewHolder {
 
-        TextView userNameTextView, userNumberTextView, userBloodGroupTextView, userAddressTextView;
+        TextView userNameTextView, userNumberTextView,
+                userBloodGroupTextView, userAddressTextView;
 
-        public TodayReadyViewHolder(@NonNull View itemView) {
+        public OrganizationWiseViewHolder(@NonNull View itemView) {
             super(itemView);
 
             userNameTextView = itemView.findViewById(R.id.userNameTextView);
             userNumberTextView = itemView.findViewById(R.id.userNumberTextView);
             userBloodGroupTextView = itemView.findViewById(R.id.userBloodGroupTextView);
             userAddressTextView = itemView.findViewById(R.id.userAddressTextView);
-
 
         }
     }

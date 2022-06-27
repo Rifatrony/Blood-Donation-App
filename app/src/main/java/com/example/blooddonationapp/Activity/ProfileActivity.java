@@ -2,6 +2,8 @@ package com.example.blooddonationapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.ButtonBarLayout;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
@@ -38,14 +40,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView userNameTextView, userNumberTextView, userBloodGroupTextView,
             userLastDonateTextView, userNextDonateTextView, userAddressTextView;
 
+    AppCompatButton beReadyDonorButton;
+
     String name, number, blood_group, last_donate, next_donate, address;
 
-    DatabaseReference userRef, dbReadyDonor, dbUser;
+    DatabaseReference userRef, dbReadyDonor, dbUser, reference;
     FirebaseUser user;
 
     Toolbar toolbar;
@@ -59,6 +63,12 @@ public class ProfileActivity extends AppCompatActivity {
     Button btn_cancel, btn_confirm;
     String uid, today_date;
 
+    String today_Date_string, next_Donate_Date_string;
+
+    Date Today, Next_Donate;
+
+    SimpleDateFormat sdf;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +76,66 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         initialization();
+        setListener();
 
         toolbar = findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
+
+        Calendar c = Calendar.getInstance();
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
+        today_Date_string = sdf.format(c.getTime());
+        System.out.println("String " + today_Date_string);
+
 
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         userRef = FirebaseDatabase.getInstance().getReference().child("User")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        reference = FirebaseDatabase.getInstance().getReference().child("User");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    User user = dataSnapshot.getValue(User.class);
+                    if (user.getId().equals(FirebaseAuth.getInstance().getUid())){
+
+                        if (!user.getNext_donate().isEmpty()){
+                            next_Donate_Date_string = user.getNext_donate();
+
+                            try {
+                                Today = sdf.parse(today_Date_string);
+                                Next_Donate = sdf.parse(next_Donate_Date_string);
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (!Today.after(Next_Donate)){
+                                beReadyDonorButton.setVisibility(View.INVISIBLE);
+                            }
+
+                            else {
+                                beReadyDonorButton.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        else {
+                            beReadyDonorButton.setVisibility(View.VISIBLE);
+                        }
+
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         dbUser = FirebaseDatabase.getInstance().getReference().child("User");
@@ -129,6 +190,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                     }
                     catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -138,17 +200,22 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void initialization() {
+
+        beReadyDonorButton = findViewById(R.id.beReadyDonorButton);
+
         userNameTextView = findViewById(R.id.userNameTextView);
         userNumberTextView = findViewById(R.id.userNumberTextView);
         userBloodGroupTextView = findViewById(R.id.userBloodGroupTextView);
         userLastDonateTextView = findViewById(R.id.userLastDonateTextView);
         userNextDonateTextView = findViewById(R.id.userNextDonateTextView);
         userAddressTextView = findViewById(R.id.userAddressTextView);
+    }
+
+    private void setListener(){
+        beReadyDonorButton.setOnClickListener(this);
     }
 
     @Override
@@ -169,8 +236,8 @@ public class ProfileActivity extends AppCompatActivity {
                 Animatoo.animateSwipeLeft(ProfileActivity.this);
                 break;
 
-            case R.id.nav_ready_donor:
-                ReadyDonor();
+            /*case R.id.beReadyDonorButton:
+                ReadyDonor();*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -206,53 +273,65 @@ public class ProfileActivity extends AppCompatActivity {
                 dialog_address = addressEditText.getText().toString().trim();
                 dialog_time = timeEditText.getText().toString().trim();
 
-                System.out.println("Address "+dialog_address);
-                System.out.println(dialog_time);
+                if (dialog_address.isEmpty()){
+                    Toast.makeText(ProfileActivity.this, "Enter Your Available Address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                dbUser.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (dialog_time.isEmpty()){
+                    Toast.makeText(ProfileActivity.this, "Enter Your Available Time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    System.out.println("Address "+dialog_address);
+                    System.out.println(dialog_time);
 
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                            User user = dataSnapshot.getValue(User.class);
+                    dbUser.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                            Calendar c = Calendar.getInstance();
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                            today_date = sdf.format(c.getTime());
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                User user = dataSnapshot.getValue(User.class);
 
-                            if (user.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+                                Calendar c = Calendar.getInstance();
+                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                                today_date = sdf.format(c.getTime());
 
-                                HashMap hashMap = new HashMap();
-                                hashMap.put("name", user.getName());
-                                hashMap.put("number", user.getNumber());
-                                hashMap.put("address", user.getAddress());
-                                hashMap.put("location", dialog_address);
-                                hashMap.put("time", dialog_time);
-                                hashMap.put("blood_group", user.getBlood_group());
-                                hashMap.put("id", user.getId());
-                                hashMap.put("uid", uid);
-                                hashMap.put("date", today_date);
+                                if (user.getId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
 
-                                dbReadyDonor.child(uid).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
-                                    @Override
-                                    public void onComplete(@NonNull Task task) {
-                                        if (task.isSuccessful()){
-                                            dialog.dismiss();
-                                            addressEditText.setText("");
-                                            timeEditText.setText("");
-                                            Toast.makeText(ProfileActivity.this, "You can donate blood Today", Toast.LENGTH_SHORT).show();
+                                    HashMap hashMap = new HashMap();
+                                    hashMap.put("name", user.getName());
+                                    hashMap.put("number", user.getNumber());
+                                    hashMap.put("address", user.getAddress());
+                                    hashMap.put("location", dialog_address);
+                                    hashMap.put("time", dialog_time);
+                                    hashMap.put("blood_group", user.getBlood_group());
+                                    hashMap.put("id", user.getId());
+                                    hashMap.put("uid", uid);
+                                    hashMap.put("date", today_date);
+
+                                    dbReadyDonor.child(uid).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
+                                            if (task.isSuccessful()){
+                                                dialog.dismiss();
+                                                addressEditText.setText("");
+                                                timeEditText.setText("");
+                                                Toast.makeText(ProfileActivity.this, "You can donate blood Today", Toast.LENGTH_SHORT).show();
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+                }
+
             }
         });
 
@@ -265,5 +344,15 @@ public class ProfileActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Animatoo.animateSwipeRight(ProfileActivity.this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.beReadyDonorButton:
+                ReadyDonor();
+                break;
+
+        }
     }
 }

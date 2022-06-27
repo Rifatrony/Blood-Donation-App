@@ -9,16 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
-import com.example.blooddonationapp.Adapter.OrganizationAdapter;
-import com.example.blooddonationapp.Adapter.OrganizationNameAdapter;
-import com.example.blooddonationapp.Model.OrganizationModel;
+import com.example.blooddonationapp.Adapter.OrganizationWiseAdapter;
+import com.example.blooddonationapp.Adapter.UserAdapter;
+import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,30 +26,29 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrganizationNameListActivity extends AppCompatActivity {
+public class OrganizationWiseMemberActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    TextView noOrganizationFoundTextView;
+    TextView titleTextView, noOrganizationFoundTextView;
     ProgressBar progressBar;
+    String title;
 
     AppCompatImageView imageBack;
 
-    OrganizationNameAdapter adapter;
-    List<OrganizationModel> organizationModelList;
+    RecyclerView recyclerView;
+    List<User> userList;
+    OrganizationWiseAdapter adapter;
 
-    DatabaseReference dbOrganization;
-
-    //String blood_group;
+    DatabaseReference dbUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_organization_name_list);
+        setContentView(R.layout.activity_organization_wise_member);
 
         initialization();
 
-        /*blood_group = getIntent().getStringExtra("group");
-        System.out.println("Blood group receive " + blood_group);*/
+        title = getIntent().getStringExtra("title");
+        titleTextView.setText(title);
 
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,25 +59,31 @@ public class OrganizationNameListActivity extends AppCompatActivity {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        organizationModelList = new ArrayList<>();
-        adapter= new OrganizationNameAdapter(this, organizationModelList);
+        userList = new ArrayList<>();
+        adapter = new OrganizationWiseAdapter(this, userList);
         recyclerView.setAdapter(adapter);
 
-        dbOrganization = FirebaseDatabase.getInstance().getReference()
-                .child("Organization");
+        progressBar.setVisibility(View.VISIBLE);
 
-        dbOrganization.addValueEventListener(new ValueEventListener() {
+        dbUser.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                organizationModelList.clear();
-
+                userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    OrganizationModel organizationModel = dataSnapshot.getValue(OrganizationModel.class);
-                    organizationModelList.add(organizationModel);
+                    User user = dataSnapshot.getValue(User.class);
+                    if (user.getOrganization().equals(title)){
+                        userList.add(user);
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
                 }
                 adapter.notifyDataSetChanged();
+
+                if (userList.isEmpty()){
+                    progressBar.setVisibility(View.INVISIBLE);
+                    noOrganizationFoundTextView.setVisibility(View.VISIBLE);
+                    noOrganizationFoundTextView.setText("No Member found");
+                }
             }
 
             @Override
@@ -89,10 +92,16 @@ public class OrganizationNameListActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     private void initialization() {
+
         imageBack = findViewById(R.id.imageBack);
+
+        dbUser = FirebaseDatabase.getInstance().getReference().child("User");
+
+        titleTextView = findViewById(R.id.titleTextView);
         recyclerView = findViewById(R.id.recyclerView);
         noOrganizationFoundTextView = findViewById(R.id.noOrganizationFoundTextView);
         progressBar = findViewById(R.id.progressBar);
@@ -101,6 +110,6 @@ public class OrganizationNameListActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Animatoo.animateSwipeRight(OrganizationNameListActivity.this);
+        Animatoo.animateSwipeRight(OrganizationWiseMemberActivity.this);
     }
 }

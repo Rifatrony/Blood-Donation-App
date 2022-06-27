@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:padding="30dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blood Group"
+        android:layout_marginBottom="10dp"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton android:id="@+id/radio_pirates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search by Location"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton android:id="@+id/radio_ninjas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search by Organization"
+            android:onClick="onRadioButtonClicked"/>
+
+
+    </RadioGroup>
+
+
+</LinearLayout>

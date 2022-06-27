@@ -18,13 +18,12 @@
             android:id="@+id/nameAndBloodGroupTextView"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Rony (AB+)"
             android:gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@color/blue"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textColor="@color/white"
             />
 

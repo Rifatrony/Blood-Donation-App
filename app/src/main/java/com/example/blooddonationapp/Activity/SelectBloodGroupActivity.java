@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,7 +75,8 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
                 break;
 
             case R.id.A_Positive:
-                Intent intent1 = new Intent(getApplicationContext(), SearchLocationActivity.class);
+
+                Intent intent1 = new Intent(getApplicationContext(), SearchByActivity.class);
                 intent1.putExtra("group", "A+");
                 startActivity(intent1);
                 Animatoo.animateSwipeLeft(SelectBloodGroupActivity.this);
@@ -80,7 +84,7 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
                 break;
 
             case R.id.B_Positive:
-                Intent intent2 = new Intent(getApplicationContext(), SearchLocationActivity.class);
+                Intent intent2 = new Intent(getApplicationContext(), SearchByActivity.class);
                 intent2.putExtra("group", "B+");
                 startActivity(intent2);
                 Animatoo.animateSwipeLeft(SelectBloodGroupActivity.this);
@@ -88,7 +92,7 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
                 break;
 
             case R.id.AB_Positive:
-                Intent intent3 = new Intent(getApplicationContext(), SearchLocationActivity.class);
+                Intent intent3 = new Intent(getApplicationContext(), SearchByActivity.class);
                 intent3.putExtra("group", "AB+");
                 startActivity(intent3);
                 Animatoo.animateSwipeLeft(SelectBloodGroupActivity.this);
@@ -96,7 +100,7 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
                 break;
 
             case R.id.O_Positive:
-                Intent intent4 = new Intent(getApplicationContext(), SearchLocationActivity.class);
+                Intent intent4 = new Intent(getApplicationContext(), SearchByActivity.class);
                 intent4.putExtra("group", "O+");
                 startActivity(intent4);
                 Animatoo.animateSwipeLeft(SelectBloodGroupActivity.this);
@@ -104,7 +108,7 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
                 break;
 
             case R.id.A_Negative:
-                Intent intent5 = new Intent(getApplicationContext(), SearchLocationActivity.class);
+                Intent intent5 = new Intent(getApplicationContext(), SearchByActivity.class);
                 intent5.putExtra("group", "A-");
                 startActivity(intent5);
                 Animatoo.animateSwipeLeft(SelectBloodGroupActivity.this);
@@ -112,7 +116,7 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
                 break;
 
             case R.id.B_Negative:
-                Intent intent6 = new Intent(getApplicationContext(), SearchLocationActivity.class);
+                Intent intent6 = new Intent(getApplicationContext(), SearchByActivity.class);
                 intent6.putExtra("group", "B-");
                 startActivity(intent6);
                 Animatoo.animateSwipeLeft(SelectBloodGroupActivity.this);
@@ -120,14 +124,14 @@ public class SelectBloodGroupActivity extends AppCompatActivity implements View.
                 break;
 
             case R.id.AB_Negative:
-                Intent intent7 = new Intent(getApplicationContext(), SearchLocationActivity.class);
+                Intent intent7 = new Intent(getApplicationContext(), SearchByActivity.class);
                 intent7.putExtra("group", "AB-");
                 startActivity(intent7);
                 Animatoo.animateSwipeLeft(SelectBloodGroupActivity.this);
                 break;
 
             case R.id.O_Negative:
-                Intent intent8 = new Intent(getApplicationContext(), SearchLocationActivity.class);
+                Intent intent8 = new Intent(getApplicationContext(), SearchByActivity.class);
                 intent8.putExtra("group", "O-");
                 startActivity(intent8);
                 Animatoo.animateSwipeLeft(SelectBloodGroupActivity.this);

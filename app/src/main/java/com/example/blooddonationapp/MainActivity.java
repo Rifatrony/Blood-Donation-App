@@ -185,13 +185,9 @@ public class MainActivity extends AppCompatActivity {
                             navigationView.getMenu().clear();
                             navigationView.inflateMenu(R.menu.admin_menu);
                         }
-
                     }
-
                 }
-
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

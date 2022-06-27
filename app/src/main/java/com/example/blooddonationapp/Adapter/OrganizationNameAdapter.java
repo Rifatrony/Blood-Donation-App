@@ -1,14 +1,18 @@
 package com.example.blooddonationapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.example.blooddonationapp.Activity.OrganizationWiseMemberActivity;
 import com.example.blooddonationapp.Model.OrganizationModel;
 import com.example.blooddonationapp.R;
 
@@ -36,7 +40,21 @@ public class OrganizationNameAdapter extends RecyclerView.Adapter<OrganizationNa
 
     @Override
     public void onBindViewHolder(@NonNull OrganizationNameViewHolder holder, int position) {
-        holder.nameTextView.setText(organizationModelList.get(position).getName());
+        OrganizationModel data = organizationModelList.get(position);
+        holder.nameTextView.setText(data.getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, OrganizationWiseMemberActivity.class);
+                intent.putExtra("title", data.getName());
+                context.startActivity(intent);
+                Animatoo.animateSwipeLeft(context);
+
+                Toast.makeText(context, "ID id " + data.getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
