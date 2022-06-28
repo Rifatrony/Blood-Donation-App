@@ -24,6 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -69,7 +70,9 @@ public class BloodRequestFragment extends Fragment {
         DatabaseReference userRef;
         userRef = FirebaseDatabase.getInstance().getReference().child("Request").child(firebaseUser.getUid());
 
-        userRef.addValueEventListener(new ValueEventListener() {
+        Query query = userRef.orderByChild("name");
+
+        query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Activity.AddOrganizationActivity;
 import com.example.blooddonationapp.Activity.OrganizationActivity;
 import com.example.blooddonationapp.Adapter.OrganizationAdapter;
@@ -82,7 +83,6 @@ public class OrganizationFragment extends Fragment {
                             fabAddOrganization.setVisibility(View.VISIBLE);
                         }
 
-                        Toast.makeText(getContext(), user.getRole(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -96,7 +96,10 @@ public class OrganizationFragment extends Fragment {
             }
         });
 
-        fabAddOrganization.setOnClickListener(view -> startActivity(new Intent(getContext(), AddOrganizationActivity.class)));
+        fabAddOrganization.setOnClickListener(view -> {
+            startActivity(new Intent(getContext(), AddOrganizationActivity.class));
+            Animatoo.animateSwipeLeft(getContext());
+        });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

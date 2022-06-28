@@ -287,7 +287,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case R.id.nav_DonorList:
-                        startActivity(new Intent(getApplicationContext(), DonorListActivity.class));
+                        Intent intent = new Intent(new Intent(getApplicationContext(), DonorListActivity.class));
+                        intent.putExtra("blood_group", h_blood_group);
+                        startActivity(intent);
                         Animatoo.animateSwipeLeft(MainActivity.this);
                         break;
 

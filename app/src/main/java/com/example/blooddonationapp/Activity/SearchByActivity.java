@@ -2,6 +2,7 @@ package com.example.blooddonationapp.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,6 +18,8 @@ public class SearchByActivity extends AppCompatActivity implements View.OnClickL
 
     String blood_group;
 
+    AppCompatImageView imageBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +33,14 @@ public class SearchByActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initialization() {
+        imageBack = findViewById(R.id.imageBack);
+
         searchByLocationButton = findViewById(R.id.searchByLocationButton);
         searchByOrganizationButton = findViewById(R.id.searchByOrganizationButton);
     }
 
     private void setListener() {
+        imageBack.setOnClickListener(this);
         searchByLocationButton.setOnClickListener(this);
         searchByOrganizationButton.setOnClickListener(this);
     }
@@ -53,6 +59,11 @@ public class SearchByActivity extends AppCompatActivity implements View.OnClickL
             case R.id.searchByOrganizationButton:
                 startActivity(new Intent(SearchByActivity.this, OrganizationNameListActivity.class));
                 Animatoo.animateSwipeLeft(SearchByActivity.this);
+                break;
+
+            case R.id.imageBack:
+                onBackPressed();
+                Animatoo.animateSwipeRight(SearchByActivity.this);
                 break;
         }
     }

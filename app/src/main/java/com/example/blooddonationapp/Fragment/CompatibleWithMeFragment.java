@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -61,12 +62,28 @@ public class CompatibleWithMeFragment extends Fragment {
 
         dbUser = FirebaseDatabase.getInstance().getReference().child("User");
 
-        dbUser.addValueEventListener(new ValueEventListener() {
+        Query query = dbUser.orderByChild("name");
+
+        query.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    User user = dataSnapshot.getValue(User.class);
+
+                    if (user.getId().equals(FirebaseAuth.getInstance().getUid())){
+                        my_blood_group = user.getBlood_group();
+
+                        if (user.getBlood_group().equals(my_blood_group)){
+
+                            userList.add(user);
+                        }
+
+
+                        Toast.makeText(getContext(), "my group is " + user.getBlood_group(), Toast.LENGTH_SHORT).show();
+                    }
 
                     /*User user = dataSnapshot.getValue(User.class);
                     my_blood_group = user.getBlood_group();

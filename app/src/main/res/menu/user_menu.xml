@@ -5,28 +5,51 @@
     >
 
     <item
+        android:title="Profile"
+        >
+
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/profile"
+                android:title="Profile"
+                />
+
+            <item
+                android:id="@+id/nav_my_request"
+                android:title="My Request"
+                android:icon="@drawable/request"
+                />
+
+            <item
+                android:id="@+id/nav_accept_request"
+                android:title="Accept Request"
+                android:icon="@drawable/accept"
+                />
+
+            <item
+                android:id="@+id/nav_donate_record"
+                android:title="Donate Record"
+                android:icon="@drawable/donate_record"
+                />
+        </menu>
+
+    </item>
+
+
+
+    <!--Profile Section-->
+
+    <item
         android:id="@+id/nav_today_ready_donor"
         android:icon="@drawable/profile"
         android:title="Today Ready"
         />
 
     <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/profile"
-        android:title="Profile"
-        />
-
-    <item
-        android:id="@+id/nav_my_request"
-        android:title="My Request"
-        android:icon="@drawable/request"
-        />
-
-
-    <item
-        android:id="@+id/nav_accept_request"
-        android:title="Accept Request"
-        android:icon="@drawable/accept"
+        android:id="@+id/nav_search_location"
+        android:title="Search Blood"
+        android:icon="@drawable/search"
         />
 
     <item
@@ -38,18 +61,6 @@
     <item
         android:id="@+id/nav_add_organization"
         android:title="Organization List"
-        android:icon="@drawable/organization"
-        />
-
-    <item
-        android:id="@+id/nav_search_location"
-        android:title="Search Blood"
-        android:icon="@drawable/search"
-        />
-
-    <item
-        android:id="@+id/nav_donate_record"
-        android:title="Donate Record"
         android:icon="@drawable/organization"
         />
 
@@ -84,17 +95,19 @@
                 android:title="Feedback"
                 />-->
 
+
+
+            <item
+                android:id="@+id/nav_about_us"
+                android:icon="@drawable/about_us"
+                android:title="About Us"
+                />
+
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/logout"
                 android:title="Logout"
                 />
-
-            <!--<item
-                android:id="@+id/nav_about_us"
-                android:icon="@drawable/about_us"
-                android:title="About Us"
-                />-->
 
         </menu>
     </item>

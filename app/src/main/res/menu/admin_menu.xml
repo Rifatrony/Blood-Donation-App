@@ -5,34 +5,48 @@
     >
 
     <item
+        android:title="Profile">
+
+        <menu>
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/profile"
+                android:title="Profile"
+                />
+
+            <item
+                android:id="@+id/nav_today_dashboard"
+                android:icon="@drawable/profile"
+                android:title="Dashboard"
+                />
+
+            <item
+                android:id="@+id/nav_my_request"
+                android:title="My Request"
+                android:icon="@drawable/request"
+                />
+
+
+            <item
+                android:id="@+id/nav_accept_request"
+                android:title="Accept Request"
+                android:icon="@drawable/accept"
+                />
+
+            <item
+                android:id="@+id/nav_donate_record"
+                android:title="Donate Record"
+                android:icon="@drawable/organization"
+                />
+
+        </menu>
+
+    </item>
+
+    <item
         android:id="@+id/nav_today_ready_donor"
         android:icon="@drawable/profile"
         android:title="Today Ready"
-        />
-
-    <item
-        android:id="@+id/nav_today_dashboard"
-        android:icon="@drawable/profile"
-        android:title="Dashboard"
-        />
-
-    <item
-        android:id="@+id/nav_profile"
-        android:icon="@drawable/profile"
-        android:title="Profile"
-        />
-
-    <item
-        android:id="@+id/nav_my_request"
-        android:title="My Request"
-        android:icon="@drawable/request"
-        />
-
-
-    <item
-        android:id="@+id/nav_accept_request"
-        android:title="Accept Request"
-        android:icon="@drawable/accept"
         />
 
     <item
@@ -59,17 +73,6 @@
         android:icon="@drawable/organization"
         />
 
-    <item
-        android:id="@+id/nav_donate_record"
-        android:title="Donate Record"
-        android:icon="@drawable/organization"
-        />
-
-    <!--<item
-        android:id="@+id/nav_add_donor"
-        android:title="Add New Donor"
-        android:icon="@drawable/add"
-        />-->
 
     <item
         android:id="@+id/nav_DonorList"
@@ -78,67 +81,6 @@
         android:iconTint="@color/black"
         />
 
-    <!--<item
-        android:id="@+id/nav_search_blood"
-        android:title="Search Blood"
-        android:icon="@drawable/search_blood"
-        />-->
-    <!--Blood Group Section-->
-
-    <!--<item
-        android:title="Send Blood Request">
-        <menu>
-
-            <item
-                android:id="@+id/nav_A_positive"
-                android:icon="@drawable/logout"
-                android:title="A+"
-                />
-
-            <item
-                android:id="@+id/nav_B_positive"
-                android:icon="@drawable/logout"
-                android:title="B+"
-                />
-
-            <item
-                android:id="@+id/nav_AB_positive"
-                android:icon="@drawable/logout"
-                android:title="AB+"
-                />
-
-            <item
-                android:id="@+id/nav_O_positive"
-                android:icon="@drawable/logout"
-                android:title="O+"
-                />
-            <item
-                android:id="@+id/nav_A_negative"
-                android:icon="@drawable/logout"
-                android:title="A-"
-                />
-
-            <item
-                android:id="@+id/nav_B_negative"
-                android:icon="@drawable/logout"
-                android:title="B-"
-                />
-
-            <item
-                android:id="@+id/nav_AB_negative"
-                android:icon="@drawable/logout"
-                android:title="AB-"
-                />
-
-            <item
-                android:id="@+id/nav_O_negative"
-                android:icon="@drawable/logout"
-                android:title="O-"
-                />
-
-
-        </menu>
-    </item>-->
 
     <!--Communication Section-->
 
@@ -164,16 +106,18 @@
                 />-->
 
             <item
+                android:id="@+id/nav_about_us"
+                android:icon="@drawable/about_us"
+                android:title="About Us"
+                />
+
+            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/logout"
                 android:title="Logout"
                 />
 
-            <!--<item
-                android:id="@+id/nav_about_us"
-                android:icon="@drawable/about_us"
-                android:title="About Us"
-                />-->
+
 
         </menu>
     </item>

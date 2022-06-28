@@ -84,7 +84,18 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                                 .child("Request").child(data.getUid())
                                 .removeValue().addOnCompleteListener(task -> {
                                     if (task.isSuccessful()){
-                                        Toast.makeText(context, "Request Deleted", Toast.LENGTH_SHORT).show();
+
+                                        FirebaseDatabase.getInstance().getReference()
+                                                .child("RequestId").child(data.getUid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()){
+                                                            Toast.makeText(context, "Request Deleted", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+
+
 
                                     }
                                     else {
@@ -142,32 +153,39 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
 
-                                        HashMap acceptRequest = new HashMap();
-                                        acceptRequest.put("name", data.getName());
-                                        acceptRequest.put("message", " accept your request to donate 1 Bag " );
-                                        acceptRequest.put("blood_group", data.getBlood_group()+" blood.");
-                                        acceptRequest.put("my_uid", data.getRequest_uid());
-                                        acceptRequest.put("accepted_uid", data.getUid());
-                                        acceptRequest.put("blood_amount", data.getBlood_amount());
-                                        acceptRequest.put("donate_location", data.getDonate_location());
-                                        acceptRequest.put("donate_time", data.getDonate_time());
-                                        acceptRequest.put("patient_problem", data.getPatient_problem());
-                                        acceptRequest.put("recipient_number", data.getRecipient_number());
-                                        acceptRequest.put("number", data.getNumber());
+                                        if (task.isSuccessful()){
 
-                                        System.out.println("\n\nUid is " + data.getUid());
+                                            HashMap acceptRequest = new HashMap();
+                                            acceptRequest.put("name", data.getName());
+                                            acceptRequest.put("message", " accept your request to donate 1 Bag " );
+                                            acceptRequest.put("blood_group", data.getBlood_group()+" blood.");
+                                            acceptRequest.put("my_uid", data.getRequest_uid());
+                                            acceptRequest.put("accepted_uid", data.getUid());
+                                            acceptRequest.put("blood_amount", data.getBlood_amount());
+                                            acceptRequest.put("donate_location", data.getDonate_location());
+                                            acceptRequest.put("donate_time", data.getDonate_time());
+                                            acceptRequest.put("patient_problem", data.getPatient_problem());
+                                            acceptRequest.put("recipient_number", data.getRecipient_number());
+                                            acceptRequest.put("number", data.getNumber());
 
-                                        DatabaseReference dbAcceptRequest = FirebaseDatabase.getInstance().getReference()
-                                                .child("Accept Request").child(data.getRequest_uid()).child(data.getUid());
+                                            System.out.println("\n\nUid is " + data.getUid());
 
-                                        dbAcceptRequest.updateChildren(acceptRequest).addOnCompleteListener(new OnCompleteListener() {
-                                            @Override
-                                            public void onComplete(@NonNull Task task) {
-                                                if (task.isSuccessful()){
-                                                    Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
+                                            DatabaseReference dbAcceptRequest = FirebaseDatabase.getInstance().getReference()
+                                                    .child("Accept Request").child(data.getRequest_uid()).child(data.getUid());
+
+                                            dbAcceptRequest.updateChildren(acceptRequest).addOnCompleteListener(new OnCompleteListener() {
+                                                @Override
+                                                public void onComplete(@NonNull Task task) {
+                                                    if (task.isSuccessful()){
+
+                                                        FirebaseDatabase.getInstance().getReference().child("RequestId")
+                                                                .child(data.getUid()).removeValue();
+                                                        Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+
+                                        }
                                     }
                                 });
                             }
