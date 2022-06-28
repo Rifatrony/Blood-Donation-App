@@ -45,6 +45,8 @@ public class AcceptRequestFragment extends Fragment {
     FirebaseUser user;
     DatabaseReference userRef;
 
+    Query query;
+
     String user_id;
 
 
@@ -75,7 +77,7 @@ public class AcceptRequestFragment extends Fragment {
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Accept Request").child(user_id);
 
-        Query query = userRef.orderByChild("name");
+        query = userRef.orderByChild("name");
 
         query.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
@@ -86,6 +88,7 @@ public class AcceptRequestFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     AcceptRequestModel acceptRequestModel = dataSnapshot.getValue(AcceptRequestModel.class);
 
+                    assert acceptRequestModel != null;
                     if (acceptRequestModel.getMy_uid().equals(user.getUid())){
                         acceptRequestModelList.add(acceptRequestModel);
                         progressBar.setVisibility(View.INVISIBLE);

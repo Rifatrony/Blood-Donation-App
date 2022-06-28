@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.blooddonationapp.Activity.TodayReadyDonorActivity;
 import com.example.blooddonationapp.Adapter.TodayReadyAdapter;
 import com.example.blooddonationapp.Model.TodayReadyModel;
 import com.example.blooddonationapp.R;
@@ -38,12 +40,14 @@ public class TodayReadyFragment extends Fragment {
     List<TodayReadyModel> todayReadyModelList;
     TodayReadyAdapter adapter;
 
-    DatabaseReference dbTodayDonor;
+    DatabaseReference dbTodayDonor, databaseReference;
 
     TextView noRequestFoundTextView;
     ProgressBar progressBar;
 
     String today_date;
+
+
 
 
     @Override
@@ -70,6 +74,7 @@ public class TodayReadyFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
 
         dbTodayDonor = FirebaseDatabase.getInstance().getReference().child("Today Ready");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Today Ready");
 
         dbTodayDonor.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -84,6 +89,13 @@ public class TodayReadyFragment extends Fragment {
                         progressBar.setVisibility(View.INVISIBLE);
                         todayReadyModelList.add(todayReadyModel);
                     }
+
+                    if (!todayReadyModel.getDate().equals(today_date)){
+
+                        databaseReference.child(todayReadyModel.getUid()).removeValue();
+                        Toast.makeText(getContext(), todayReadyModel.getDate(), Toast.LENGTH_SHORT).show();
+                    }
+
                 }
 
                 adapter.notifyDataSetChanged();

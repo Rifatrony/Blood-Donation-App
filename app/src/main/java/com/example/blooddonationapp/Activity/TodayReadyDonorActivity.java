@@ -9,12 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.blooddonationapp.Adapter.TodayReadyAdapter;
 import com.example.blooddonationapp.MainActivity;
 import com.example.blooddonationapp.Model.TodayReadyModel;
 import com.example.blooddonationapp.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +40,7 @@ public class TodayReadyDonorActivity extends AppCompatActivity {
     DatabaseReference dbTodayDonor;
 
     String today_date;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,14 @@ public class TodayReadyDonorActivity extends AppCompatActivity {
 
                         todayReadyModelList.add(todayReadyModel);
                     }
+                    if (!todayReadyModel.getDate().equals(today_date)){
+
+                        databaseReference.child(todayReadyModel.getUid()).removeValue();
+                        Toast.makeText(TodayReadyDonorActivity.this, todayReadyModel.getDate(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+
                 }
 
                 adapter.notifyDataSetChanged();
@@ -86,12 +98,16 @@ public class TodayReadyDonorActivity extends AppCompatActivity {
             }
         });
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Today Ready");
+
+
 
     }
 
     private void initialization() {
 
         dbTodayDonor = FirebaseDatabase.getInstance().getReference().child("Today Ready");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Today Ready");
 
         recyclerView = findViewById(R.id.recyclerView);
         imageBack = findViewById(R.id.imageBack);

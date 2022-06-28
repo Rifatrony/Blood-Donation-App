@@ -18,7 +18,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.blooddonationapp.Model.AcceptRequestModel;
-import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -110,7 +109,6 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                         Calendar c = Calendar.getInstance();
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                         String strDate = sdf.format(c.getTime());
-                        Toast.makeText(context, "Date is " + strDate, Toast.LENGTH_SHORT).show();
 
 
                         try {
@@ -125,9 +123,6 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                         calendar.add(Calendar.MONTH, +3);
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
                         afterThreeMonthsDate = date.format(calendar.getTime());
-
-                        Toast.makeText(context, "Request Uid is " + data.getAccepted_uid(), Toast.LENGTH_SHORT).show();
-                        Toast.makeText(context, "My Uid is " + data.getMy_uid(), Toast.LENGTH_SHORT).show();
 
                         HashMap hashMap = new HashMap();
                         hashMap.put("name", data.getName());
@@ -145,10 +140,9 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                         dbConfirm.child(data.getAccepted_uid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
-                                Toast.makeText(context, "Confirm Blood", Toast.LENGTH_SHORT).show();
 
                                 FirebaseDatabase.getInstance().getReference()
-                                        .child("Accept Request").child(data.getMy_uid()).removeValue()
+                                        .child("Accept Request").child(data.getMy_uid()).child(data.getAccepted_uid()).removeValue()
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -156,7 +150,7 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                                                 if (task.isSuccessful()){
 
 
-                                                    Toast.makeText(context, "Confirm and Removed", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, "Confirm", Toast.LENGTH_SHORT).show();
 
                                                     DatabaseReference dbUser = FirebaseDatabase.getInstance().getReference()
                                                             .child("User").child(data.getAccepted_uid());
@@ -170,7 +164,6 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                                                         public void onComplete(@NonNull Task task) {
 
                                                             if (task.isSuccessful()){
-                                                                Toast.makeText(context, "Updated", Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                     });
