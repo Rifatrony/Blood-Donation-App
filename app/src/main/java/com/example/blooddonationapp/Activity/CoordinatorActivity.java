@@ -75,8 +75,6 @@ public class CoordinatorActivity extends AppCompatActivity implements View.OnCli
                         } else {
                             fabAddCoordinator.setVisibility(View.VISIBLE);
                         }
-
-                        Toast.makeText(CoordinatorActivity.this, user.getRole(), Toast.LENGTH_SHORT).show();
                     }
 
                 }

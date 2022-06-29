@@ -89,7 +89,7 @@
                     android:layout_height="55dp"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/background_input"
-                    android:hint="Ex. Surgery"
+                    android:hint="Patient Problem Ex. Surgery"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
                     android:inputType="textAutoCorrect"

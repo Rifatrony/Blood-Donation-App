@@ -25,6 +25,8 @@
                 android:id="@+id/nameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp"
                 android:text="Name Is Rifat Ahmed Rony" />
 
             <TextView
@@ -33,6 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/nameTextView"
                 android:layout_marginTop="6dp"
+                android:textColor="@color/black"
+                android:textSize="13sp"
                 android:text="01628979644" />
 
             <TextView
@@ -41,6 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/numberTextView"
                 android:layout_marginTop="6dp"
+                android:textColor="@color/black"
+                android:textSize="13sp"
                 android:text="0" />
 
             <!--<androidx.appcompat.widget.AppCompatImageView

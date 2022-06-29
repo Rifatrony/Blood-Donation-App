@@ -56,7 +56,6 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
         c = Calendar.getInstance();
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         todayDate = sdf.format(c.getTime());
-        Toast.makeText(getApplicationContext(), "Today Date is " + todayDate, Toast.LENGTH_SHORT).show();
 
 
     }
@@ -182,7 +181,7 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
                 return;
 
             case R.id.totalMemberCardView:
-                startActivity(new Intent(DashBoardActivity.this, DonorListActivity.class));
+                startActivity(new Intent(DashBoardActivity.this, AllMemberActivity.class));
                 Animatoo.animateSwipeLeft(DashBoardActivity.this);
                 return;
 

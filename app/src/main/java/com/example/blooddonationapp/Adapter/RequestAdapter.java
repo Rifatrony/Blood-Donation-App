@@ -68,9 +68,17 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                 dialog.show();
                 dialog.setCancelable(false);
 
+                TextView titleTextView, messageTextView;
                 Button btn_cancel, btn_delete;
+                titleTextView = dialog.findViewById(R.id.titleTextView);
+                messageTextView = dialog.findViewById(R.id.messageTextView);
                 btn_cancel = dialog.findViewById(R.id.btn_cancel);
                 btn_delete = dialog.findViewById(R.id.btn_delete);
+
+                messageTextView.setText("Are you sure you want to delete ? ");
+                titleTextView.setText("Confirm Delete");
+
+
 
                 btn_cancel.setOnClickListener(view1 -> dialog.dismiss());
                 btn_delete.setOnClickListener(new View.OnClickListener() {

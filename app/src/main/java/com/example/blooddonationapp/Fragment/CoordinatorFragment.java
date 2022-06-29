@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +23,7 @@ import com.example.blooddonationapp.Activity.AddNewCoordinatorActivity;
 import com.example.blooddonationapp.Activity.CoordinatorActivity;
 import com.example.blooddonationapp.Adapter.CoordinatorAdapter;
 import com.example.blooddonationapp.Model.CoordinatorModel;
+import com.example.blooddonationapp.Model.OrganizationModel;
 import com.example.blooddonationapp.Model.User;
 import com.example.blooddonationapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,6 +46,7 @@ public class CoordinatorFragment extends Fragment {
 
     View view;
 
+    EditText searchCoordinatorEditText;
     TextView noCoordinatorFoundTextView;
     ProgressBar progressBar;
 
@@ -64,6 +69,7 @@ public class CoordinatorFragment extends Fragment {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_coordinator, container, false);
 
+        searchCoordinatorEditText = view.findViewById(R.id.searchCoordinatorEditText);
         recyclerView = view.findViewById(R.id.recyclerView);
         noCoordinatorFoundTextView = view.findViewById(R.id.noCoordinatorFoundTextView);
         progressBar = view.findViewById(R.id.progressBar);
@@ -98,6 +104,24 @@ public class CoordinatorFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+
+        searchCoordinatorEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                filter(editable.toString());
             }
         });
 
@@ -150,5 +174,16 @@ public class CoordinatorFragment extends Fragment {
 
         return view;
 
+    }
+
+    private void filter(String text) {
+        ArrayList<CoordinatorModel> filteredList = new ArrayList<>();
+
+        for (CoordinatorModel item : coordinatorModelList) {
+            if (item.getAddress().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        adapter.filterList(filteredList);
     }
 }

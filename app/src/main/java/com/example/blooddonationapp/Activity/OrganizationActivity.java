@@ -73,7 +73,6 @@ public class OrganizationActivity extends AppCompatActivity {
                             fabAddOrganization.setVisibility(View.VISIBLE);
                         }
 
-                        Toast.makeText(OrganizationActivity.this, user.getRole(), Toast.LENGTH_SHORT).show();
                     }
 
                 }

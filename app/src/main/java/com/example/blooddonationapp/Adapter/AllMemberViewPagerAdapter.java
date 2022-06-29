@@ -6,12 +6,13 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.blooddonationapp.Fragment.AllDonorFragment;
-import com.example.blooddonationapp.Fragment.CompatibleWithMeFragment;
+import com.example.blooddonationapp.Fragment.AllMemberFragment;
+import com.example.blooddonationapp.Fragment.BirthdayWiseFragment;
 import com.example.blooddonationapp.Fragment.NearestDonorFragment;
 
-public class DonorViewPagerAdapter extends FragmentStateAdapter {
+public class AllMemberViewPagerAdapter extends FragmentStateAdapter {
 
-    public DonorViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    public AllMemberViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -20,15 +21,14 @@ public class DonorViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 0:
-                return new AllDonorFragment();
+                return new AllMemberFragment();
 
             case 1:
-                return new NearestDonorFragment();
+                return new BirthdayWiseFragment();
 
             default:
-                return new AllDonorFragment();
+                return new AllMemberFragment();
         }
-
     }
 
     @Override

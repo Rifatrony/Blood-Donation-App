@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    TextView header_name, header_number, header_blood_group, header_total_member;
+    TextView header_name, header_number, header_blood_group, header_total_member, header_type;
 
     DatabaseReference userRef;
 
@@ -210,6 +210,9 @@ public class MainActivity extends AppCompatActivity {
 
                     h_blood_group = snapshot.child("blood_group").getValue().toString();
                     header_blood_group.setText(h_blood_group);
+
+                    h_type = snapshot.child("role").getValue().toString();
+                    header_type.setText(h_type);
                 }
             }
 
@@ -336,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
         header_name = navigationView.getHeaderView(0).findViewById(R.id.header_name_textView);
         header_number = navigationView.getHeaderView(0).findViewById(R.id.header_number_textView);
         header_blood_group = navigationView.getHeaderView(0).findViewById(R.id.header_blood_group_textView);
+        header_type = navigationView.getHeaderView(0).findViewById(R.id.header_type_textView);
     }
 
 

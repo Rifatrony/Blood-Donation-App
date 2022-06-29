@@ -1,6 +1,7 @@
 package com.example.blooddonationapp.Adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import com.example.blooddonationapp.Model.AcceptRequestModel;
 import com.example.blooddonationapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -64,6 +66,53 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
         holder.nameTextView.setText(data.getName());
         holder.numberTextView.setText(data.getNumber());
 
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.custom_dialog_layout);
+                dialog.setCancelable(false);
+                dialog.show();
+
+                TextView titleTextView = dialog.findViewById(R.id.titleTextView);
+                TextView messageTextView = dialog.findViewById(R.id.messageTextView);
+                titleTextView.setText("Confirm Delete");
+                messageTextView.setText("Are you sure you want to delete ? ");
+                Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
+                Button btn_delete = dialog.findViewById(R.id.btn_delete);
+                btn_delete.setText("Delete");
+
+                btn_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FirebaseDatabase.getInstance().getReference()
+                                .child("Accept Request").child(FirebaseAuth.getInstance().getUid())
+                                .child(data.getAccepted_uid()).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            dialog.dismiss();
+                                            Toast.makeText(context, "Request Deleted", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                    }
+                });
+
+
+                return false;
+
+            }
+        });
+
         holder.callImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,7 +137,8 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
 
                 TextView titleTextView = dialog.findViewById(R.id.titleTextView);
                 TextView messageTextView = dialog.findViewById(R.id.messageTextView);
-                titleTextView.setText("You take blood from " + data.getName()+" ?");
+                titleTextView.setText("Confirm Blood");
+                messageTextView.setText("You take blood from " + data.getName()+" ? press confirm button.");
                 Button btn_cancel = dialog.findViewById(R.id.btn_cancel);
                 Button btn_delete = dialog.findViewById(R.id.btn_delete);
                 btn_delete.setText("Confirm");

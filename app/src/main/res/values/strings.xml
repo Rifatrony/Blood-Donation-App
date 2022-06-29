@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Blood Donation Application</string>
+    <string name="app_name">Blood Friend</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="login_to_continue">Login to Continue</string>
     <string name="number">Number</string>

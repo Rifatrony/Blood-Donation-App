@@ -16,7 +16,7 @@
 
             <item
                 android:id="@+id/nav_today_dashboard"
-                android:icon="@drawable/profile"
+                android:icon="@drawable/dashboard"
                 android:title="Dashboard"
                 />
 
@@ -45,7 +45,7 @@
 
     <item
         android:id="@+id/nav_today_ready_donor"
-        android:icon="@drawable/profile"
+        android:icon="@drawable/today"
         android:title="Today Ready"
         />
 
@@ -64,7 +64,7 @@
     <item
         android:id="@+id/nav_add_coordinator_type"
         android:title="Add Coordinator Type"
-        android:icon="@drawable/group"
+        android:icon="@drawable/type"
         />
 
     <item

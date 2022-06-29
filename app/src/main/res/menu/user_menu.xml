@@ -42,7 +42,7 @@
 
     <item
         android:id="@+id/nav_today_ready_donor"
-        android:icon="@drawable/profile"
+        android:icon="@drawable/today"
         android:title="Today Ready"
         />
 

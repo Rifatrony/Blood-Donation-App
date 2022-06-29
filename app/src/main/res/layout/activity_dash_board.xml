@@ -65,7 +65,7 @@
                         android:id="@+id/totalMemberCardView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        app:cardBackgroundColor="@color/red"
                         app:cardCornerRadius="10dp"
                         >
 
@@ -73,7 +73,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:background="@drawable/total_member_card_bg"
                             >
 
                             <TextView

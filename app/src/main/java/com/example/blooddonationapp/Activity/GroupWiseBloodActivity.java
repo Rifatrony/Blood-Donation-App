@@ -201,8 +201,6 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                                             } catch (ParseException e) {
                                                 e.printStackTrace();
                                             }
-                                            Toast.makeText(getApplicationContext(), "Today Date is " + today_date, Toast.LENGTH_SHORT).show();
-                                            Toast.makeText(GroupWiseBloodActivity.this, "Last Donate Date is " + user.getLast_donate(), Toast.LENGTH_SHORT).show();
 
                                             if (todayDate.after(nextDonateDate)){
                                                 String latitude1 = user.getLatitude();
@@ -299,7 +297,6 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
                         dbRequestId.setValue(hashMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
-                                //Toast.makeText(GroupWiseBloodActivity.this, "Added Successfully", Toast.LENGTH_SHORT).show();
                             }
                         });
 

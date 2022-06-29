@@ -54,7 +54,7 @@
                 android:id="@+id/searchCoordinatorEditText"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:hint="Search by Address"
+                android:hint="Search by Coordinator Address"
                 android:textSize="14sp"
                 android:inputType="text"
                 android:textColor="@color/black"

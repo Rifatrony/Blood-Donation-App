@@ -317,7 +317,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                                                 dialog.dismiss();
                                                 addressEditText.setText("");
                                                 timeEditText.setText("");
-                                                Toast.makeText(ProfileActivity.this, "You can donate blood Today", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
