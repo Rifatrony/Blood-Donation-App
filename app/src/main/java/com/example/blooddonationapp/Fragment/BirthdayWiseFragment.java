@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -57,6 +60,23 @@ public class BirthdayWiseFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         today_date = sdf.format(c.getTime());
 
+        Date date = null;
+
+        try {
+            date = sdf.parse(today_date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        //String dayOfTheWeek = (String) DateFormat.format("EEEE", date); // Thursday
+        //String monthString  = (String) DateFormat.format("MMM",  date); // Jun
+        //String year         = (String) DateFormat.format("yyyy", date);
+        String day          = (String) DateFormat.format("dd",   date); // 20
+        String monthNumber  = (String) DateFormat.format("MM",   date); // 06
+
+        System.out.println("Date is " + day);
+        System.out.println("Month is " + monthNumber);
+
         nothingFoundTextView = view.findViewById(R.id.noTextView);
         progressBar = view.findViewById(R.id.progressBar);
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -83,7 +103,19 @@ public class BirthdayWiseFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     User user = dataSnapshot.getValue(User.class);
 
-                    if (user.getDob().equals(today_date)){
+                    Date date1 = null;
+
+                    try {
+                        date1 = sdf.parse(user.getDob());
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    String day1         = (String) DateFormat.format("dd",   date1); // 20
+                    String monthNumber1 = (String) DateFormat.format("MM",   date1); // 06
+
+                    if (day.equals(day1)  && monthNumber.equals(monthNumber1)){
                         userList.add(user);
                         progressBar.setVisibility(View.INVISIBLE);
                     }

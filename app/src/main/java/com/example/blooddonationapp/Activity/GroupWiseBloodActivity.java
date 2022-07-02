@@ -98,7 +98,7 @@ public class GroupWiseBloodActivity extends AppCompatActivity implements View.On
         setListener();
 
         Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("hh:mm:ss");
+        SimpleDateFormat mdformat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         current_time = mdformat.format(calendar.getTime());
         System.out.println(current_time);
 

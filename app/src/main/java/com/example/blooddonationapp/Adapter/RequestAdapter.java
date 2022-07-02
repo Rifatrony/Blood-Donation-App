@@ -85,7 +85,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.RequestV
                     @Override
                     public void onClick(View view) {
 
-                        Toast.makeText(context, "Current Uid is " + data.getUid(), Toast.LENGTH_SHORT).show();
                         //Toast.makeText(context, "Request Uid is " + data.getRequest_uid(), Toast.LENGTH_SHORT).show();
 
                         FirebaseDatabase.getInstance().getReference()

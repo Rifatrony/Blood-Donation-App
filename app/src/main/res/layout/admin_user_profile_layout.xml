@@ -71,7 +71,8 @@
             android:id="@+id/userDobTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Address"
+            android:text="Dob"
+            android:textStyle="bold"
             android:layout_marginBottom="3dp"
             android:textColor="@color/black"
             android:textSize="14sp" />

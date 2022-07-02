@@ -43,11 +43,11 @@ public class AdminUserDetailsAdapter extends RecyclerView.Adapter<AdminUserDetai
     public void onBindViewHolder(@NonNull AdminUserDetailsViewHolder holder, int position) {
         User data = userList.get(position);
         holder.userNameTextView.setText(data.getName() + " ( " + data.getOrganization()+" )");
-        holder.userNumberTextView.setText("Number:   "+data.getNumber());
-        holder.userBloodGroupTextView.setText("Blood Group:   "+data.getBlood_group());
-        holder.userAddressTextView.setText("Address:   "+data.getAddress());
-        holder.userOrganizationTextView.setText("Organization:   "+data.getOrganization());
-        holder.userDobTextView.setText("DOB:   "+data.getDob());
+        holder.userNumberTextView.setText("Number :   "+data.getNumber());
+        holder.userBloodGroupTextView.setText("Blood Group :   "+data.getBlood_group());
+        holder.userAddressTextView.setText("Address :   "+data.getAddress());
+        holder.userOrganizationTextView.setText("Organization :   "+data.getOrganization());
+        holder.userDobTextView.setText("DOB :   "+data.getDob());
     }
 
     @Override

@@ -106,29 +106,6 @@ public class DashBoardActivity extends AppCompatActivity implements View.OnClick
         });
     }
 
-    private void TotalTodayDonate() {
-        dbTodayTotalDonate.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    ConfirmBloodModel confirmBloodModel = dataSnapshot.getValue(ConfirmBloodModel.class);
-
-                    donateDate = confirmBloodModel.getDonate_date();
-
-                    if (donateDate.equals(todayDate)){
-                        //int num = confirmBloodModel.getAccepted_id()
-                        total = snapshot.getChildrenCount();
-                        totalTodayDonateTextView.setText(String.valueOf(total));
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
     private void getTotalCoordinator() {
         dbCoordinator.addValueEventListener(new ValueEventListener() {

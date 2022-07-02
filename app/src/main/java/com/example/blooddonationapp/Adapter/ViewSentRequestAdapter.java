@@ -64,7 +64,8 @@ public class ViewSentRequestAdapter extends RecyclerView.Adapter<ViewSentRequest
                 titleTextView = dialog.findViewById(R.id.titleTextView);
                 messageTextView = dialog.findViewById(R.id.messageTextView);
 
-                titleTextView.setText("Are you sure you want to cancel the request?");
+                messageTextView.setText("Are you sure you want to cancel the request?");
+                titleTextView.setText("Cancel Request");
 
                 Button btn_cancel, btn_delete;
                 btn_cancel = dialog.findViewById(R.id.btn_cancel);

@@ -33,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Account Name (User Name)"
+                android:text="Send Request"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"

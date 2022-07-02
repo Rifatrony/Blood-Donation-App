@@ -54,11 +54,13 @@ public class SearchByActivity extends AppCompatActivity implements View.OnClickL
                 intent.putExtra("group", blood_group);
                 startActivity(intent);
                 Animatoo.animateSwipeLeft(SearchByActivity.this);
+                finish();
                 break;
 
             case R.id.searchByOrganizationButton:
                 startActivity(new Intent(SearchByActivity.this, OrganizationNameListActivity.class));
                 Animatoo.animateSwipeLeft(SearchByActivity.this);
+                finish();
                 break;
 
             case R.id.imageBack:

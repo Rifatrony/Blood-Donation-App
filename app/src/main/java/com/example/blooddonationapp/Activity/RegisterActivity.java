@@ -135,7 +135,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         organizationList.add(data.getName());
                         organizationUidList.add(data.getUid());
                         organizationTotalMember.add(data.getTotal_member());
-                        //Toast.makeText(RegisterActivity.this, "Count is " + data.getTotal_member(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -288,11 +287,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                 selectedOrganizationUid = organizationUidList.get(i);
 
-                Toast.makeText(RegisterActivity.this, "Total member is "  + totalMember + " of " + organizationName, Toast.LENGTH_SHORT).show();
-
-                //selectedAccountUid = parAccountBalance;
-                System.out.println("Selected Account Uid----->"+selectedOrganizationUid);
-                Toast.makeText(RegisterActivity.this, "Clicked is " + selectedOrganizationUid, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -348,8 +342,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         int radioId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(radioId);
         clickedItemIs = radioButton.getText().toString();
-        Toast.makeText(this, "Clicked is " + clickedItemIs, Toast.LENGTH_SHORT).show();
-        System.out.println("Clicked is " + clickedItemIs);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -435,7 +427,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                     //intTotal = Integer.parseInt(totalMember);
                     intTotal = convert+1;
-                    Toast.makeText(RegisterActivity.this, "Count is "+ intTotal, Toast.LENGTH_SHORT).show();
 
                     HashMap userInfo = new HashMap();
                     userInfo.put("id", currentUserId);
@@ -476,7 +467,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     .getReference().child("Organization").child(selectedOrganizationUid);
 
                             if (selectedOrganizationUid.isEmpty()){
-                                Toast.makeText(RegisterActivity.this, "No Organization found", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             else {
@@ -484,7 +474,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     @Override
                                     public void onComplete(@NonNull Task task) {
                                         if (task.isSuccessful()){
-                                            Toast.makeText(RegisterActivity.this, "Member Updated", Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
