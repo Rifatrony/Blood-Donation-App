@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/back.xml" value="0.1385" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/back_white.xml" value="0.116" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/call_vackground.xml" value="0.191" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/cancel_button_bg.xml" value="0.153" />
@@ -18,12 +19,12 @@
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/text_view_background.xml" value="0.153" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/drawable/total_member_card_bg.xml" value="0.123" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/accept_request_layout.xml" value="0.20416666666666666" />
-        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_accept_request.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_accept_request.xml" value="0.1" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_account_type.xml" value="0.25416666666666665" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_add_new_coordinator.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_add_new_donor.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_add_organization.xml" value="0.20416666666666666" />
-        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_all_member.xml" value="0.20416666666666666" />
+        <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_all_member.xml" value="0.1" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_blood_request.xml" value="0.22" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_coordinator.xml" value="0.20416666666666666" />
         <entry key="..\:/Blood-Donation-App/app/src/main/res/layout/activity_coordinator_type.xml" value="0.20416666666666666" />
