@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -22,7 +23,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.binaryit.blooddonationapp.Model.ConfirmBloodModel;
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +52,7 @@ import com.binaryit.blooddonationapp.Adapter.MyViewPagerAdapter;
 import com.binaryit.blooddonationapp.Adapter.UserAdapter;
 import com.binaryit.blooddonationapp.Model.User;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,24 +70,20 @@ public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    TextView header_name, header_number, header_blood_group, header_total_member, header_type;
+    TextView header_name, header_number, header_blood_group, header_total_donate, header_type;
 
-    DatabaseReference userRef;
+    DatabaseReference userRef, dbTimes;
 
     RecyclerView recyclerView;
     List<User> userList;
     UserAdapter adapter;
     private static final int REQUEST_CODE = 101;
 
-    ProgressBar progressBar;
-    TextView noDataFoundTextView;
-
-    String current_time;
-    String role;
-
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     MyViewPagerAdapter viewPagerAdapter;
+
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,15 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         initialization();
 
-        /*Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        current_time = mdformat.format(calendar.getTime());
-        System.out.println("Date Format with dd-M-yyyy hh:mm:ss : "+current_time);
-
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String strDate = formatter.format(date);
-        System.out.println("Date Format with dd-M-yyyy hh:mm:ss : "+strDate);*/
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -148,11 +141,6 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
-        /*recyclerView.setLayoutManager(layoutManager);
-
-        userList = new ArrayList<>();
-        adapter = new UserAdapter(this, userList);
-        recyclerView.setAdapter(adapter);*/
 
         userRef = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance()
                 .getCurrentUser().getUid());
@@ -161,10 +149,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                try {
-                   //readUser();
 
                }catch (Exception e){
-                   //progressBar.setVisibility(View.GONE);
                    Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
                }
             }
@@ -221,8 +207,19 @@ public class MainActivity extends AppCompatActivity {
                     h_blood_group = snapshot.child("blood_group").getValue().toString();
                     header_blood_group.setText(h_blood_group);
 
-                    h_type = snapshot.child("role").getValue().toString();
-                    header_type.setText(h_type);
+                    if (!snapshot.child("total_donate").exists()){
+                        HashMap hashMap = new HashMap();
+                        hashMap.put("total_donate","0");
+                        userRef.updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                            @Override
+                            public void onComplete(@NonNull Task task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(MainActivity.this, "New row inserted", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+
                 }
             }
 
@@ -233,6 +230,37 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /*Header Closed*/
+
+        dbTimes = FirebaseDatabase.getInstance().getReference().child("Confirm Blood");
+
+        dbTimes.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                    ConfirmBloodModel confirmBloodModel = dataSnapshot.getValue(ConfirmBloodModel.class);
+
+                    if (confirmBloodModel.getAccepted_id().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+
+                        count = confirmBloodModel.getTimes() + count;
+                        System.out.println("Count is " + count);
+
+                        try {
+                            header_total_donate.setText("Total Donate: " + count + " times");
+                        }
+                        catch (Exception e){
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 
@@ -310,13 +338,13 @@ public class MainActivity extends AppCompatActivity {
                         logOut();
                         break;
 
-                    /*case R.id.nav_share:
-                        Intent intent = new Intent(Intent.ACTION_SEND);
-                        intent.setType("text/plain");
-                        intent.putExtra(Intent.EXTRA_SUBJECT,"Check this application");
-                        intent.putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id=com.whatsapp");
-                        startActivity(Intent.createChooser(intent,"Share Via"));
-                        break;*/
+                    case R.id.nav_share:
+                        Intent intent1 = new Intent(Intent.ACTION_SEND);
+                        intent1.setType("text/plain");
+                        intent1.putExtra(Intent.EXTRA_SUBJECT,"Check this application");
+                        intent1.putExtra(Intent.EXTRA_TEXT,"https://play.google.com/store/apps/details?id=com.binaryit.blooddonationapp");
+                        startActivity(Intent.createChooser(intent1,"Share Via"));
+                        break;
 
                     default:
                         return true;
@@ -349,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
         header_name = navigationView.getHeaderView(0).findViewById(R.id.header_name_textView);
         header_number = navigationView.getHeaderView(0).findViewById(R.id.header_number_textView);
         header_blood_group = navigationView.getHeaderView(0).findViewById(R.id.header_blood_group_textView);
-        header_type = navigationView.getHeaderView(0).findViewById(R.id.header_type_textView);
+        header_total_donate = navigationView.getHeaderView(0).findViewById(R.id.header_total_donate_textView);
     }
 
 

@@ -159,7 +159,6 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                         String strDate = sdf.format(c.getTime());
 
-
                         try {
                             date = sdf.parse(strDate);
                         }
@@ -173,6 +172,10 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy");
                         afterThreeMonthsDate = date.format(calendar.getTime());
 
+                        String  id;
+
+                        id = dbConfirm.push().getKey();
+
                         HashMap hashMap = new HashMap();
                         hashMap.put("name", data.getName());
                         hashMap.put("accepted_id", data.getAccepted_uid());
@@ -185,8 +188,10 @@ public class AcceptRequestAdapter extends RecyclerView.Adapter<AcceptRequestAdap
                         hashMap.put("patient_problem", data.getPatient_problem());
                         hashMap.put("recipient_number", data.getRecipient_number());
                         hashMap.put("donate_date", strDate);
+                        hashMap.put("times", 1);
+                        hashMap.put("id", id);
 
-                        dbConfirm.child(data.getAccepted_uid()).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
+                        dbConfirm.child(id).updateChildren(hashMap).addOnCompleteListener(new OnCompleteListener() {
                             @Override
                             public void onComplete(@NonNull Task task) {
 

@@ -4,22 +4,24 @@ public class AcceptRequestModel {
 
     String name, message, blood_group, my_uid, accepted_uid, recipient_number,
             donate_location, donate_time, number, patient_problem, donate_date;
+    int times;
 
     public AcceptRequestModel() {
     }
 
-    public AcceptRequestModel(String name, String message, String blood_group, String my_uid, String accepted_uid, String donate_location, String donate_time, String number, String patient_problem, String recipient_number, String donate_date) {
+    public AcceptRequestModel(String name, String message, String blood_group, String my_uid, String accepted_uid, String recipient_number, String donate_location, String donate_time, String number, String patient_problem, String donate_date, int times) {
         this.name = name;
         this.message = message;
         this.blood_group = blood_group;
         this.my_uid = my_uid;
         this.accepted_uid = accepted_uid;
+        this.recipient_number = recipient_number;
         this.donate_location = donate_location;
         this.donate_time = donate_time;
         this.number = number;
         this.patient_problem = patient_problem;
-        this.recipient_number = recipient_number;
         this.donate_date = donate_date;
+        this.times = times;
     }
 
     public String getName() {
@@ -108,5 +110,13 @@ public class AcceptRequestModel {
 
     public void setDonate_date(String donate_date) {
         this.donate_date = donate_date;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
     }
 }

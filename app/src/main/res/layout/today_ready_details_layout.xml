@@ -83,6 +83,7 @@
                     android:drawableEnd="@drawable/calendar"
                     android:drawableTint="@color/red"
                     android:hint="Donate Date"
+                    android:focusable="false"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
                     android:inputType="textEmailAddress"

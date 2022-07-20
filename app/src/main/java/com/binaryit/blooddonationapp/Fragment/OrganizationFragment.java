@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.binaryit.blooddonationapp.Activity.AddOrganizationActivity;
@@ -30,9 +31,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -51,6 +56,10 @@ public class OrganizationFragment extends Fragment {
     FloatingActionButton fabAddOrganization;
 
     DatabaseReference dbRole;
+
+    DatabaseReference dbOrganization;
+    Query query;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,8 +115,11 @@ public class OrganizationFragment extends Fragment {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        DatabaseReference dbOrganization = FirebaseDatabase.getInstance().getReference()
+        dbOrganization = FirebaseDatabase.getInstance().getReference()
                 .child("Organization");
+
+        query = dbOrganization.startAt("total_member");
+
 
         dbOrganization.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -118,8 +130,47 @@ public class OrganizationFragment extends Fragment {
 
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     OrganizationModel organizationModel = dataSnapshot.getValue(OrganizationModel.class);
+                    //Arrays.sort(organizationModelList.toArray());
                     organizationModelList.add(organizationModel);
                     progressBar.setVisibility(View.INVISIBLE);
+
+                    Collections.sort(organizationModelList, new Comparator<OrganizationModel>() {
+                        @Override
+                        public int compare(OrganizationModel lhs, OrganizationModel rhs) {
+
+                            return lhs.getName().compareTo(rhs.getTotal_member());
+                        }});
+
+                    /*String totalMember = organizationModel.getTotal_member();
+                    int a = Integer.parseInt(totalMember);*/
+
+
+                    /*if (!organizationModel.getTotal_member() .equals("")){
+
+                        String totalMember = organizationModel.getTotal_member();
+                        int a = Integer.parseInt(totalMember);
+                        System.out.println("Total Member of " +organizationModel.getName() +" "+ a);
+
+                        query = dbOrganization.limitToFirst(a);
+
+                        query.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                                    OrganizationModel organizationModel = dataSnapshot.getValue(OrganizationModel.class);
+                                    organizationModelList.add(organizationModel);
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }*/
+
                 }
                 adapter.notifyDataSetChanged();
 

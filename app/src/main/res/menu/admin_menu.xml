@@ -85,25 +85,27 @@
     <!--Communication Section-->
 
     <item
+
         android:title="Communicate">
+
         <menu>
-            <!--<item
+            <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/share"
                 android:title="Share"
                 />
 
-            <item
-                android:id="@+id/nav_contact"
-                android:icon="@drawable/contact_us"
-                android:title="Contact"
-                />
+            <!-- <item
+                 android:id="@+id/nav_contact"
+                 android:icon="@drawable/contact_us"
+                 android:title="Contact"
+                 />
 
-            <item
-                android:id="@+id/nav_feedback"
-                android:icon="@drawable/feedback"
-                android:title="Feedback"
-                />-->
+             <item
+                 android:id="@+id/nav_feedback"
+                 android:icon="@drawable/feedback"
+                 android:title="Feedback"
+                 />-->
 
             <item
                 android:id="@+id/nav_about_us"

@@ -3,12 +3,14 @@ package com.binaryit.blooddonationapp.Model;
 public class ConfirmBloodModel {
 
     String blood_group, donate_date, donate_location, number, accepted_id,
-    my_uid, patient_problem, donate_time, message, name,recipient_number;
+    my_uid, patient_problem, donate_time, message, name,recipient_number, id;
+
+    int times;
 
     public ConfirmBloodModel() {
     }
 
-    public ConfirmBloodModel(String blood_group, String donate_date, String donate_location, String number, String accepted_id, String my_uid, String patient_problem, String donate_time, String message, String name, String recipient_number) {
+    public ConfirmBloodModel(String blood_group, String donate_date, String donate_location, String number, String accepted_id, String my_uid, String patient_problem, String donate_time, String message, String name, String recipient_number, String id, int times) {
         this.blood_group = blood_group;
         this.donate_date = donate_date;
         this.donate_location = donate_location;
@@ -20,6 +22,8 @@ public class ConfirmBloodModel {
         this.message = message;
         this.name = name;
         this.recipient_number = recipient_number;
+        this.id = id;
+        this.times = times;
     }
 
     public String getBlood_group() {
@@ -108,5 +112,21 @@ public class ConfirmBloodModel {
 
     public void setRecipient_number(String recipient_number) {
         this.recipient_number = recipient_number;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
     }
 }

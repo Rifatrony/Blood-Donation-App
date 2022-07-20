@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.binaryit.blooddonationapp.Adapter.ConfirmBloodAdapter;
 import com.binaryit.blooddonationapp.Model.ConfirmBloodModel;
@@ -36,9 +37,12 @@ public class DonateRecordFragment extends Fragment {
     ConfirmBloodAdapter adapter;
 
     DatabaseReference dbConfirmBlood;
+    DatabaseReference dbRecord;
 
     TextView noDataFoundTextView;
     ProgressBar progressBar;
+
+    String id;
 
 
     @Override
@@ -67,13 +71,14 @@ public class DonateRecordFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 //confirmBloodModelList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    ConfirmBloodModel confirmBloodModel = dataSnapshot.getValue(ConfirmBloodModel.class);
-                    assert confirmBloodModel != null;
-                    if (confirmBloodModel.getAccepted_id().equals(FirebaseAuth.getInstance().getUid())){
 
+                    ConfirmBloodModel confirmBloodModel = dataSnapshot.getValue(ConfirmBloodModel.class);
+
+                    if (confirmBloodModel.getAccepted_id().equals(FirebaseAuth.getInstance().getUid())){
                         confirmBloodModelList.add(confirmBloodModel);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
+
                 }
                 adapter.notifyDataSetChanged();
 

@@ -275,6 +275,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/background_input"
                 android:hint="Date of Birth"
+                android:focusable="false"
                 android:drawableEnd="@drawable/calendar"
                 android:drawableTint="@color/red"
                 android:maxLines="1"

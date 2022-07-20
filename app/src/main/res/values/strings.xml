@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Blood Friend</string>
+    <string name="app_name">iBloodFriend</string>
     <string name="welcome_back">Welcome Back</string>
     <string name="login_to_continue">Login to Continue</string>
     <string name="number">Number</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="create_new_account">Create new Acount</string>
+    <string name="create_new_account">Create new Account</string>
     <string name="email">Email</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="register">Register</string>

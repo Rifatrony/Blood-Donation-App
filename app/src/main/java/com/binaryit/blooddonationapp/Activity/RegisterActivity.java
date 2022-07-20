@@ -2,6 +2,7 @@ package com.binaryit.blooddonationapp.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -112,6 +113,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         initialization();
         setListener();
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         organizationList = new ArrayList<>();
         organizationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, organizationList);

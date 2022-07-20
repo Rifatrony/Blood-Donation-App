@@ -48,7 +48,7 @@ public class CoordinatorAdapter extends RecyclerView.Adapter<CoordinatorAdapter.
         holder.nameTextView.setText("Name: "+data.getName());
         holder.numberTextView.setText("Number: "+data.getNumber());
         holder.addressTextView.setText("Address: "+data.getAddress());
-        holder.typeTextView.setText("Coordinator Type: "+data.getType());
+        holder.typeTextView.setText(data.getType() + " Coordinator");
 
         holder.callCoordinatorButton.setOnClickListener(new View.OnClickListener() {
             @Override

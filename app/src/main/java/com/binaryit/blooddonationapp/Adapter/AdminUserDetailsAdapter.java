@@ -40,7 +40,7 @@ public class AdminUserDetailsAdapter extends RecyclerView.Adapter<AdminUserDetai
     @Override
     public void onBindViewHolder(@NonNull AdminUserDetailsViewHolder holder, int position) {
         User data = userList.get(position);
-        holder.userNameTextView.setText(data.getName() + " ( " + data.getOrganization()+" )");
+        holder.userNameTextView.setText(data.getName());
         holder.userNumberTextView.setText("Number :   "+data.getNumber());
         holder.userBloodGroupTextView.setText("Blood Group :   "+data.getBlood_group());
         holder.userAddressTextView.setText("Address :   "+data.getAddress());
