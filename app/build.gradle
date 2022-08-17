@@ -10,8 +10,8 @@ android {
         applicationId "com.binaryit.blooddonationapp"
         minSdk 21
         targetSdk 32
-        versionCode 2
-        versionName "1.1"
+        versionCode 3
+        versionName "1.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.hbb20:ccp:2.6.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
 
     implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
 

@@ -384,6 +384,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         System.out.println("Selected country is ======>" + ccp);
 
+        if (name.isEmpty()){
+            showToast("Name Required");
+            return;
+        }
+
         if (email.isEmpty()){
             showToast("Email Required");
             return;
@@ -403,6 +408,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if (!confirm_password.equals(password)){
             showToast("Password and Confirm Password Should be Same");
+            return;
+        }
+        if (dob.isEmpty()){
+            showToast("Enter Date of Birth");
             return;
         }
         else {
